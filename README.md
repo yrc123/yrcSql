@@ -13,7 +13,7 @@
 ## cookie约定
 
 - userID:用户登录后获取的用户id
-- userName用户登录后获取的用户的教师号\学号\admin
+- username用户登录后获取的用户的教师号\学号\admin
 
 ## 函数约定
 
@@ -24,21 +24,29 @@
 
   - ```json
     {
-        "userName":"用户名",
-        "passWord":"md5加密后的用户密码"
+        "username":"用户名",
+        "password":"md5加密后的用户密码"
     }
     ```
 
 - 返回值
 
-  - void
+
+  - ```json
+    {
+        "loginCode":0|1
+    }
+    ```
+
+  - 
 
 - 功能
 
   - 用户登入
   - 设置userID
-  - 设置userName
+  - 设置username
   - 依据用户组转跳页面
+  - 登录成功返回1，否则返回0
 
 - [ ] ### logout
 
@@ -49,8 +57,9 @@
   - void
 - 功能
   - 删除userID
-  - 删除userName
+  - 删除username
   - 后端注销userID
+  - 转跳到index.html
 
 ## 前端需求
 

@@ -1,23 +1,17 @@
-
-Mock.mock("/api/logout",function(){
-	return "logout";
-});
-/*
-console.log($("#login a").text());
-$("#login a").click(function(){
-	$.ajax({
-		url:"/api/login",
-		dataType:"Text",
-		data:{},
-		type:"GET",
-		beforeSend:function(){
-
-		},
-		success:function(req){
-			$("#login a").text(req);
-		},
-		error:function(){
-			$("#login a").text("error");
-		}
+Mock.mock("/api/login",function(){
+	var data = Mock.mock({
+		"loginCode|0-1":1,
 	})
-})*/
+	if(data["loginCode"]==1){
+		$.cookie("userID","test");
+		$.cookie("username","学生A");
+		location.reload();
+	}
+	return JSON.stringify(data);
+
+});
+Mock.mock("/api/logout",function(){
+	$.removeCookie("userID");
+	$.removeCookie("user");
+	location.reload();
+});
