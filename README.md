@@ -13,6 +13,7 @@
 ## cookie约定
 
 - userID:用户登录后获取的用户id
+- userName用户登录后获取的用户的教师号\学号\admin
 
 ## 函数约定
 

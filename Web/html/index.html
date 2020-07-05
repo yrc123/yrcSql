@@ -6,6 +6,7 @@
 		<title>军事理论考试系统</title>
 		<link rel="stylesheet" href="../layui/css/layui.css">
 		<script src="../assets/js/jquery-3.5.1.min.js"></script>
+		<script src="../assets/js/jquery.cookie.js"></script>
 	</head>
 	<body>
 <div class="layui-layout layui-layout-admin">
@@ -18,9 +19,18 @@
       <li class="layui-nav-item"><a href="">老师</a></li>
       <li class="layui-nav-item"><a href="">学生</a></li>
     </ul>
-    <ul id="user-info" class="layui-nav layui-layout-right">
-      <li class="layui-nav-item"><a href="">登录</a></li>
-    </ul>
+    <ul class="layui-nav layui-layout-right">
+		<li id="user-info" class="layui-nav-item layui-hide">
+			<a href="javascript:;">个人中心</a>
+			<dl class="layui-nav-child"> <!-- 二级菜单 -->
+				<dd><a id="user-name"href=""></a></dd>
+				<dd><a href="">退出</a></dd>
+			</dl>
+		</li>
+		<li id="login" class="layui-nav-item layui-hide">
+			<a href="">登录</a>
+		</li>
+	</ul>
   </div>
   
   <div class="layui-side layui-bg-black">
@@ -66,11 +76,16 @@
 	军事理论考试系统 by 
   </div>
 </div>
-	
-		<script src="../layui/layui.all.js"></script>
-		<script>
-			;!function(){
-			}();
+	<script src="../layui/layui.js"></script>
+		<script> 
+			$(document).ready(function() {
+				if($.cookie('userID')!=null){
+					$("#user-info").removeClass("layui-hide");
+					$("#user-name").text($.cookie('userName'));
+				}else{
+					$("#login").removeClass("layui-hide");
+				}
+			});
 			layui.use('element', function(){
 				var element = layui.element;
 
