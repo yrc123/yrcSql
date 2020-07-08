@@ -5,13 +5,15 @@ Mock.mock("/api/login",function(){
 	if(data["loginCode"]==1){
 		$.cookie("userID","test");
 		$.cookie("username","学生A");
-		location.reload();
+		$.cookie("character","student");
+		location.href="./index.html";
 	}
 	return JSON.stringify(data);
 
 });
 Mock.mock("/api/logout",function(){
 	$.removeCookie("userID");
-	$.removeCookie("user");
-	location.reload();
+	$.removeCookie("username");
+	$.removeCookie("character");
+	location.href="./index.html";
 });

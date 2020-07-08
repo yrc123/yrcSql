@@ -11,8 +11,8 @@
 		<script src="../assets/js/jquery.md5.js"></script>
 
 		<!--测试用，记得注释掉-->
-		<!--<script src="../assets/js/mock.js"></script>-->
-		<!--<script src="../mockjs/mock.js"></script>-->
+		<script src="../assets/js/mock.js"></script>
+		<script src="../mockjs/mock.js"></script>
 	</head>
 	<body>
 		<div class="layui-layout layui-layout-admin">
@@ -20,16 +20,17 @@
 				<div class="layui-logo">军事理论考试系统</div>
 				<!-- 头部区域（可配合layui已有的水平导航） -->
 				<ul class="layui-nav layui-layout-left">
-					<li class="layui-nav-item layui-this"><a href="">主页</a></li>
-					<li class="layui-nav-item"><a onclick="displayPermissionWindow()" href="#">管理员</a></li>
-					<li class="layui-nav-item"><a href="#">老师</a></li>
-					<li class="layui-nav-item"><a href="#">学生</a></li>
+					<li class="layui-nav-item layui-this"><a href="./index.html">主页</a></li>
+					<li class="layui-nav-item"><a onclick="doCheck(this)" type="admin" href="#">管理员</a></li>
+					<li class="layui-nav-item"><a onclick="doCheck(this)" type="teacher" href="#">老师</a></li>
+					<li class="layui-nav-item"><a onclick="doCheck(this)" type="student" ref="#">学生</a></li>
 				</ul>
 				<ul class="layui-nav layui-layout-right">
 					<li id="user-info" class="layui-nav-item layui-hide">
 						<a href="javascript:;">个人中心</a>
 						<dl class="layui-nav-child"> <!-- 二级菜单 -->
-							<dd><a id="user-name" href="./student.html"></a></dd>
+							<dd><a id="user-name" onclick="myHtml()" href="#"></a></dd>
+							<dd><a id="changePassword" href="#">修改密码</a></dd>
 							<dd><a id="logout" href="#">退出</a></dd>
 						</dl>
 					</li>
@@ -110,52 +111,6 @@
 						$("#admin-info").removeClass("layui-hide");
 					}
 				});
-			});
-
-			layui.use('form', function(){
-				var form =layui.form;
-				form.on('submit(form-submit)', function(){
-					var username=$(":text").val();
-					var password=$(":password").val();
-					//md5加密
-					password=$.md5(password);
-					var loginCode=-1;
-					$.ajax({
-						type:"POST",
-						url:"/api/login",
-						dataType:"json",
-						data:{
-							"username":username,
-							"password":password
-						},
-						async:false,
-						success:function(resp){
-							var data=JSON.parse(resp);
-							if(data["loginCode"]!=undefined){
-								loginCode=data["loginCode"];
-							}
-						}
-
-					})
-					var layer=layui.layer;
-					if(loginCode==-1){
-						layer.msg("服务器出错");
-					}else if(loginCode==0){
-						layer.msg("用户名或密码错误");
-					}else{
-						layer.msg("登录成功");
-					}
-					return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-				});
-				//退出登录
-				$("#logout").click(function(){
-					$.ajax({
-						type:"POST",
-						url:"/api/logout",
-						success:function(resp){
-						}
-					})
-				})
 			});
 		</script> 
 	</body>
