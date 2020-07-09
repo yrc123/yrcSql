@@ -43,22 +43,29 @@ function displayPermissionWindow(){
 
 //
 function doCheck(data){
-	checkPermission(data.type);
+	var flag=checkPermission(data.type);
+	if(flag){
+		window.location.href = "./"+$.cookie("character")+".html";
+	}
 }
 //权限检查
 function checkPermission(s){
 	if($.cookie("userID") == null){
 		displayLoginWindow();
+		return false;
 	}else if($.cookie("character")!=s){
 		displayPermissionWindow();
-	}else{
-		window.location.href = "./"+s+".html";
+		return false;
 	}
+	return true;
 }
 
 //
 function myHtml(){
-	checkPermission($.cookie("character"));
+	var flag=checkPermission($.cookie("character"));
+	if(flag){
+		window.location.href = "./"+$.cookie("character")+".html";
+	}
 }
 
 //退出登录
@@ -70,12 +77,12 @@ $("#logout").click(function(){
 		}
 	})
 })
-//
+//登录表单
 layui.use('form', function(){
 	var form =layui.form;
 	form.on('submit(form-submit)', function(){
-		var username=$(":text").val();
-		var password=$(":password").val();
+		var username=$("#username").val();
+		var password=$("#password").val();
 		//md5加密
 		password=$.md5(password);
 		var loginCode=-1;

@@ -1,0 +1,22 @@
+.site-block{
+	padding:20px;
+	border:1px solid #eee;
+	margin: 20px;
+}
+.site-text{
+	position: relative;
+}
+.main-info{
+	margin:20px;
+}
+input{
+	vertical-align: -2px;
+	vertical-align: -1px;
+	margin-right: 2px;
+}
+p{
+	font-size:17px;
+	font-weight:300;
+	line-height:25px;
+	color:#666;
+}
