@@ -13,7 +13,8 @@
 ## cookie约定
 
 - userID:用户登录后获取的用户id
-- username用户登录后获取的用户的教师号\学号\admin
+- username:用户登录后获取的用户的教师号\学号\admin
+- character:用户角色student/teacher/admin
 
 ## 函数约定
 
@@ -43,6 +44,7 @@
   - 用户登入
   - 设置userID
   - 设置username
+  - 设置character
   - 依据用户组转跳页面
   - 登录成功返回1，否则返回0
 
@@ -56,6 +58,7 @@
 - 功能
   - 删除userID
   - 删除username
+  - 删除character
   - 后端注销userID
   - 转跳到index.html
 
