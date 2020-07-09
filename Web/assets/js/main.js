@@ -1,4 +1,10 @@
-
+//加载皮肤
+layui.use('layer', function(){
+	var layer = layui.layer;
+	layer.config({
+		extend: 'hide/hide.css' //你的皮肤
+	});
+});
 //显示登录窗口
 $("body").append("<div id=\"loginWindow\" class=\"layui-hide\"></div>") 
 $("#loginWindow").load("./loginWindow.html");
@@ -7,8 +13,11 @@ function displayLoginWindow(){
 		var layer = layui.layer;
 		layer.open({
 			type:1,
+			title:0,
+			closeBtn:0,
+			resize:0,
+			skin:"layer-ext-hide",
 			content:$("#loginWindow").html(),
-			title:"用户登录",
 			area:["500px","250px"]
 		});
 	}); 
@@ -24,10 +33,10 @@ function displayPermissionWindow(){
 			type:1,
 			title:0,
 			closeBtn:0,
-			skin:"permissionWindow",
+			resize:0,
+			skin:"layer-ext-hide",
 			content:$("#permissionWindow").html(),
 			area:["300px","400px"],
-			resize:0,
 		});
 	}); 
 };
