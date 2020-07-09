@@ -78,8 +78,10 @@ $("#logout").click(function(){
 layui.use('form', function(){
 	var form =layui.form;
 	form.on('submit(form-submit)', function(){
-		var username=$(":text").val();
-		var password=$(":password").val();
+		var username=$("#username").val();
+		var password=$("#password").val();
+		console.log(username);
+		console.log(password);
 		//md5加密
 		password=$.md5(password);
 		var loginCode=-1;
