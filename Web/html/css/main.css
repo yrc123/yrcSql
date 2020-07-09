@@ -18,39 +18,10 @@ body, html {
 }
 
 /*---------------------------------------------*/
-a {
-	font-family: 'Microsoft Yahei';
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-}
 
-a:focus {
-	outline: none !important;
-}
-
-a:hover {
-	text-decoration: none;
-  color: #a64bf4;
-}
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
-}
 
-p {
-	font-family: 'Microsoft Yahei';
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-}
 
 ul, li {
 	margin: 0px;
@@ -104,9 +75,6 @@ button:hover {
 	cursor: pointer;
 }
 
-iframe {
-	border: none !important;
-}
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
