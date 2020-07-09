@@ -11,14 +11,18 @@ $("#loginWindow").load("./loginWindow.html");
 function displayLoginWindow(){
 	layui.use('layer', function(){
 		var layer = layui.layer;
+		layer.config({
+            extend:'skin/LoginPopup/style.css'
+        });
 		layer.open({
+			skin:'login-popup',
 			type:1,
 			title:0,
 			closeBtn:0,
 			resize:0,
-			skin:"layer-ext-hide",
 			content:$("#loginWindow").html(),
-			area:["500px","250px"]
+			area:["500px","399px"],
+			shadeClose:true,
 		});
 	}); 
 };
