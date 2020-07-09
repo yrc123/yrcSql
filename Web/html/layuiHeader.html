@@ -1,0 +1,21 @@
+<div class="layui-logo">军事理论考试系统</div>
+<!-- 头部区域（可配合layui已有的水平导航） -->
+<ul id="header" class="layui-nav layui-layout-left">
+	<li class="layui-nav-item" ><a type="index"href="./index.html">主页</a></li>
+	<li class="layui-nav-item"><a onclick="doCheck(this)" type="admin" href="#">管理员</a></li>
+	<li class="layui-nav-item"><a onclick="doCheck(this)" type="teacher" href="#">老师</a></li>
+	<li class="layui-nav-item"><a onclick="doCheck(this)" type="student" ref="#">学生</a></li>
+</ul>
+<ul class="layui-nav layui-layout-right">
+	<li id="user-info" class="layui-nav-item layui-hide">
+		<a href="javascript:;">个人中心</a>
+		<dl class="layui-nav-child"> <!-- 二级菜单 -->
+			<dd><a id="user-name" onclick="myHtml()" href="#"></a></dd>
+			<dd><a onclick="displayChangePasswordWindow()"  href="#">修改密码</a></dd>
+			<dd><a id="logout" href="#">退出</a></dd>
+		</dl>
+	</li>
+	<li  id="login"class="layui-nav-item layui-hide">
+		<a onclick="displayLoginWindow()" href="#">登录</a>
+	</li>
+</ul>

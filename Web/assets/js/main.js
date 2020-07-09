@@ -2,25 +2,90 @@
 layui.use('layer', function(){
 	var layer = layui.layer;
 	layer.config({
-		extend: 'hide/hide.css' //你的皮肤
+		extend:'skin/LoginPopup/style.css'
 	});
 });
+
+//监听侧边栏
+layui.use('element', function(){
+	var element = layui.element;
+	//一些事件监听
+	element.on('nav(left-nav)', function(elem){
+		var sideArr = document.querySelectorAll(".side-item");
+		var len = sideArr.length;
+		for(i=0;i<len;i++){
+			sideArr[i].classList.add("layui-hide");
+		}
+		sideArr[elem[0].type].classList.remove("layui-hide");
+	});
+});
+
+//修改登录和个人中心
+function checkUserID(){
+	if($.cookie('userID')!=null){
+		$("#user-info").removeClass("layui-hide");
+		$("#user-name").text($.cookie('username'));
+	}else{
+		$("#login").removeClass("layui-hide");
+	}
+}
+
+//显示顶端导航栏
+function loadHeader(s){
+	$(".layui-layout-admin").prepend('<div class="layui-header"></div>') 
+	$(".layui-header").load("./layuiHeader.html",function(response,status,xhr){
+
+		checkUserID();
+
+		//退出登录
+		$("#logout").click(function(){
+			$.ajax({
+				type:"POST",
+				url:"/api/logout",
+			})
+		})
+		var aArr = document.querySelectorAll("#header li>a");
+		var len = aArr.length;
+		for(i=0;i<len;i++){
+			if(aArr[i].type==s){
+				aArr[i].parentNode.classList.add("layui-this");
+			}
+		}
+	});
+}
+
 //显示登录窗口
 $("body").append("<div id=\"loginWindow\" class=\"layui-hide\"></div>") 
 $("#loginWindow").load("./loginWindow.html");
 function displayLoginWindow(){
 	layui.use('layer', function(){
 		var layer = layui.layer;
-		layer.config({
-            extend:'skin/LoginPopup/style.css'
-        });
 		layer.open({
-			skin:'login-popup',
 			type:1,
 			title:0,
 			closeBtn:0,
 			resize:0,
+			skin:'login-popup',
 			content:$("#loginWindow").html(),
+			area:["500px","399px"],
+			shadeClose:true,
+		});
+	}); 
+};
+
+//显示修改密码窗口
+$("body").append("<div id=\"changePasswordWindow\" class=\"layui-hide\"></div>") 
+$("#changePasswordWindow").load("./changePasswordWindow.html");
+function displayChangePasswordWindow(){
+	layui.use('layer', function(){
+		var layer = layui.layer;
+		layer.open({
+			type:1,
+			title:0,
+			closeBtn:0,
+			resize:0,
+			skin:'login-popup',
+			content:$("#changePasswordWindow").html(),
 			area:["500px","399px"],
 			shadeClose:true,
 		});
@@ -41,6 +106,7 @@ function displayPermissionWindow(){
 			skin:"layer-ext-hide",
 			content:$("#permissionWindow").html(),
 			area:["300px","400px"],
+			shadeClose:true,
 		});
 	}); 
 };
@@ -72,15 +138,7 @@ function myHtml(){
 	}
 }
 
-//退出登录
-$("#logout").click(function(){
-	$.ajax({
-		type:"POST",
-		url:"/api/logout",
-		success:function(resp){
-		}
-	})
-})
+
 //登录表单
 layui.use('form', function(){
 	var form =layui.form;
