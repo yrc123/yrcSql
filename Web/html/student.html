@@ -45,7 +45,7 @@
 										<div class="layui-form">
 											<input type="checkbox" title="我已阅读并同意《福州大学网络考试守则》。" lay-skin="primary" value="0"> 
 										</div>
-										<button  class="layui-btn layui-btn-lg layui-btn-normal layui-btn-disabled" style="margin: 10px auto;display:block;width: 30%;">开始正式考试</button>
+										<button value="0" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-disabled" style="margin: 10px auto;display:block;width: 30%;">开始正式考试</button>
 									</div>
 								</div>
 							</div>
@@ -72,7 +72,7 @@
 										<div class="layui-form">
 											<input type="checkbox" title="我已阅读并同意《福州大学网络考试守则》。" lay-skin="primary" value="1"> 
 										</div>
-										<button id="start-exam" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-disabled" style="margin: 10px auto;display:block;width: 30%;">开始模拟考试</button>
+										<button value="1" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-disabled" style="margin: 10px auto;display:block;width: 30%;">开始模拟考试</button>
 									</div>
 								</div>
 							</div>
@@ -105,6 +105,41 @@
 					}
 				})
 			})
+
+			//开始考试按钮
+			function startExam(thisValue){
+				if(thisValue.classList.contains("layui-btn-disabled")){
+					return false;
+				}
+				var value=thisValue.value;
+				$.ajax({
+					type:"POST",
+					url:"/api/examStart",
+					dataType:"json",
+					data:{
+						"examType":value
+					},
+					async:false,
+					success:function(resp){
+						var data=JSON.parse(resp);
+						if(data["examStart"]==0){
+							layer.msg("考试还未开始");
+						}else{
+							if(value==0){
+								layer.msg("开始正式考试");
+							}else{
+								layer.msg("开始模拟考试");
+							} 
+							$.cookie("examType",value);
+						}
+					},
+					error:function(){
+							layer.msg("服务器出错");
+					}
+				})
+			}
+			//
+			$("button").attr("onclick","startExam(this)");
 		</script> 
 	</body>
 </html>
