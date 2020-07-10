@@ -5,9 +5,12 @@ layui.use('layer', function(){
 		extend:'skin/LoginPopup/style.css'
 	});
 });
+//使用layer
+var layer = layui.layer;
 
 //监听侧边栏
 layui.use('element', function(){
+	//使用element
 	var element = layui.element;
 	//一些事件监听
 	element.on('nav(left-nav)', function(elem){
@@ -59,7 +62,6 @@ $("body").append("<div id=\"loginWindow\" class=\"layui-hide\"></div>")
 $("#loginWindow").load("./loginWindow.html");
 function displayLoginWindow(){
 	layui.use('layer', function(){
-		var layer = layui.layer;
 		layer.open({
 			type:1,
 			title:0,
@@ -78,7 +80,6 @@ $("body").append("<div id=\"changePasswordWindow\" class=\"layui-hide\"></div>")
 $("#changePasswordWindow").load("./changePasswordWindow.html");
 function displayChangePasswordWindow(){
 	layui.use('layer', function(){
-		var layer = layui.layer;
 		layer.open({
 			type:1,
 			title:0,
@@ -97,7 +98,6 @@ $("body").append("<div id=\"permissionWindow\" class=\"layui-hide\"></div>")
 $("#permissionWindow").load("./permissionWindow.html");
 function displayPermissionWindow(){
 	layui.use('layer', function(){
-		var layer = layui.layer;
 		layer.open({
 			type:1,
 			title:0,
@@ -147,7 +147,6 @@ layui.use('form', function(){
 		var password=$("#password").val();
 		//md5加密
 		password=$.md5(password);
-		var loginCode=-1;
 		$.ajax({
 			type:"POST",
 			url:"/api/login",
@@ -159,20 +158,17 @@ layui.use('form', function(){
 			async:false,
 			success:function(resp){
 				var data=JSON.parse(resp);
-				if(data["loginCode"]!=undefined){
-					loginCode=data["loginCode"];
+				if(data["loginCode"]==0){
+					layer.msg("用户名或密码错误");
+				}else if(data["loginCode"]==1){
+					layer.msg("登录成功");
 				}
+			},
+			error:function(){
+				layer.msg("服务器出错");
 			}
 
 		})
-		var layer=layui.layer;
-		if(loginCode==-1){
-			layer.msg("服务器出错");
-		}else if(loginCode==0){
-			layer.msg("用户名或密码错误");
-		}else{
-			layer.msg("登录成功");
-		}
 		return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 	});
 });

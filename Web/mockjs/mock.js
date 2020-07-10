@@ -9,11 +9,19 @@ Mock.mock("/api/login",function(){
 		location.href="./index.html";
 	}
 	return JSON.stringify(data);
-
 });
+
 Mock.mock("/api/logout",function(){
 	$.removeCookie("userID");
 	$.removeCookie("username");
 	$.removeCookie("character");
 	location.href="./index.html";
+});
+
+Mock.mock("/api/examStart",function(){
+	var data = Mock.mock({
+		"examStart|0-1":1,
+	})
+	location.href="./exam.html";
+	return JSON.stringify(data);
 });
