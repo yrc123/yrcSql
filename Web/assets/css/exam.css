@@ -1,0 +1,48 @@
+.questions{
+	 margin: 10px 10px;
+	 /*padding: 5px 10px;*/
+	 /*border: 1px solid #eee;*/
+}
+.q-number{
+	float:left;
+	width: 30px;
+	font-size:22px;
+	line-height: 26px;
+	color:#333;
+}
+.q-title{
+	line-height: 26px;
+	padding-left:30px;
+}
+.q-type{
+	display: inline-block;
+	padding:2px 4px;
+	font-size: 12px;
+	background-color:#e3f8ff;
+	border:1px solid #bfdfff;
+	margin-right:10px;
+	line-height:15px;
+}
+.q-select{
+	margin-left:10px;
+	margin-top:10px;
+}
+.layui-form-checkbox[lay-skin=primary]{
+	height: 34px!important;
+}
+.layui-form-checkbox[lay-skin=primary] i{
+	width:22px;
+	height:22px;
+	top:5px
+}
+.layui-icon-ok:before{
+	height:22px;
+	line-height: 22px;
+}
+.layui-form-checkbox[lay-skin=primary] span{
+	line-height:34px;
+}
+.layui-form-radio *{
+
+	color:rgb(102, 102, 102);
+} 

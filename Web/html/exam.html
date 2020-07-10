@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>军事理论考试系统</title>
+
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<link rel="stylesheet" href="../assets/css/exam.css">
+		<script src="../assets/js/front-main.js"></script>
+
+		<!--测试用，记得注释掉-->
+		<script src="../assets/js/mock.js"></script>
+		<script src="../mockjs/mock.js"></script>
+
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin">
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="left-nav">
+						<li  class="layui-nav-item layui-this"><a type="0" href="#">题目</a></li>
+						<li  class="layui-nav-item"><a type="1" href="#">结束考试</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="main-info" class="layui-body main-info" >
+			<!-- 内容主体区域 -->
+				<form class="layui-form" action="" lay-filter="examForm">
+					<div class="side-item">
+
+						<fieldset class="layui-elem-field ">
+							<legend id="examType"></legend>
+							<div id="addExam" class="layui-field-box ">
+								<hr>
+							</div>
+						</fieldset>
+					</div>
+
+					<div class="side-item layui-hide">
+
+						<fieldset class="layui-elem-field ">
+							<legend>注意事项</legend>
+							<div class="layui-field-box">
+								<blockquote class="layui-elem-quote layui-quote-nm">
+									<p>5.一些考试须知</p>
+									<p>6.一些考试须知</p>
+									<p>7.一些考试须知</p>
+								</blockquote>
+								<div>
+									<div style="margin:10px 0;">
+										<button class="layui-btn layui-btn-lg layui-btn-normal " style="margin: 10px auto;display:block;width: 30%;">提交试卷</button>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</form>
+			</div>
+			<div class="layui-footer ">
+				<!-- 底部固定区域 -->
+				军事理论考试系统 by 
+			</div>
+		</div>
+
+
+		<div id="type0" class="layui-hide">
+			<div class="questions">
+				<div class="q-number"></div>
+				<div class="q-title"><span class="q-type"></span></div>
+				<div class="q-select">
+					<div><input type="radio" value="1" title="" ></div>
+					<div><input type="radio" value="2" title="" ></div>
+					<div><input type="radio" value="4" title="" ></div>
+					<div><input type="radio" value="8" title="" ></div>
+				</div>
+			</div>
+		</div>
+		<div id="type1" class="layui-hide">
+			<div class="questions">
+				<div class="q-number"></div>
+				<div class="q-title"><span class="q-type"></span></div>
+				<div class="q-select">
+					<div><input type="checkbox" value="1" title="" lay-skin="primary"></div>
+					<div><input type="checkbox" value="2" itle="" lay-skin="primary"></div>
+					<div><input type="checkbox" value="4" title="" lay-skin="primary"> </div>
+					<div><input type="checkbox" value="8" title="" lay-skin="primary"> </div>
+				</div>
+			</div>
+		</div>
+		<div id="type2" class="layui-hide">
+			<div class="questions">
+				<div class="q-number"></div>
+				<div class="q-title"><span class="q-type"></span></div>
+				<div class="q-select">
+					<div><input type="radio"  value="1" title="正确" ></div>
+					<div><input type="radio"  value="2" title="错误" ></div>
+				</div>
+			</div>
+		</div>
+		<script src="../assets/js/back-main.js"></script>
+		<script src="../assets/js/exam.js"></script>
+		<script> 
+			$(document).ready(function() {
+			});
+			var thisPage="student";
+			loadHeader(thisPage);
+			checkPermission(thisPage);
+			checkExam();
+
+			var examInfo=getExam();
+			setExam(examInfo);
+		</script> 
+	</body>
+</html>

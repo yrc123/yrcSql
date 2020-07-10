@@ -26,7 +26,9 @@
 				</div>
 			</div>
 			
-				<div  class="side-item layui-body main-info" >
+			<div class="layui-body">
+
+				<div  class="side-item  main-info" >
 					<!-- 内容主体区域 -->
 						<fieldset class="layui-elem-field ">
 							<legend>正式考试须知</legend>
@@ -53,7 +55,7 @@
 				</div>
 
 
-				<div  class="side-item layui-body main-info layui-hide" >
+				<div  class="side-item  main-info layui-hide" >
 					<!-- 内容主体区域 -->
 						<fieldset class="layui-elem-field ">
 							<legend>模拟考试须知</legend>
@@ -78,6 +80,7 @@
 							</div>
 						</fieldset>
 				</div>
+			</div>
 
 			<div class="layui-footer ">
 				<!-- 底部固定区域 -->
@@ -131,6 +134,7 @@
 								layer.msg("开始模拟考试");
 							} 
 							$.cookie("examType",value);
+							location.href="./exam.html";
 						}
 					},
 					error:function(){
