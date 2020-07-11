@@ -102,6 +102,7 @@
 			</div>
 		</div>
 		<script src="../assets/js/back-main.js"></script>
+		<script src="../assets/js/jquery.countdown.min.js"></script>
 		<script src="../assets/js/exam.js"></script>
 		<script> 
 			$(document).ready(function() {
@@ -113,6 +114,18 @@
 
 			var examInfo=getExam();
 			setExam(examInfo);
+			showTimeWindow(examInfo.date);
+
+			var cArr = new Array();
+			var examNum = examInfo.Qtype[0]+examInfo.Qtype[1]+examInfo.Qtype[2];
+			for(i=0;i<examNum;i++){
+				cArr.push(0);
+			}
+			var saveChoice={
+				examID:examInfo.examID,
+				choice:cArr
+			}
+			loadChoice();
 		</script> 
 	</body>
 </html>

@@ -119,7 +119,7 @@
 
   - 根据考试类型，返回对应考试状态
 
-  - [ ] ### getQuestions
+  - [ ] ### getExam
 
 - 参数
 
@@ -129,7 +129,8 @@
 
   - ```json
     {
-        "time":number,
+        "examID":string,
+        "date":string,
         "Qtype":[ number, number, number],
         "data":[
             {
@@ -151,9 +152,11 @@
             ...
         ]
     }
-    ```
+  ```
+    
+  - examID:考卷的唯一id，为随机值
 
-  - time：代表考试剩余的时间
+  - date：代表考试剩余的时间,返回结束时的时间string "YYYY/MM/DD hh:mm:ss"
 
   - Qtype：分别代表单选，多选，判断的题目数量
 
@@ -219,8 +222,8 @@
 
 - [ ] 考试倒计时
 - [ ] 时间到自动提交
-
 - [x] 提交
+- [ ] 保存未提交选项
 
 ### 学生界面
 

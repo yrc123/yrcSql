@@ -1,13 +1,11 @@
-Mock.mock("/api/login",function(Jdata){
-	console.log(Jdata);
+Mock.mock("/api/login",function(){
 	var data = Mock.mock({
 		"loginCode|0-2":1,
 	})
 	if(data["loginCode"]!=0){
-		$.cookie("userID","test");
-		$.cookie("username","学生A");
+		$.cookie("userID",Mock.Random.string(16));
+		$.cookie("username",Mock.Random.cname());
 		$.cookie("character","student");
-		if(data["loginCode"]==1)location.href="./"+$.cookie("character")+".html";
 	}
 	return JSON.stringify(data);
 });
@@ -16,7 +14,6 @@ Mock.mock("/api/logout",function(){
 	$.removeCookie("userID");
 	$.removeCookie("username");
 	$.removeCookie("character");
-	location.href="./index.html";
 });
 
 Mock.mock("/api/examStart",function(){
@@ -27,18 +24,28 @@ Mock.mock("/api/examStart",function(){
 });
 
 Mock.mock("/api/changePassword",function(){
-	location.href="./"+$.cookie("character")+".html";
 	return true;
 });
 
 Mock.mock("/api/submitExam",function(Jans){
 	var ans = JSON.parse(Jans.body);
-	ans[1]=[1,1,1,1,1,1];
-	var type = Mock.mock({
-		"examType|1":1,
-	});
+	//console.log(JSON.parse(Jans.body));
+	ans.data=new Array();
+	for(i=0;i<3;i++){
+		for(j=0;j<ans.Qtype[i];j++){
+			if(i==0){
+				var num=[1,2,4,8];
+				ans["data"].push(num[Mock.Random.integer(0,3)]);
+			}else if(i==1){
+				ans["data"].push(Mock.Random.integer(1,15));
+			}else{
+				ans["data"].push(num[Mock.Random.integer(0,1)]);
+			}
+		}
+	}
 
-	if(type["examType"]==0){
+	//console.log(ans);
+	if($.cookie("examType")==0){
 		return null;
 	}else{
 		return JSON.stringify(ans);
@@ -46,37 +53,36 @@ Mock.mock("/api/submitExam",function(Jans){
 });
 
 Mock.mock("/api/getExam",function(){
-	var data = Mock.mock({
-		"time|60":1,
-		"Qtype":[1,2,3],
-		"data":[
-			{
-				"title":"test",
-				"choice":["ans1","ans2","ans3","ans4"]
+	var date = new Date();
+	date.setMinutes(date.getMinutes()+60)
 
-			},
-			{
-				"title":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-				"choice":["ans1","ans2","ans3","ans4"]
+	var ts= date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+' ';
+	ts+=date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 
-			},
-			{
-				"title":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-				"choice":["ans1","ans2","ans3","ans4"]
-
-			},
-			{
-				"title":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-			},
-			{
-				"title":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-			},
-			{
-				"title":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-
+	var id =Mock.Random.string(16);
+	var Qnum = [10,20,20]
+	id="test";
+	var data = {
+		examId:id,
+		date:ts,
+		Qtype:Qnum
+	}
+	var Darr = new Array();
+	for(i=0;i<3;i++){
+		for(j=0;j<Qnum[i];j++){
+			var sDataTmp={};
+			sDataTmp["title"]=Mock.Random.cparagraph();
+			var tip = new Array();
+			if(i<2){
+				for(z=0;z<4;z++){
+					tip.push(Mock.Random.csentence());
+				}
+				sDataTmp["choice"]=tip;
 			}
-		]
-
-	})
-	return data;
+			Darr.push(sDataTmp);
+		}
+	}
+	data["data"]=Darr;
+	
+	return JSON.stringify(data);
 });

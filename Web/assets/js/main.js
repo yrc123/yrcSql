@@ -1,18 +1,12 @@
+var form =layui.form;
+var layer =layui.layer;
+var element =layui.element;
 //加载皮肤
-layui.use('layer', function(){
 	var layer = layui.layer;
 	layer.config({
 		extend:'skin/LoginPopup/style.css'
 	});
-});
-//使用layer
-var layer = layui.layer;
-
 //监听侧边栏
-layui.use('element', function(){
-	//使用element
-	var element = layui.element;
-	//一些事件监听
 	element.on('nav(left-nav)', function(elem){
 		var sideArr = document.querySelectorAll(".side-item");
 		var len = sideArr.length;
@@ -21,7 +15,6 @@ layui.use('element', function(){
 		}
 		sideArr[elem[0].type].classList.remove("layui-hide");
 	});
-});
 
 //修改登录和个人中心
 function checkUserID(){
@@ -36,7 +29,7 @@ function checkUserID(){
 //显示顶端导航栏
 function loadHeader(s){
 	$(".layui-layout-admin").prepend('<div class="layui-header"></div>') 
-	$(".layui-header").load("./layuiHeader.html",function(response,status,xhr){
+	$(".layui-header").load("./layuiHeader.html",function(){
 
 		checkUserID();
 
@@ -45,6 +38,9 @@ function loadHeader(s){
 			$.ajax({
 				type:"POST",
 				url:"/api/logout",
+				success:function(){
+					location.href="./index.html";
+				}
 			})
 		})
 		var aArr = document.querySelectorAll("#header li>a");
@@ -54,6 +50,7 @@ function loadHeader(s){
 				aArr[i].parentNode.classList.add("layui-this");
 			}
 		}
+		element.render('nav');
 	});
 }
 
@@ -61,8 +58,7 @@ function loadHeader(s){
 $("body").append("<div id='loginWindow' class='layui-hide'></div>") 
 $("#loginWindow").load("./loginWindow.html");
 function displayLoginWindow(){
-	layui.use('layer', function(){
-		var thisWindow = $("#loginWindow");
+	var thisWindow = $("#loginWindow");
 		layer.open({
 			type:1,
 			title:0,
@@ -78,16 +74,14 @@ function displayLoginWindow(){
 			cancel: function(){ 
 				thisWindow.addClass("layui-hide");
 			}    
-		});
-	}); 
+	});
 };
 
 //显示修改密码窗口
 $("body").append("<div id='changePasswordWindow' class='layui-hide'></div>") 
 $("#changePasswordWindow").load("./changePasswordWindow.html");
 function displayChangePasswordWindow(flag = 1){
-	layui.use('layer', function(){
-		var thisWindow = $("#changePasswordWindow");
+	var thisWindow = $("#changePasswordWindow");
 		layer.open({
 			type:1,
 			title:0,
@@ -104,15 +98,15 @@ function displayChangePasswordWindow(flag = 1){
 				thisWindow.addClass("layui-hide");
 			}    
 		});
-	}); 
 };
 
 //显示权限不足窗口
 $("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
 $("#permissionWindow").load("./permissionWindow.html");
 function displayPermissionWindow(){
+	var thisWindow = $("#permissionWindow");
+
 	layui.use('layer', function(){
-		var thisWindow = $("#permissionWindow");
 		layer.open({
 			type:1,
 			title:0,
@@ -129,7 +123,7 @@ function displayPermissionWindow(){
 				thisWindow.addClass("layui-hide");
 			}    
 		});
-	}); 
+	});
 };
 
 //
@@ -170,69 +164,71 @@ function myHtml(){
 
 
 //登录表单
-layui.use('form', function(){
-	var form =layui.form;
-	form.on('submit(login)', function(){
-		var username=$("#username").val();
-		var password=$("#password").val();
-		//md5加密
-		password=$.md5(password);
-		$.ajax({
-			type:"POST",
-			url:"/api/login",
-			dataType:"json",
-			data:{
-				"username":username,
-				"password":password
-			},
-			async:false,
-			success:function(resp){
-				var data=JSON.parse(resp);
-				if(data["loginCode"]==0){
-					layer.msg("用户名或密码错误");
-				}else if(data["loginCode"]==1){
-					layer.msg("登录成功");
-				}else if(data["loginCode"]==2){
-					$.cookie("hasNotChangePassword","ture");
-					displayChangePasswordWindow(0);
-				}	
-			},
-			error:function(){
-				layer.msg("服务器出错");
-			}
+form.on('submit(login)', function(){
+	var username=$("#username").val();
+	var password=$("#password").val();
+	//md5加密
+	password=$.md5(password);
+	$.ajax({
+		type:"POST",
+		url:"/api/login",
+		dataType:"json",
+		data:{
+			"username":username,
+			"password":password
+		},
+		async:false,
+		success:function(resp){
+			var data=JSON.parse(resp);
+			console.log(data)
+			if(data["loginCode"]==0){
+				layer.msg("用户名或密码错误");
+			}else if(data["loginCode"]==1){
+				layer.msg("登录成功");
+				setTimeout(function(){
+					location.href="./"+$.cookie("character")+".html";
+				},100);
+			}else if(data["loginCode"]==2){
+				$.cookie("hasNotChangePassword","ture");
+				displayChangePasswordWindow(0);
+			}	
+		},
+		error:function(){
+			layer.msg("服务器出错");
+		}
 
-		})
-		return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-	});
+	})
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 });
 
 //修改密码
-layui.use('form', function(){
-	var form =layui.form;
-	form.on('submit(changePassword)', function(){
-		var newPassword=$("#newPassword").val();
-		var newPasswordTwins=$("#newPasswordTwins").val();
-		//md5加密
-		if(newPassword!=newPasswordTwins){
-			layer.msg("两次输入的密码不一致")
-			return false;
+form.on('submit(changePassword)', function(){
+	var newPassword=$("#newPassword").val();
+	var newPasswordTwins=$("#newPasswordTwins").val();
+	//md5加密
+	if(newPassword!=newPasswordTwins){
+		layer.msg("两次输入的密码不一致")
+		return false;
+	}
+	newPassword=$.md5(newPassword);
+	$.ajax({
+		type:"POST",
+		url:"/api/changePassword",
+		dataType:"json",
+		data:{
+			"newPassword":newPassword,
+		},
+		async:false,
+		success:function(){
+			$.removeCookie("hasNotChangePassword");
+			layer.msg("密码修改成功");
+			setTimeout(function(){
+				location.href="./"+$.cookie("character")+".html";
+			},100);
+		},
+		error:function(){
+			layer.msg("服务器出错");
 		}
-		newPassword=$.md5(newPassword);
-		$.ajax({
-			type:"POST",
-			url:"/api/changePassword",
-			dataType:"json",
-			data:{
-				"newPassword":newPassword,
-			},
-			async:false,
-			success:function(){
-				$.removeCookie("hasNotChangePassword");
-			},
-			error:function(){
-				layer.msg("服务器出错");
-			}
-		})
-		return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-	});
+	})
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 });

@@ -1,18 +1,60 @@
+
+//显示第no个侧边栏的内容
+function goSide(no){
+	var sideArr = document.querySelectorAll(".side-item");
+	var len = sideArr.length;
+	for(i=0;i<len;i++){
+		sideArr[i].classList.add("layui-hide");
+	}
+	sideArr[no].classList.remove("layui-hide");
+}
+
+//显示计时器窗口
+function showTimeWindow(date){
+		layer.open({
+			type: 1 ,
+			title: '考试进行中',
+			area: ['260px', '100px'],
+			shade: 0,
+			maxmin:true,
+			offset:'rt' ,
+			content:'<div id="timeBar"></div>',
+			closeBtn:0,
+			success:function(){
+				setTime(date);
+			}
+		});
+
+}
+//设置倒计时
+function setTime(date){
+	$('#timeBar').countdown(date, function(event) {
+		$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
+	}).on('finish.countdown',function(){
+		alert("test");
+	})
+}
+//获取考试信息json
 function getExam(){
 	var data;
 	$.ajax({
 		url:"/api/getExam",
 		async:false,
+		type:"POST",
+		data:null,
+		dataType:"json",
 		success:function(resp){
-			data=resp;
+			data=JSON.parse(resp);
 		},
 		error:function(){
 			layer.msg("服务器出错");
 		}
 	})
-	return JSON.parse(data); 
+	//console.log(data);
+	return data; 
 };
 
+//获取考试题目
 function getQuestion(){
 	var qArr = new Array();
 	$(".questions").each(function(){
@@ -22,6 +64,7 @@ function getQuestion(){
 	});
 	return qArr;
 }
+//设置考试
 function setExam(data){
 
 	if($.cookie("examType")==0){
@@ -66,29 +109,32 @@ function setExam(data){
 			num++;
 		}
 	}
+	form.render();
 }	
 
+//检查考试是否开始
 function checkExam(){
 	var examType = $.cookie("examType");
-	$.ajax({
-		type:"POST",
-		url:"/api/examStart",
-		dataType:"json",
-		data:{
-			"examType":examType
-		},
-		async:false,
-		success:function(resp){
-			var data=JSON.parse(resp);
-			if(data["examStart"]==0){
-				layer.msg("考试还未开始");
-				//location.href="./student.html";
+	layui.use('layer', function(){
+		$.ajax({
+			type:"POST",
+			url:"/api/examStart",
+			dataType:"json",
+			data:{
+				"examType":examType
+			},
+			async:false,
+			success:function(resp){
+				var data=JSON.parse(resp);
+				if(data["examStart"]==0){
+					layer.msg("考试还未开始");
+				}
+			},
+			error:function(){
+				layer.msg("服务器出错");
 			}
-		},
-		error:function(){
-			layer.msg("服务器出错");
-		}
-	})
+		})
+	});
 }
 //获取input
 function getInput(data){
@@ -115,9 +161,9 @@ function getInput(data){
 //获取学生的答案
 function getAns(data){
 
-	var ans= new Array();
-
-	ans.push(data.Qtype);
+	var ans={} ;
+	
+	ans.Qtype=data.Qtype;
 	
 	var inputArr = getInput(data);
 	var tmp;
@@ -139,7 +185,7 @@ function getAns(data){
 			Qnum++;
 		}
 	}
-	ans.push(tmpArr);
+	ans.data=tmpArr;
 	return ans;
 }
 
@@ -149,22 +195,22 @@ function setAns(ans,data){
 	var inputArr = getInput(data);
 	var Qnum=0;
 	var tmp;
-	console.log(ans);
+	//console.log(ans);
 	for(i=0;i<3;i++){
 		tmp=data.Qtype[i];
 		for(j=0;j<tmp;j++){
-			console.log(tmp);
+			//console.log(tmp);
 			var item;
 			if(i<2)item=4;
 			else item=2;
 			for(z=0;z<item;z++){
-				console.log(Qnum+" "+inputArr[Qnum][z].attr("value"));
+				//console.log(Qnum+" "+inputArr[Qnum][z].attr("value"));
 				if(inputArr[Qnum][z].is(":checked")){
-					if((ans[Qnum][z]&parseInt(inputArr[Qnum][z].attr("value")))==0){
+					if((ans.data[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))==0){
 						inputArr[Qnum][z].parent().css("background-color","#f6bbbb")
 					}
 				}
-				if((ans[1][Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
+				if((ans.data[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
 					inputArr[Qnum][z].parent().css("background-color","#e8f7d2")
 				}
 			}	
@@ -174,29 +220,89 @@ function setAns(ans,data){
 }
 
 //提交按钮
-layui.use('form', function(){
-	var form =layui.form;
-	form.on('submit', function(){
-		var ans=getAns(examInfo);
-		$.ajax({
-			type:"POST",
-			url:"/api/submitExam",
-			dataType:"json",
-			data:JSON.stringify(ans),
-			async:false,
-			success:function(resp){
-				if(resp==null){
-					layer.msg("提交成功");
-				}else{
-					var ans=JSON.parse(resp);
-					setAns(ans,examInfo);
-				}
-			},
-			error:function(){
-				layer.msg("服务器出错");
+form.on('submit', function(){
+	var ans=getAns(examInfo);
+	console.log(form.val("examForm"));
+	$.ajax({
+		type:"POST",
+		url:"/api/submitExam",
+		dataType:"json",
+		data:JSON.stringify(ans),
+		async:false,
+		success:function(resp){
+			if(resp==null){
+				layer.msg("提交成功");
+				setTimeout(function(){
+					location.href="./student.html"
+				},100);
+			}else{
+				var ans=JSON.parse(resp);
+				//console.log(ans);
+				setAns(ans,examInfo);
+				goSide(0);
 			}
+		},
+		error:function(){
+			layer.msg("服务器出错");
+		}
+	})
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+});
 
-		})
-		return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-	});
+//保存已选到cookie
+function saveCookie(no,value){
+	saveChoice.choice[no]=value;	
+	console.log(saveChoice);
+	$.cookie("choice",JSON.stringify(saveChoice));
+}
+//加载cookie中的选项
+function loadChoice(){
+	if($.cookie("choice")==null)return false;
+	if(examInfo.examID!=saveChoice.examID)return false;
+	saveChoice=JSON.parse($.cookie("choice"));
+	console.log(saveChoice);
+	setChoice();
+}
+//渲染cookie中的选项
+function setChoice(){
+	data=examInfo;
+	var inputArr = getInput(data);
+	var Qnum=0;
+	var tmp;
+	for(i=0;i<3;i++){
+		tmp=data.Qtype[i];
+		for(j=0;j<tmp;j++){
+			var item;
+			if(i<2)item=4;
+			else item=2;
+			for(z=0;z<item;z++){
+				if((saveChoice.choice[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
+					inputArr[Qnum][z].prop('checked',true);
+				}
+			}	
+			Qnum++;
+		}
+	}
+	form.render();
+}
+
+//监听radio
+form.on('radio', function(data){
+	var dom=data.elem;
+	var no = Number(dom.name.substr(2));
+	var value = dom.value;
+	saveCookie(no,value);
+});  
+
+//监听checkbox
+form.on('checkbox', function(data){
+	var dom=data.elem;
+	var no = Number(dom.name.substr(2));
+	var value = saveChoice.choice[no];
+	if(dom.checked){
+		value+=parseInt(dom.value);
+	}else{
+		value-=parseInt(dom.value);
+	}
+	saveCookie(no,value);
 });
