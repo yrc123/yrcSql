@@ -17,7 +17,7 @@ function showTimeWindow(date){
 			area: ['260px', '100px'],
 			shade: 0,
 			maxmin:true,
-			offset:'rt' ,
+			offset:'rb' ,
 			content:'<div id="timeBar"></div>',
 			closeBtn:0,
 			success:function(){
@@ -29,7 +29,8 @@ function showTimeWindow(date){
 //设置倒计时
 function setTime(date){
 	$('#timeBar').countdown(date, function(event) {
-		$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
+		//$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
+		$(this).html(event.strftime('%H:%M:%S'));
 	}).on('finish.countdown',function(){
 		layer.msg("考试结束，自动提交");
 		setTimeout(function(){
@@ -239,9 +240,9 @@ function submitExam(){
 				},500);
 			}else{
 				var ans=JSON.parse(resp);
-				setAns(ans,examInfo);
 				$('#timeBar').countdown('stop')
 				setTimeout(function(){
+					setAns(ans,examInfo);
 					layer.closeAll();
 					goSide(0);
 				},500);
@@ -256,21 +257,29 @@ function submitExam(){
 
 //提交按钮
 form.on('submit', function(){
-	submitExam();
+	return submitExam();
 });
 
 //保存已选到cookie
 function saveCookie(no,value){
-	saveChoice.choice[no]=value;	
-	console.log(saveChoice);
-	$.cookie("choice",JSON.stringify(saveChoice));
+	choiceInCookie.examID=examInfo.examID;
+	choiceInCookie.choice[no]=value;	
+	$.cookie("choice",JSON.stringify(choiceInCookie));
 }
 //加载cookie中的选项
 function loadChoice(){
 	if($.cookie("choice")==null)return false;
-	if(examInfo.examID!=saveChoice.examID)return false;
-	saveChoice=JSON.parse($.cookie("choice"));
-	console.log(saveChoice);
+	console.log(examInfo.examID);
+	//console.log(choiceInCookie);
+	console.log(JSON.parse($.cookie("choice")));
+	choiceInCookie=JSON.parse($.cookie("choice"));
+	if(examInfo.examID!=choiceInCookie.examID){
+		choiceInCookie.examID=examInfo.examID;
+		choiceInCookie.choice=cArr;
+		$.cookie("choice",JSON.stringify(choiceInCookie));
+		console.log(choiceInCookie);
+		return false;
+	}
 	setChoice();
 }
 //渲染cookie中的选项
@@ -286,7 +295,7 @@ function setChoice(){
 			if(i<2)item=4;
 			else item=2;
 			for(z=0;z<item;z++){
-				if((saveChoice.choice[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
+				if((choiceInCookie.choice[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
 					inputArr[Qnum][z].prop('checked',true);
 				}
 			}	
@@ -308,7 +317,7 @@ form.on('radio', function(data){
 form.on('checkbox', function(data){
 	var dom=data.elem;
 	var no = Number(dom.name.substr(2));
-	var value = saveChoice.choice[no];
+	var value = choiceInCookie.choice[no];
 	if(dom.checked){
 		value+=parseInt(dom.value);
 	}else{
@@ -316,3 +325,14 @@ form.on('checkbox', function(data){
 	}
 	saveCookie(no,value);
 });
+
+//获取题目纵坐标
+ function getTop(dom){
+	var offset=dom.offsetTop;
+	return offset;
+ }
+//滚动到题目
+function scrollToExam(dom){
+	var pos = getTop(dom);
+	$("#main-info").scrollTop(pos);
+}

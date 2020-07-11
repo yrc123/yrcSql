@@ -187,7 +187,7 @@ form.on('submit(login)', function(){
 				layer.msg("登录成功");
 				setTimeout(function(){
 					location.href="./"+$.cookie("character")+".html";
-				},100);
+				},500);
 			}else if(data["loginCode"]==2){
 				$.cookie("hasNotChangePassword","ture");
 				displayChangePasswordWindow(0);
@@ -224,7 +224,7 @@ form.on('submit(changePassword)', function(){
 			layer.msg("密码修改成功");
 			setTimeout(function(){
 				location.href="./"+$.cookie("character")+".html";
-			},100);
+			},500);
 		},
 		error:function(){
 			layer.msg("服务器出错");

@@ -54,16 +54,16 @@ Mock.mock("/api/submitExam",function(Jans){
 
 Mock.mock("/api/getExam",function(){
 	var date = new Date();
-	date.setSeconds(date.getSeconds()+3);
+	date.setSeconds(date.getSeconds()+15*60);
 
 	var ts= date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+' ';
 	ts+=date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 
 	var id =Mock.Random.string(16);
 	var Qnum = [10,20,20]
-	id="test";
+	//id="same"
 	var data = {
-		examId:id,
+		examID:id,
 		date:ts,
 		Qtype:Qnum
 	}

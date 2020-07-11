@@ -9,10 +9,6 @@
 		<link rel="stylesheet" href="../assets/css/exam.css">
 		<script src="../assets/js/front-main.js"></script>
 
-		<!--测试用，记得注释掉-->
-		<script src="../assets/js/mock.js"></script>
-		<script src="../mockjs/mock.js"></script>
-
 	</head>
 	<body>
 		<div class="layui-layout layui-layout-admin">
@@ -121,8 +117,8 @@
 			for(i=0;i<examNum;i++){
 				cArr.push(0);
 			}
-			var saveChoice={
-				examID:examInfo.examID,
+			var choiceInCookie={
+				examID:null,
 				choice:cArr
 			}
 			loadChoice();
