@@ -31,7 +31,10 @@ function setTime(date){
 	$('#timeBar').countdown(date, function(event) {
 		$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
 	}).on('finish.countdown',function(){
-		alert("test");
+		layer.msg("考试结束，自动提交");
+		setTimeout(function(){
+			submitExam();
+		},500)
 	})
 }
 //获取考试信息json
@@ -218,9 +221,8 @@ function setAns(ans,data){
 		}
 	}
 }
-
-//提交按钮
-form.on('submit', function(){
+//提交考试
+function submitExam(){
 	var ans=getAns(examInfo);
 	console.log(form.val("examForm"));
 	$.ajax({
@@ -230,16 +232,19 @@ form.on('submit', function(){
 		data:JSON.stringify(ans),
 		async:false,
 		success:function(resp){
+			layer.msg("提交成功");
 			if(resp==null){
-				layer.msg("提交成功");
 				setTimeout(function(){
 					location.href="./student.html"
-				},100);
+				},500);
 			}else{
 				var ans=JSON.parse(resp);
-				//console.log(ans);
 				setAns(ans,examInfo);
-				goSide(0);
+				$('#timeBar').countdown('stop')
+				setTimeout(function(){
+					layer.closeAll();
+					goSide(0);
+				},500);
 			}
 		},
 		error:function(){
@@ -247,6 +252,11 @@ form.on('submit', function(){
 		}
 	})
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+}
+
+//提交按钮
+form.on('submit', function(){
+	submitExam();
 });
 
 //保存已选到cookie

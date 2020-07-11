@@ -54,7 +54,7 @@ Mock.mock("/api/submitExam",function(Jans){
 
 Mock.mock("/api/getExam",function(){
 	var date = new Date();
-	date.setMinutes(date.getMinutes()+60)
+	date.setSeconds(date.getSeconds()+3);
 
 	var ts= date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()+' ';
 	ts+=date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
