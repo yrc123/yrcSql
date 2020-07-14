@@ -28,3 +28,6 @@ p{
 .layui-form-label{
 	width:100px;
 }
+.ext-disabled{
+	color:#d2d2d2;
+}

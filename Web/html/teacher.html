@@ -57,22 +57,22 @@
 									<div class="layui-col-md4">
 										<label class="layui-form-label">选择班级</label>
 										<div class="layui-input-block">
-											<select lay-filter="selectInSetExam" lay-verify="required" id="selectClass"name="class" lay-verify="selectClass" lay-search>
+											<select lay-filter="selectInSetExam" lay-verify="required" id="selectClass"name="classID" lay-verify="selectClass" lay-search>
 											</select>   
 										</div>
 									</div>
 									<div class="layui-col-md5 ">
-										<label class="layui-form-label">选择时间</label>
+										<label id="selectTimeLabel" class="layui-form-label" disabled>选择时间</label>
 										<div class="layui-input-block">
-											<input lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间" lay-verify="required" type="text" class="layui-input" id="date">
+											<input id="selectTime" lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间"  type="text" class="layui-input" name="examTime"> 
 										</div>
 									</div>
 									<div class="layui-col-md3 " style="text-align: center">
-										<input type="radio" name="setExam" value=true title="添加考试" disabled>
-										<input type="radio" name="setExam" value=false title="删除考试" disabled>
+										<input type="radio" name="classStatus" value=true title="添加考试" disabled>
+										<input type="radio" name="classStatus" value=false title="删除考试" disabled>
 									</div>
 								</div>
-								<button  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;">确 认</button>
+								<button lay-submit  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;" lay-filter="submitSetExam">确 认</button>
 							</form>
 						</div>
 					</fieldset>
@@ -136,7 +136,7 @@
 			loadHeader(thisPage);
 			checkPermission(thisPage);
 			laydate.render({ 
-				elem: '#date'
+				elem: '#selectTime'
 				,type: 'datetime'
 				,range:'~'  //或 range: '~' 来自定义分割字符
 				,format: 'yyyy/MM/dd HH:mm:ss'

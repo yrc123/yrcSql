@@ -106,3 +106,11 @@ Mock.mock("/api/getClassInExam",function(){
 	res.data=data;
 	return JSON.stringify(res);
 });
+
+Mock.mock("/api/setClassInExam",function(req){
+	var data = Mock.mock({
+		"statusCode|0-1":1,
+	})
+	console.log(data);
+	return JSON.stringify(data);
+});

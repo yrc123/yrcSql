@@ -32,7 +32,10 @@ function setTime(date){
 		//$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
 		$(this).html(event.strftime('%H:%M:%S'));
 	}).on('finish.countdown',function(){
-		layer.msg("考试结束，自动提交");
+		layer.msg("考试结束，自动提交",{
+				shade:0.3,
+				time:500
+		});
 		setTimeout(function(){
 			submitExam();
 		},500)
@@ -51,7 +54,10 @@ function getExam(){
 			data=JSON.parse(resp);
 		},
 		error:function(){
-			layer.msg("服务器出错");
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
 		}
 	})
 	//console.log(data);
@@ -131,11 +137,17 @@ function checkExam(){
 			success:function(resp){
 				var data=JSON.parse(resp);
 				if(data["examStart"]==0){
-					layer.msg("考试还未开始");
+					layer.msg("考试还未开始",{
+				shade:0.3,
+				time:500
+					});
 				}
 			},
 			error:function(){
-				layer.msg("服务器出错");
+				layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+				});
 			}
 		})
 	});
@@ -233,7 +245,10 @@ function submitExam(){
 		data:JSON.stringify(ans),
 		async:false,
 		success:function(resp){
-			layer.msg("提交成功");
+			layer.msg("提交成功",{
+				shade:0.3,
+				time:500
+			});
 			if(resp==null){
 				setTimeout(function(){
 					location.href="./student.html"
@@ -249,7 +264,10 @@ function submitExam(){
 			}
 		},
 		error:function(){
-			layer.msg("服务器出错");
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
 		}
 	})
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
