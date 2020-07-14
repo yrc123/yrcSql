@@ -18,8 +18,7 @@
 
 ## 函数约定
 
-- [ ] ### login
-
+### login
 
 - 参数
 
@@ -36,14 +35,13 @@
 
 - 返回值
 
-
   - ```json
     {
-        "loginCode":0|1|2
+        "statusCode":0|1|2|3
     }
     ```
 
-  - loginCode：代表登录状态，0代表登录失败，1代表登录成功，2代表第一次登录未修改密码
+  - loginCode：代表登录状态，0代表登录失败，1代表登录成功，2代表第一次登录未修改密码，3代表重复登录
 
 
 - 功能
@@ -55,8 +53,7 @@
   - 依据用户组转跳页面
   - 对于第一次登录的用户，其只能进行修改密码的操作，其他的操作可认为其未登录
 
-- [ ] ### logout
-
+### logout
 
 - 参数
   
@@ -71,7 +68,7 @@
   - 后端注销userID
   - 转跳到index.html
 
-- [ ] ### changePassword
+### changePassword
 
 - 参数
 
@@ -91,8 +88,7 @@
 
   - 设置新密码
 
-
-- [ ] ### examStart
+### examStart
 
 - 参数
 
@@ -119,7 +115,7 @@
 
   - 根据考试类型，返回对应考试状态
 
-  - [ ] ### getExam
+### getExam
 
 - 参数
 
@@ -152,21 +148,21 @@
             ...
         ]
     }
-  ```
+    ```
     
   - examID:考卷的唯一id，为随机值
-
+  
   - date：代表考试剩余的时间,返回结束时的时间string "YYYY/MM/DD hh:mm:ss"
-
+  
   - Qtype：分别代表单选，多选，判断的题目数量
-
+  
   - 不同类型的题目有不同格式，data里必须严格按照单选，多选，判断的顺序排列
 
 - 功能
 
   - 返回考试试题
 
-- [ ] ### submitExam
+### submitExam
 
 - 参数
 
@@ -205,6 +201,76 @@
   - 提交学生选项
   - 如果是模拟考则返回答案，正式考试返回null
   - 一定要用服务器数据来判断是否是模拟考，不能用cookie
+  
+### getClassInExam
+
+- 参数
+
+  - void
+
+- 返回
+
+  - ```json
+    {
+        "classNumber":number,
+        "data":[
+            {
+                "className":string,
+                "classID":sting,
+                "classStatus":bool,
+                "examTime":string
+            }
+            ...
+        ]
+    }
+    ```
+
+  - classNumber：班级数量
+
+  - className：班级名称，如"软件工程三班"
+
+  - classID：班级唯一id
+
+  - classStatus：班级状态，是否在考试中，返回bool值
+
+  - examTime：如果班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+
+- 功能
+  
+  - 查询对应教师账号的所有班级考试状态
+
+### setClassInExam
+
+- 参数
+
+  - ```json
+    {
+        "classID":sting,
+        "classStatus":bool,
+        "examTime":string
+    }
+    ```
+
+  - classID：班级唯一id
+
+  - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态
+
+  - examTime：如果设置班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+
+- 返回
+
+  - ```json
+    {
+        "statusCode":0|1
+    }
+    ```
+
+  - statusCode：0设置失败，1设置成功
+
+- 功能
+
+  - 设置指定班级的考试时间范围
+  - 如果该班级考试已开放，再次设置考试时间应当返回设置失败
 
 ## 前端需求
 

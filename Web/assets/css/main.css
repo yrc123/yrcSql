@@ -25,3 +25,6 @@ p{
 	line-height:25px;
 	color:#666;
 }
+.layui-form-label{
+	width:100px;
+}

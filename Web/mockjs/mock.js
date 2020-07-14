@@ -1,8 +1,8 @@
 Mock.mock("/api/login",function(){
 	var data = Mock.mock({
-		"loginCode|0-2":1,
+		"statusCode|0-2":1,
 	})
-	if(data["loginCode"]!=0){
+	if(data["statusCode"]!=0){
 		$.cookie("userID",Mock.Random.string(16));
 		$.cookie("username",Mock.Random.cname());
 		$.cookie("character","student");
@@ -85,4 +85,24 @@ Mock.mock("/api/getExam",function(){
 	data["data"]=Darr;
 	
 	return JSON.stringify(data);
+});
+
+Mock.mock("/api/getClassInExam",function(){
+	var res={};
+	var num=10;
+	var data=new Array();
+	for(i=0;i<num;i++){
+		var Tdata=Mock.mock({
+			"classStatus|1":true
+		})
+		Tdata.className = "班级"+Mock.Random.cword('一二三四五六七八九十',1,2);
+		Tdata.classID = Mock.Random.string(16);
+		if(Tdata.classStatus){
+			Tdata.examTime = Mock.Random.date('yyyy/MM/dd')+" "+Mock.Random.time('HH:mm:ss')+" ~ "+Mock.Random.date('yyyy/MM/dd')+" "+Mock.Random.time('HH:mm:ss');
+		}
+		data.push(Tdata);
+	}
+	res.classNumber=num;
+	res.data=data;
+	return JSON.stringify(res);
 });
