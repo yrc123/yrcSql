@@ -1,6 +1,9 @@
 var form =layui.form;
 var layer =layui.layer;
 var element =layui.element;
+var laydate = layui.laydate;
+var transfer = layui.transfer;
+var laytpl = layui.laytpl;
 //加载皮肤
 	var layer = layui.layer;
 	layer.config({
@@ -183,12 +186,12 @@ form.on('submit(login)', function(){
 			console.log(data)
 			if(data["loginCode"]==0){
 				layer.msg("用户名或密码错误");
-			}else if(data["loginCode"]==1){
+			}else if(data["statusCode"]==1){
 				layer.msg("登录成功");
 				setTimeout(function(){
 					location.href="./"+$.cookie("character")+".html";
 				},500);
-			}else if(data["loginCode"]==2){
+			}else if(data["statusCode"]==2){
 				$.cookie("hasNotChangePassword","ture");
 				displayChangePasswordWindow(0);
 			}	
