@@ -245,12 +245,18 @@
 
   - ```json
     {
-        "classID":sting,
-        "classStatus":bool,
-        "examTime":string
+        "classNumber":number,
+        "data":[
+            {
+                "classID":sting,
+                "classStatus":bool,
+              "examTime":string
+            }
+            ...
+        ]
     }
     ```
-
+    
   - classID：班级唯一id
 
   - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态
@@ -286,7 +292,7 @@
 
 ### 考试页面
 
-- [x] 考试倒计时
+- [ ] 考试倒计时
 - [x] 时间到自动提交
 - [x] 提交
 - [x] 保存未提交选项
