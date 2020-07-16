@@ -245,12 +245,18 @@
 
   - ```json
     {
-        "classID":sting,
-        "classStatus":bool,
-        "examTime":string
+        "classNumber":number,
+        "data":[
+            {
+                "classID":sting,
+                "classStatus":bool,
+              "examTime":string
+            }
+            ...
+        ]
     }
     ```
-
+    
   - classID：班级唯一id
 
   - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态

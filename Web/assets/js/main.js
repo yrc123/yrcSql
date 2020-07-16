@@ -4,6 +4,7 @@ var element =layui.element;
 var laydate = layui.laydate;
 var transfer = layui.transfer;
 var laytpl = layui.laytpl;
+var table = layui.table;
 //加载皮肤
 var layer = layui.layer;
 layer.config({

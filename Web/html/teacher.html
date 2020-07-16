@@ -26,56 +26,43 @@
 			<div id="main-info" class="layui-body main-info" >
 				<!-- 内容主体区域 -->
 				<div class="side-item">
-					<fieldset class="layui-elem-field ">
-						<legend>考试管理</legend>
-						<div  class="layui-field-box ">
+					<!--<fieldset class="layui-elem-field ">-->
+						<!--<legend>考试管理</legend>-->
+						<!--<div  class="layui-field-box">-->
 							<fieldset class="layui-elem-field layui-field-title">
 								<legend>考试信息</legend>
 							</fieldset>
-							<table class="layui-table">
-								<colgroup>
-									<col width="150">
-									<col width="200">
-									<col>
-								</colgroup>
-								<thead>
-									<tr>
-										<th>班级</th>
-										<th>考试状态</th>
-										<th>考试时间</th>
-									</tr> 
-								</thead >
-								<tbody id="classInfo">
-								</tbody>
-							</table>
-							<form class="layui-form" action="" lay-filter="setExam">
-								<fieldset class="layui-elem-field layui-field-title" style="margin-top:20px">
-									<legend>修改考试</legend>
-								</fieldset>
+							<!--<div style="width:99%">-->
+								<table id="setExamTable" class="layui-table" lay-filter="examTable"></table>
+							<!--</div>-->
+							<!--<form class="layui-form" action="" lay-filter="setExam">-->
+								<!--<fieldset class="layui-elem-field layui-field-title" style="margin-top:20px">-->
+									<!--<legend>修改考试</legend>-->
+								<!--</fieldset>-->
 
-								<div class="layui-form-item layui-row layui-col-space10">
-									<div class="layui-col-md4">
-										<label class="layui-form-label">选择班级</label>
-										<div class="layui-input-block">
-											<select lay-filter="selectInSetExam" lay-verify="required" id="selectClass"name="classID" lay-verify="selectClass" lay-search>
-											</select>   
-										</div>
-									</div>
-									<div class="layui-col-md5 ">
-										<label id="selectTimeLabel" class="layui-form-label" disabled>选择时间</label>
-										<div class="layui-input-block">
-											<input id="selectTime" lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间"  type="text" class="layui-input" name="examTime"> 
-										</div>
-									</div>
-									<div class="layui-col-md3 " style="text-align: center">
-										<input type="radio" name="classStatus" value=true title="添加考试" disabled>
-										<input type="radio" name="classStatus" value=false title="删除考试" disabled>
-									</div>
-								</div>
-								<button lay-submit  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;" lay-filter="submitSetExam">确 认</button>
-							</form>
-						</div>
-					</fieldset>
+								<!--<div class="layui-form-item layui-row layui-col-space10">-->
+									<!--<div class="layui-col-md4">-->
+										<!--<label class="layui-form-label">选择班级</label>-->
+										<!--<div class="layui-input-block">-->
+											<!--<select lay-filter="selectInSetExam" lay-verify="required" id="selectClass"name="classID" lay-verify="selectClass" lay-search>-->
+											<!--</select>   -->
+										<!--</div>-->
+									<!--</div>-->
+									<!--<div class="layui-col-md5 ">-->
+										<!--<label id="selectTimeLabel" class="layui-form-label" disabled>选择时间</label>-->
+										<!--<div class="layui-input-block">-->
+											<!--<input id="selectTime" lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间"  type="text" class="layui-input" name="examTime"> -->
+										<!--</div>-->
+									<!--</div>-->
+									<!--<div class="layui-col-md3 " style="text-align: center">-->
+										<!--<input type="radio" name="classStatus" value=true title="添加考试" disabled>-->
+										<!--<input type="radio" name="classStatus" value=false title="删除考试" disabled>-->
+									<!--</div>-->
+								<!--</div>-->
+								<!--<button lay-submit  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;" lay-filter="submitSetExam">确 认</button>-->
+							<!--</form>-->
+						<!--</div>-->
+					<!--</fieldset>-->
 				</div>
 
 				<div class="side-item layui-hide">
@@ -115,14 +102,27 @@
 				军事理论考试系统 by 
 			</div>
 		</div>
-		<script id="tableTemplate" type="text/html">
-			<tr>
-				<td>{{ d.className }}</td>
-				<td>{{ d.classStatus }}</td>
-				<td>{{ d.examTime }}</td>
-			</tr>
-		</script>
 
+		<div id="selectExamWindow" class="layui-hide">
+			<form class="layui-form" action="" lay-filter="setExam">
+				<div style="width:470px; margin-top:20px;">
+					<label id="selectTimeLabel" class="layui-form-label" disabled>选择时间</label>
+					<div class="layui-input-block" style="padding-bottom:5px">
+						<input id="selectTime" lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间"  type="text" class="layui-input" name="examTime"> 
+					</div>
+					<button lay-submit  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;" lay-filter="submitSetExam">确 认</button>
+				</div>
+			</form>
+		</div>
+
+		<script type="text/html" id="examBar">
+			<a href="#" class="add layui-icon layui-icon-add-circle" style="font-size: 30px;" lay-event="examAdd"></a>
+			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="examSub"></a>
+		</script>
+		<script type="text/html" id="examToolbar">
+			<div class="layui-inline" lay-event="examAddMulti"><i class="layui-icon layui-icon-addition"></i></div>
+			<div class="layui-inline" lay-event="examSubMulti"><i class="layui-icon layui-icon-subtraction"></i></div>
+		</script>
 		<script id="selectTemplate" type="text/html">
 			<option value="{{d.classID}}">{{d.className}}</option>
 		</script>
@@ -141,9 +141,8 @@
 				,range:'~'  //或 range: '~' 来自定义分割字符
 				,format: 'yyyy/MM/dd HH:mm:ss'
 			});
-			var classInfo = getClassInExam();
-			setTable(classInfo);
-			setSelect(classInfo);
+	//		var classInfo = getClassInExam();
+			//setSelect(classInfo);
 		</script> 
 	</body>
 </html>

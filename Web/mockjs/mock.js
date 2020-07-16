@@ -89,7 +89,7 @@ Mock.mock("/api/getExam",function(){
 
 Mock.mock("/api/getClassInExam",function(){
 	var res={};
-	var num=10;
+	var num=300;
 	var data=new Array();
 	for(i=0;i<num;i++){
 		var Tdata=Mock.mock({
@@ -107,10 +107,11 @@ Mock.mock("/api/getClassInExam",function(){
 	return JSON.stringify(res);
 });
 
-Mock.mock("/api/setClassInExam",function(req){
+Mock.mock("/api/setClassInExam",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	var data = Mock.mock({
-		"statusCode|0-1":1,
+		"statusCode|0":1,
 	})
-	console.log(data);
 	return JSON.stringify(data);
 });
