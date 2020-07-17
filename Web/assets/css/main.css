@@ -28,3 +28,21 @@ p{
 .layui-form-label{
 	width:100px;
 }
+.ext-disabled{
+	color:#d2d2d2;
+}
+.add:hover{
+	color:#5FB878;
+}
+.sub:hover{
+	color:#FF5722;
+}
+
+.add{
+	color:#CCC;
+	transition:0.3s ease;
+}
+.sub{
+	color:#CCC;
+	transition:0.3s ease;
+}

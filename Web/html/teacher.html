@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>军事理论考试系统</title>
+
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<script src="../assets/js/front-main.js"></script>
+
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin">
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="left-nav">
+						<li  class="layui-nav-item layui-this"><a type="0" href="#">考试管理</a></li>
+						<li  class="layui-nav-item"><a type="1" href="#">班级管理</a></li>
+						<li  class="layui-nav-item"><a type="2" href="#">学生管理</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="main-info" class="layui-body main-info" >
+				<!-- 内容主体区域 -->
+				<div class="side-item">
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>考试信息</legend>
+					</fieldset>
+					<table id="setExamTable" class="layui-table" lay-filter="examTable"></table>
+				</div>
+
+				<div class="side-item layui-hide">
+
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>班级信息</legend>
+					</fieldset>
+					<table id="setClassTable" class="layui-table" lay-filter="classTable"></table>
+				</div>
+
+				<div class="side-item layui-hide">
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>学生成绩</legend>
+					</fieldset>
+					<form class="layui-form">
+						<div class=" layui-form-item layui-row layui-col-space10">
+							<div class="layui-col-md8">
+								<label class="layui-form-label">选择班级</label>
+								<div class="layui-input-block">
+									<select  lay-verify="required" id="selectClass" name="classID" lay-verify="selectClass" lay-search>
+									</select>   
+								</div>
+							</div>
+							<div class="layui-col-md2 layui-col-md-offset1">
+								<button lay-submit class="layui-btn layui-btn-lg layui-btn-normal layui-btn-fluid" style="height:38px;" lay-filter="submitClassID" >确 认</button>
+							</div>
+						</div>
+					</form>
+
+					<table id="studentTable" class="layui-table" lay-filter="studentTable"></table>
+				</div>
+
+			</div>
+
+			<div class="layui-footer ">
+				<!-- 底部固定区域 -->
+				军事理论考试系统 by 
+			</div>
+		</div>
+
+		<div id="selectExamWindow" class="layui-hide">
+			<form class="layui-form" action="" lay-filter="setExam">
+				<div style="width:470px; margin-top:20px;">
+					<label id="selectTimeLabel" class="layui-form-label" disabled>选择时间</label>
+					<div class="layui-input-block" style="padding-bottom:5px">
+						<input id="selectTime" lay-filter="dateInSetExam" autocomplete="off" placeholder="请选择考试时间"  type="text" class="layui-input" name="examTime"> 
+					</div>
+					<button lay-submit  class="layui-btn layui-btn-lg layui-btn-normal" style="margin: 10px auto;display:block;width: 30%;" lay-filter="submitSetExam">确 认</button>
+				</div>
+			</form>
+		</div>
+
+		<div id="uploadWindow" class="layui-field-box layui-hide" style="text-align:center;padding:0;">
+			<div style="display:inline-block;">
+				<div class="layui-upload-drag" id="uploadSpace" style="padding-bottom:15px; width:400px; height:200px; padding-top:60px">
+					<i class="layui-icon layui-icon-upload-drag"></i>
+					<p>点击上传，或将文件拖拽到此处</p>
+					<div id="uploadFileName" class="layui-hide">
+						<hr>
+						<p style="font-size: 17px;font-weight: 300;line-height: 25px;color: #666;"></p>
+					</div>
+				</div>
+				<div style="padding:10px; border:1px dashed #e2e2e2;">
+					<input id="inputClassName" type="text" name="className" required  lay-verify="required" placeholder="请输入要上传的班级名" autocomplete="off" class="layui-input" style="margin-bottom:10px">
+					<button id="startUpload" class="layui-btn layui-btn-normal layui-btn-fluid" id="startUpload"  >开始上传</button>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/html" id="examBar">
+			<a href="#" class="add layui-icon layui-icon-add-circle" style="font-size: 30px;" lay-event="examAdd"></a>
+			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="examSub"></a>
+		</script>
+
+		<script type="text/html" id="examToolbar">
+			<div class="layui-inline" lay-event="examAddMulti"><i class="layui-icon layui-icon-addition"></i></div>
+			<div class="layui-inline" lay-event="examSubMulti"><i class="layui-icon layui-icon-subtraction"></i></div>
+		</script>
+
+		<script type="text/html" id="classBar">
+			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="classSub"></a>
+		</script>
+
+		<script type="text/html" id="classToolbar">
+			<p style="display:inline">班级表    </p>
+			<div style="display:inline" class="layui-inline" lay-event="classAdd"><i class="layui-icon layui-icon-addition"></i></div>
+		</script>
+
+		<script id="selectTemplate" type="text/html">
+			<option value="{{d.classID}}">{{d.className}}</option>
+		</script>
+
+		<script src="../assets/js/back-main.js"></script>
+		<script src="../assets/js/teacher.js"></script>
+		<script> 
+			$(document).ready(function() {
+			});
+			var thisPage="teacher";
+			loadHeader(thisPage);
+			checkPermission(thisPage);
+			laydate.render({ 
+				elem: '#selectTime'
+				,type: 'datetime'
+				,range:'~'  //或 range: '~' 来自定义分割字符
+				,format: 'yyyy/MM/dd HH:mm:ss'
+			});
+			var classInfo = getClassInExam();
+			setSelect(classInfo);
+		</script> 
+	</body>
+</html>

@@ -4,11 +4,13 @@ var element =layui.element;
 var laydate = layui.laydate;
 var transfer = layui.transfer;
 var laytpl = layui.laytpl;
+var table = layui.table;
+var upload = layui.upload;
 //加载皮肤
-	var layer = layui.layer;
-	layer.config({
-		extend:'skin/LoginPopup/style.css'
-	});
+var layer = layui.layer;
+layer.config({
+	extend:'skin/LoginPopup/style.css',
+});
 //监听侧边栏
 	element.on('nav(left-nav)', function(elem){
 		var sideArr = document.querySelectorAll(".side-item");
@@ -185,9 +187,15 @@ form.on('submit(login)', function(){
 			var data=JSON.parse(resp);
 			console.log(data)
 			if(data["loginCode"]==0){
-				layer.msg("用户名或密码错误");
+				layer.msg("用户名或密码错误",{
+					shade:0.3,
+					time:500
+				});
 			}else if(data["statusCode"]==1){
-				layer.msg("登录成功");
+				layer.msg("登录成功",{
+					shade:0.3,
+					time:500
+				});
 				setTimeout(function(){
 					location.href="./"+$.cookie("character")+".html";
 				},500);
@@ -197,7 +205,10 @@ form.on('submit(login)', function(){
 			}	
 		},
 		error:function(){
-			layer.msg("服务器出错");
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
 		}
 
 	})
@@ -210,7 +221,10 @@ form.on('submit(changePassword)', function(){
 	var newPasswordTwins=$("#newPasswordTwins").val();
 	//md5加密
 	if(newPassword!=newPasswordTwins){
-		layer.msg("两次输入的密码不一致")
+		layer.msg("两次输入的密码不一致",{
+			shade:0.3,
+			time:500
+		})
 		return false;
 	}
 	newPassword=$.md5(newPassword);
@@ -224,14 +238,30 @@ form.on('submit(changePassword)', function(){
 		async:false,
 		success:function(){
 			$.removeCookie("hasNotChangePassword");
-			layer.msg("密码修改成功");
+			layer.msg("密码修改成功",{
+				shade:0.3,
+				time:500
+			});
 			setTimeout(function(){
 				location.href="./"+$.cookie("character")+".html";
 			},500);
 		},
 		error:function(){
-			layer.msg("服务器出错");
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
 		}
 	})
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 });
+
+//显示第no个侧边栏的内容
+function goSide(no){
+	var sideArr = document.querySelectorAll(".side-item");
+	var len = sideArr.length;
+	for(i=0;i<len;i++){
+		sideArr[i].classList.add("layui-hide");
+	}
+	sideArr[no].classList.remove("layui-hide");
+}

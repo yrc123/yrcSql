@@ -89,7 +89,7 @@ Mock.mock("/api/getExam",function(){
 
 Mock.mock("/api/getClassInExam",function(){
 	var res={};
-	var num=10;
+	var num=300;
 	var data=new Array();
 	for(i=0;i<num;i++){
 		var Tdata=Mock.mock({
@@ -103,6 +103,58 @@ Mock.mock("/api/getClassInExam",function(){
 		data.push(Tdata);
 	}
 	res.classNumber=num;
+	res.data=data;
+	return JSON.stringify(res);
+});
+
+Mock.mock("/api/setClassInExam",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
+	var data = Mock.mock({
+		"statusCode|0":1,
+	})
+	return JSON.stringify(data);
+});
+
+Mock.mock("/api/uploadStudentList",function(req){
+	//console.log(req.body.get("className"));
+	console.log(req.body.get("studentForm"));
+	var data = Mock.mock({
+		"statusCode|0":1,
+	})
+	//console.log(JSON.stringify(data));
+	return JSON.stringify(data);
+});
+
+Mock.mock("/api/delectClass",function(Jreq){
+	req = JSON.parse(Jreq.body);
+	console.log(req);
+	var data = Mock.mock({
+		"statusCode|0":1,
+	})
+	//console.log(JSON.stringify(data));
+	return JSON.stringify(data);
+});
+
+Mock.mock("/api/getStudentInfo",function(Jreq){
+	var res={};
+	req = JSON.parse(Jreq.body);
+	console.log(req.classID);
+	var num;
+	if(req.classID=="ALL"){
+		num=200;
+	}else{
+		num=50;
+	}
+	var data=new Array();
+	for(i=0;i<num;i++){
+		var Tdata={};
+		Tdata.studentName = Mock.Random.name();
+		Tdata.studentNo = Mock.Random.integer(100000000,999999999);
+		Tdata.studentScore = Mock.Random.integer(30,100);
+		data.push(Tdata);
+	}
+	res.studentNumber=num;
 	res.data=data;
 	return JSON.stringify(res);
 });

@@ -122,19 +122,31 @@
 					success:function(resp){
 						var data=JSON.parse(resp);
 						if(data["examStart"]==0){
-							layer.msg("考试还未开始");
+							layer.msg("考试还未开始",{
+								shade:0.3,
+								time:500
+							});
 						}else{
 							if(value==0){
-								layer.msg("开始正式考试");
+								layer.msg("开始正式考试",{
+									shade:0.3,
+									time:500
+								});
 							}else{
-								layer.msg("开始模拟考试");
+								layer.msg("开始模拟考试",{
+									shade:0.3,
+									time:500
+								});
 							} 
 							$.cookie("examType",value);
 							location.href="./exam.html";
 						}
 					},
 					error:function(){
-							layer.msg("服务器出错");
+						layer.msg("服务器出错",{
+							shade:0.3,
+							time:500
+						});
 					}
 				})
 			}
