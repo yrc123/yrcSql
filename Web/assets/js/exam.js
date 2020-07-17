@@ -1,13 +1,4 @@
 
-//显示第no个侧边栏的内容
-function goSide(no){
-	var sideArr = document.querySelectorAll(".side-item");
-	var len = sideArr.length;
-	for(i=0;i<len;i++){
-		sideArr[i].classList.add("layui-hide");
-	}
-	sideArr[no].classList.remove("layui-hide");
-}
 
 //显示计时器窗口
 function showTimeWindow(date){

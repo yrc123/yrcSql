@@ -278,6 +278,61 @@
   - 设置指定班级的考试时间范围
   - 如果该班级考试已开放，再次设置考试时间应当返回设置失败
 
+### uploadClassForm
+
+- 参数
+
+  - ```json
+    //受到layui限制，数据格式为FormData
+    "studentForm":上传的文件
+    "className":上传的班级名称
+    ```
+
+- 返回
+
+  - ```json
+    {
+        "statusCode":0|1
+    }
+    ```
+
+  - statusCode：0设置失败，1设置成功
+
+  - 对于参数不够返回失败
+
+- 功能
+
+  - 上传班级学生名单，为xls或xlsx
+
+### delectClass
+
+- 参数
+
+  - ```json
+    {
+        "classNumber":number,
+        "data":[string,string,...]
+    }
+    ```
+
+  - classNumber:班级数量
+
+  - data：一个包含删除班级classID的数组
+
+- 返回
+
+  - ```json
+    {
+        "statusCode":0|1
+    }
+    ```
+
+  - statusCode：0设置失败，1设置成功
+
+- 功能
+
+  - 删除指定班级
+
 ## 前端需求
 
 ### 主页|index.html
@@ -307,9 +362,9 @@
 ### 教师界面
 
 - [x] 修改密码
-- [ ] 允许指定班级考试
-- [ ] 结束指定班级考试
-- [ ] 上传指定班级学生名单
+- [x] 允许指定班级考试
+- [x] 结束指定班级考试
+- [x] 上传指定班级学生名单
 - [ ] 导出指定班级成绩
 - [ ] 删除指定班级
 

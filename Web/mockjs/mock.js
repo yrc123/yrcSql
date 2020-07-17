@@ -115,3 +115,23 @@ Mock.mock("/api/setClassInExam",function(Jreq){
 	})
 	return JSON.stringify(data);
 });
+
+Mock.mock("/api/uploadStudentList",function(req){
+	//console.log(req.body.get("className"));
+	console.log(req.body.get("studentForm"));
+	var data = Mock.mock({
+		"statusCode|0":1,
+	})
+	//console.log(JSON.stringify(data));
+	return JSON.stringify(data);
+});
+
+Mock.mock("/api/delectClass",function(Jreq){
+	req = JSON.parse(Jreq.body);
+	console.log(req);
+	var data = Mock.mock({
+		"statusCode|0":1,
+	})
+	//console.log(JSON.stringify(data));
+	return JSON.stringify(data);
+});

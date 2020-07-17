@@ -5,6 +5,7 @@ var laydate = layui.laydate;
 var transfer = layui.transfer;
 var laytpl = layui.laytpl;
 var table = layui.table;
+var upload = layui.upload;
 //加载皮肤
 var layer = layui.layer;
 layer.config({
@@ -254,3 +255,13 @@ form.on('submit(changePassword)', function(){
 	})
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 });
+
+//显示第no个侧边栏的内容
+function goSide(no){
+	var sideArr = document.querySelectorAll(".side-item");
+	var len = sideArr.length;
+	for(i=0;i<len;i++){
+		sideArr[i].classList.add("layui-hide");
+	}
+	sideArr[no].classList.remove("layui-hide");
+}
