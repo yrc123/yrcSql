@@ -1,4 +1,5 @@
 var selectSetExamData;
+var getClassID="ALL";
 
 //获取班级信息
 function getClassInExam(){
@@ -360,3 +361,66 @@ table.on('toolbar(classTable)', function(obj){
 });
 
 
+//设置select选项
+function setSelect(data){
+	var len = data.classNumber;
+	var selectTemplate = $("#selectTemplate");
+	var selectClass = $("#selectClass");
+	//console.log(selectClass.html());
+	selectClass.html('<option value="ALL" >ALL</option>');
+	for(i=0;i<len;i++){
+		var tdata={
+			className:data.data[i].className,
+			classID:data.data[i].classID,
+		};
+		//console.log(tdata);
+		laytpl(selectTemplate[0].innerHTML).render(tdata,function(html){
+			//console.log(html);
+			selectClass.append(html);
+		})
+	}
+	form.render('select');
+}
+
+//监听获取班级提交
+form.on('submit(submitClassID)', function(data){
+	getClassID = data.field.classID;
+	console.log(getClassID);
+	table.reload("studentTable",{
+		where: { 
+			classID:getClassID,
+		}
+	});
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+});
+
+//设置班级管理的table
+table.render({
+	elem:"#studentTable",
+	cols:[[
+		{field:"studentNo",title:"学号",width:"33%",sort:true},
+		{field:"studentName",title:"姓名",width:"33%"},
+		{field:"studentScore",title:"成绩",width:"33%"},
+	]],
+	url:"/api/getStudentInfo",
+	method:"POST",
+	contentType:'application/json',
+	where:{
+		classID:getClassID
+	},
+	parseData: function(res){ //res 即为原始返回的数据
+		res = JSON.parse(res);
+		var data = {
+			"code": 0, //解析接口状态
+			"msg": res.message, //解析提示文本
+			"count": res.total, //解析数据长度
+			"data":res.data
+		};
+		data.data=res.data;
+		return data; 
+	},
+	toolbar:"<p>成绩表</p>", //开启头部工具栏，并为其绑定左侧模板
+    defaultToolbar: ['filter', 'exports', 'print'],
+	title:"学生成绩表",
+	height: 'full-340',
+});

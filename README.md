@@ -333,6 +333,43 @@
 
   - 删除指定班级
 
+### getStudentInfo
+
+- 参数
+
+  - ```json
+    {
+        "classID":string,
+    }
+    ```
+
+  - classID：要获取的学生信息的班级id
+
+- 返回
+
+  - ```json
+    {
+        "studentNumber":number,
+        "data":[
+            {
+                "studentName":string,
+                "studentNo":number,
+                "studentScore":number,
+            }
+        ]
+    }
+    ```
+
+  - studetnName:代表学生姓名
+
+  - studentNo：代表学生学号
+
+  - studentScore：代表学生成绩
+
+- 功能
+
+  - 获取指定班级的学生信息
+
 ## 前端需求
 
 ### 主页|index.html
@@ -366,7 +403,7 @@
 - [x] 结束指定班级考试
 - [x] 上传指定班级学生名单
 - [ ] 导出指定班级成绩
-- [ ] 删除指定班级
+- [x] 删除指定班级
 
 ### 管理员界面
 

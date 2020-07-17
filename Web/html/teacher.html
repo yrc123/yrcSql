@@ -44,6 +44,20 @@
 					<fieldset class="layui-elem-field layui-field-title">
 						<legend>学生成绩</legend>
 					</fieldset>
+					<form class="layui-form">
+						<div class=" layui-form-item layui-row layui-col-space10">
+							<div class="layui-col-md8">
+								<label class="layui-form-label">选择班级</label>
+								<div class="layui-input-block">
+									<select  lay-verify="required" id="selectClass" name="classID" lay-verify="selectClass" lay-search>
+									</select>   
+								</div>
+							</div>
+							<div class="layui-col-md2 layui-col-md-offset1">
+								<button lay-submit class="layui-btn layui-btn-lg layui-btn-normal layui-btn-fluid" style="height:38px;" lay-filter="submitClassID" >确 认</button>
+							</div>
+						</div>
+					</form>
 
 					<table id="studentTable" class="layui-table" lay-filter="studentTable"></table>
 				</div>
@@ -122,8 +136,8 @@
 				,range:'~'  //或 range: '~' 来自定义分割字符
 				,format: 'yyyy/MM/dd HH:mm:ss'
 			});
-	//		var classInfo = getClassInExam();
-			//setSelect(classInfo);
+			var classInfo = getClassInExam();
+			setSelect(classInfo);
 		</script> 
 	</body>
 </html>

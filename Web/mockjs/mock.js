@@ -135,3 +135,26 @@ Mock.mock("/api/delectClass",function(Jreq){
 	//console.log(JSON.stringify(data));
 	return JSON.stringify(data);
 });
+
+Mock.mock("/api/getStudentInfo",function(Jreq){
+	var res={};
+	req = JSON.parse(Jreq.body);
+	console.log(req.classID);
+	var num;
+	if(req.classID=="ALL"){
+		num=200;
+	}else{
+		num=50;
+	}
+	var data=new Array();
+	for(i=0;i<num;i++){
+		var Tdata={};
+		Tdata.studentName = Mock.Random.name();
+		Tdata.studentNo = Mock.Random.integer(100000000,999999999);
+		Tdata.studentScore = Mock.Random.integer(30,100);
+		data.push(Tdata);
+	}
+	res.studentNumber=num;
+	res.data=data;
+	return JSON.stringify(res);
+});
