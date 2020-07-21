@@ -115,7 +115,7 @@
 
   - 根据考试类型，返回对应考试状态
 
-### getExam
+### getExam*
 
 - 参数
 
@@ -250,7 +250,7 @@
             {
                 "classID":sting,
                 "classStatus":bool,
-              "examTime":string
+                "examTime":string
             }
             ...
         ]
@@ -343,7 +343,7 @@
     }
     ```
 
-  - classID：要获取的学生信息的班级id
+  - classID：要获取的学生信息的班级id,"ALL"代表获取所有学生信息
 
 - 返回
 
