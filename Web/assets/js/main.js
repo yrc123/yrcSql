@@ -12,14 +12,14 @@ layer.config({
 	extend:'skin/LoginPopup/style.css',
 });
 //监听侧边栏
-	element.on('nav(left-nav)', function(elem){
-		var sideArr = document.querySelectorAll(".side-item");
-		var len = sideArr.length;
-		for(i=0;i<len;i++){
-			sideArr[i].classList.add("layui-hide");
-		}
-		sideArr[elem[0].type].classList.remove("layui-hide");
-	});
+element.on('nav(left-nav)', function(elem){
+	var sideArr = document.querySelectorAll(".side-item");
+	var len = sideArr.length;
+	for(i=0;i<len;i++){
+		sideArr[i].classList.add("layui-hide");
+	}
+	sideArr[elem[0].type].classList.remove("layui-hide");
+});
 
 //修改登录和个人中心
 function checkUserID(){
@@ -132,12 +132,6 @@ function displayPermissionWindow(){
 };
 
 //
-function doCheck(data){
-	var flag=checkPermission(data.type);
-	if(flag){
-		window.location.href = "./"+$.cookie("character")+".html";
-	}
-}
 //权限检查
 function checkPermission(s){
 	if($.cookie("hasNotChangePassword")!=null){
@@ -153,27 +147,23 @@ function checkPermission(s){
 		displayLoginWindow();
 		return false;
 	}else if($.cookie("character")!=s){
+		debugger
 		layer.alert('您的权限不足',{
 			closeBtn:0,
 			title:0,
-			area:["300px","200px"],
+			//area:["300px","200px"],
 			btnAlign: 'c',				//按钮居中
-			shadeClose:true
+			shadeClose:true,
+			
+		},function(index){
+			window.location.href = "./"+$.cookie("character")+".html";
+			layer.close(index);
 		});
 		//displayPermissionWindow();
 		return false;
 	}
 	return true;
 }
-
-//
-function myHtml(){
-	var flag=checkPermission($.cookie("character"));
-	if(flag){
-		window.location.href = "./"+$.cookie("character")+".html";
-	}
-}
-
 
 //登录表单
 form.on('submit(login)', function(){

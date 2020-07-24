@@ -2,9 +2,9 @@
 <!-- 头部区域（可配合layui已有的水平导航） -->
 <ul id="header" class="layui-nav layui-layout-left">
 	<li class="layui-nav-item" ><a type="index"href="./index.html">主页</a></li>
-	<li class="layui-nav-item"><a onclick="doCheck(this)" type="admin" href="#">管理员</a></li>
-	<li class="layui-nav-item"><a onclick="doCheck(this)" type="teacher" href="#">老师</a></li>
-	<li class="layui-nav-item"><a onclick="doCheck(this)" type="student" ref="#">学生</a></li>
+	<li class="layui-nav-item"><a onclick="checkPermission(this.type)" type="admin" href="#">管理员</a></li>
+	<li class="layui-nav-item"><a onclick="checkPermission(this.type)" type="teacher" href="#">老师</a></li>
+	<li class="layui-nav-item"><a onclick="checkPermission(this.type)" type="student" href="#">学生</a></li>
 </ul>
 <ul class="layui-nav layui-layout-right">
 	<li id="user-info" class="layui-nav-item layui-hide">
