@@ -153,7 +153,14 @@ function checkPermission(s){
 		displayLoginWindow();
 		return false;
 	}else if($.cookie("character")!=s){
-		displayPermissionWindow();
+		layer.alert('您的权限不足',{
+			closeBtn:0,
+			title:0,
+			area:["300px","200px"],
+			btnAlign: 'c',				//按钮居中
+			shadeClose:true
+		});
+		//displayPermissionWindow();
 		return false;
 	}
 	return true;
