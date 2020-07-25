@@ -106,67 +106,86 @@ function displayChangePasswordWindow(flag = 1){
 };
 
 //显示权限不足窗口
-$("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
-$("#permissionWindow").load("./permissionWindow.html");
-function displayPermissionWindow(){
-	var thisWindow = $("#permissionWindow");
+//$("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
+//$("#permissionWindow").load("./permissionWindow.html");
+function displayPermissionWindow(s){
+	//var thisWindow = $("#permissionWindow");
 
-	layui.use('layer', function(){
-		layer.open({
-			type:1,
-			title:0,
-			closeBtn:0,
-			resize:0,
-			skin:"layer-ext-hide",
-			content:thisWindow,
-			area:["300px","400px"],
-			shadeClose:0,
-			success:function(){
-				thisWindow.removeClass("layui-hide");
-			},
-			cancel: function(){ 
-				thisWindow.addClass("layui-hide");
-			}    
-		});
+	layer.alert(s,{
+		closebtn:0,
+		title:0,
+		//area:["300px","200px"],
+		btn:["返回"],
+		yes:function(index){
+			console.log(1);
+			window.location.href = "./index.html";
+			layer.close(index);
+		},
+		btnAlign: 'c',				//按钮居中
+		shadeclose:true,
 	});
+	//layui.use('layer', function(){
+		//layer.open({
+			//type:1,
+			//title:0,
+			//closeBtn:0,
+			//resize:0,
+			//skin:"layer-ext-hide",
+			//content:thisWindow,
+			//area:["300px","400px"],
+			//shadeClose:0,
+			//success:function(){
+				//thisWindow.removeClass("layui-hide");
+			//},
+			//cancel: function(){ 
+				//thisWindow.addClass("layui-hide");
+			//}    
+		//});
+	//});
 };
 
-//
-//权限检查
-function checkPermission(s){
+//是否第一次更改密码
+function checkChangePassword(){
 	if($.cookie("hasNotChangePassword")!=null){
 		$.removeCookie("userID");
 		$.removeCookie("username");
 		$.removeCookie("character");
 		$.removeCookie("hasNotChangePassword");
-		window.location.href = "./index.html";
-		return false;
 	}
+}
+//权限检查
+//返回0-2
+//0代表未登录
+//1代表权限正常
+//2代表权限不足
+function checkPermission(s){
 	if(s=="index"){
-		window.location.href = "./index.html";
-		return true;
+		return 1;
 	}
 	if($.cookie("userID") == null){
 		displayLoginWindow();
-		return false;
+		return 0;
 	}
 	if($.cookie("character")!=s){
-		debugger
-		layer.alert('您的权限不足',{
-			closeBtn:0,
-			title:0,
-			//area:["300px","200px"],
-			btnAlign: 'c',				//按钮居中
-			shadeClose:true,
-			
-		},function(index){
-			window.location.href = "./"+$.cookie("character")+".html";
-			layer.close(index);
-		});
-		//displayPermissionWindow();
-		return false;
+		return 2;
 	}
-	return true;
+	return 1;
+}
+
+
+//检查当前页面的权限
+//jump为true时自动跳转，否则不跳转
+function checkPagePermission(s, jump=true){
+	var flag = checkPermission(s);
+	if(flag==0){
+		displayLoginWindow();
+	}else if(flag==1){
+		if(jump){
+			window.location.href = "./"+$.cookie("character")+".html";
+		}
+	}else if(flag==2){
+		displayPermissionWindow("你的权限不足");
+	}
 }
 
 //登录表单

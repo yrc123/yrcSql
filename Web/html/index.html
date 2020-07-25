@@ -62,8 +62,11 @@
 			$(document).ready(function() {
 			});
 			var thisPage="index";
+
+			checkChangePassword();
+			checkPagePermission(thisPage,false);
+
 			loadHeader(thisPage);
-			checkPermission(thisPage);
 
 		</script> 
 	</body>

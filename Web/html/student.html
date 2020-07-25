@@ -89,7 +89,8 @@
 			$(document).ready(function() {
 			});
 			var thisPage="student";
-			checkPermission(thisPage);
+			checkChangePassword();
+			checkPagePermission(thisPage,false);
 			loadHeader(thisPage);
 
 			//同意守则修改按钮
