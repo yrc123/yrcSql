@@ -112,7 +112,7 @@ function displayPermissionWindow(s){
 	//var thisWindow = $("#permissionWindow");
 
 	layer.alert(s,{
-		closebtn:0,
+		closeBtn:0,
 		title:0,
 		//area:["300px","200px"],
 		btn:["返回"],
@@ -122,7 +122,6 @@ function displayPermissionWindow(s){
 			layer.close(index);
 		},
 		btnAlign: 'c',				//按钮居中
-		shadeclose:true,
 	});
 	//layui.use('layer', function(){
 		//layer.open({
