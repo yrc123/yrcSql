@@ -117,7 +117,7 @@ function displayPermissionWindow(s){
 		//area:["300px","200px"],
 		btn:["返回"],
 		yes:function(index){
-			console.log(1);
+			//console.log(1);
 			window.location.href = "./index.html";
 			layer.close(index);
 		},
@@ -163,7 +163,6 @@ function checkPermission(s){
 		return 1;
 	}
 	if($.cookie("userID") == null){
-		displayLoginWindow();
 		return 0;
 	}
 	if($.cookie("character")!=s){
