@@ -139,14 +139,18 @@ function checkPermission(s){
 		$.removeCookie("username");
 		$.removeCookie("character");
 		$.removeCookie("hasNotChangePassword");
+		window.location.href = "./index.html";
+		return false;
 	}
 	if(s=="index"){
+		window.location.href = "./index.html";
 		return true;
 	}
 	if($.cookie("userID") == null){
 		displayLoginWindow();
 		return false;
-	}else if($.cookie("character")!=s){
+	}
+	if($.cookie("character")!=s){
 		debugger
 		layer.alert('您的权限不足',{
 			closeBtn:0,
