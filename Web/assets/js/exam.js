@@ -9,7 +9,7 @@ function showTimeWindow(date){
 			shade: 0,
 			//maxmin:true,
 			skin:'time-down',
-			offset:['230px','1250px'] , 
+			offset:'auto',//['230px','1250px'] , 
 			content:'<div id="timeBar" class="layui-icon layui-icon-notice"></div>',
 			closeBtn:0,
 			move:'#timeBar',
