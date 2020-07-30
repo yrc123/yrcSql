@@ -123,7 +123,7 @@ function displayPermissionWindow(s){
 			resize:0,
 			skin:'login-popup',
 			content:thisWindow,
-			area:["500px","399px"],
+			area:["400px","420px"],
 			success:function(){
 				thisWindow.removeClass("layui-hide");
 			},
@@ -175,7 +175,7 @@ function checkPagePermission(s, jump=true){
 			window.location.href = "./"+$.cookie("character")+".html";
 		}
 	}else if(flag==2){
-		displayPermissionWindow("就这？");
+		displayPermissionWindow("不要往这里看啊!");
 	}
 }
 
