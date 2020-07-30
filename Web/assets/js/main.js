@@ -109,8 +109,9 @@ function displayChangePasswordWindow(flag = 1){
 $("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
 $("#permissionWindow").load("./permissionWindow.html");
 function displayPermissionWindow(s){
+	insertTitile(s);
 	var thisWindow = $("#permissionWindow");
-				layer.open({
+			layer.open({
 			type:1,
 			title:0,
 			closeBtn:0,
@@ -118,7 +119,6 @@ function displayPermissionWindow(s){
 			skin:'login-popup',
 			content:thisWindow,
 			area:["500px","399px"],
-			shadeClose:1,
 			success:function(){
 				thisWindow.removeClass("layui-hide");
 			},
@@ -126,37 +126,10 @@ function displayPermissionWindow(s){
 				thisWindow.addClass("layui-hide");
 			}    
 	});
-	// layer.alert(s,{
-	// 	closeBtn:0,
-	// 	title:0,
-	// 	//area:["300px","200px"],
-	// 	btn:["返回"],
-	// 	yes:function(index){
-	// 		//console.log(1);
-	// 		window.location.href = "./index.html";
-	// 		layer.close(index);
-	// 	},
-	// 	btnAlign: 'c',				//按钮居中
-	// });
-	//layui.use('layer', function(){
-		//layer.open({
-			//type:1,
-			//title:0,
-			//closeBtn:0,
-			//resize:0,
-			//skin:"layer-ext-hide",
-			//content:thisWindow,
-			//area:["300px","400px"],
-			//shadeClose:0,
-			//success:function(){
-				//thisWindow.removeClass("layui-hide");
-			//},
-			//cancel: function(){ 
-				//thisWindow.addClass("layui-hide");
-			//}    
-		//});
-	//});
 };
+function insertTitile(s){
+	document.getElementById("permissionTitle").innerHTML=s;
+}
 
 //是否第一次更改密码
 function checkChangePassword(){
