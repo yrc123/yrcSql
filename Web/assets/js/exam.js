@@ -4,13 +4,15 @@
 function showTimeWindow(date){
 		layer.open({
 			type: 1 ,
-			title: '考试进行中',
-			area: ['260px', '100px'],
+			title: 0,				//['考试进行中',"color:white;text-align:center;border-bottom:none;background-color:black;border-radius:10px 10px 0 0;padding-right: 0px;padding-left: 0px;"],
+			area: ['180px', '55px'],
 			shade: 0,
-			maxmin:true,
-			offset:'rb' ,
-			content:'<div id="timeBar"></div>',
+			//maxmin:true,
+			skin:'time-down',
+			offset:['230px','1250px'] , 
+			content:'<div id="timeBar" class="layui-icon layui-icon-notice"></div>',
 			closeBtn:0,
+			move:'#timeBar',
 			success:function(){
 				setTime(date);
 			}
@@ -21,7 +23,7 @@ function showTimeWindow(date){
 function setTime(date){
 	$('#timeBar').countdown(date, function(event) {
 		//$(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
-		$(this).html(event.strftime('%H:%M:%S'));
+		$(this).html(event.strftime(' %H:%M:%S'));
 	}).on('finish.countdown',function(){
 		layer.msg("考试结束，自动提交",{
 				shade:0.3,

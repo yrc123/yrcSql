@@ -46,3 +46,13 @@ p{
 	color:#CCC;
 	transition:0.3s ease;
 }
+#timeBar{
+	text-align:center;
+	color:white;
+    background-color:black;
+    font-size:25px;
+	user-select:none;	
+	border-radius:10px 10px 0 0;	
+	padding-top: 9px;
+	padding-bottom: 5px;
+}
