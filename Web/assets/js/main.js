@@ -107,9 +107,14 @@ function displayChangePasswordWindow(flag = 1){
 
 //显示权限不足窗口
 $("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
-$("#permissionWindow").load("./permissionWindow.html");
 function displayPermissionWindow(s){
-	insertTitile(s);
+	if($("#permissionTitle").length==0){
+		$("#permissionWindow").load("./permissionWindow.html",function(){
+			insertTitile(s);
+		});
+	}else{
+		insertTitile(s);
+	}
 	var thisWindow = $("#permissionWindow");
 			layer.open({
 			type:1,
@@ -170,7 +175,7 @@ function checkPagePermission(s, jump=true){
 			window.location.href = "./"+$.cookie("character")+".html";
 		}
 	}else if(flag==2){
-		displayPermissionWindow("你的权限不足");
+		displayPermissionWindow("就这？");
 	}
 }
 
