@@ -1,3 +1,35 @@
-<div>
-	权限不足
+<div class="container-login100" style="padding-left:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;">
+	<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="opacity:0.9;padding-top: 0px;">
+		<form class="login100-form validate-form layui-form">
+			<!-- <span class="login100-form-title p-b-49">登录</span> -->
+			<img src="https://s1.hdslb.com/bfs/static/jinkela/space/asserts/nodata02.png" alt="警告图标" style="transform:scale(0.8);padding-left: 60px;" >
+			<br>
+			<span class="permissionTitle">您的权限不足</span>
+			<link rel="stylesheet" type="text/css" href="../assets/css/confirmButton.css">		
+	<div class="demo1">
+		<div class="container">
+			<div class="row pad-15">
+
+				<div class="col-sm-3">
+					<a href="#" class="btn btn-lg blue">button</a>
+				</div>
+			</div>
+		</div>
+	</div>
+			<!-- <div class="container-login100-form-btn">
+				<div class="wrap-login100-form-btn">
+					<div class="login100-form-bgbtn"></div>
+					<button class="login100-form-btn confirm">确 认</button>
+				</div>
+			</div> -->
+		</form>
+	</div>
+	<script>
+		$(function(){
+        $(".confirm").click(function() {
+			window.location.href = "./index.html";
+			layer.close(index);
+        })
+    } )
+	</script>
 </div>

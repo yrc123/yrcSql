@@ -106,23 +106,38 @@ function displayChangePasswordWindow(flag = 1){
 };
 
 //显示权限不足窗口
-//$("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
-//$("#permissionWindow").load("./permissionWindow.html");
+$("body").append("<div id='permissionWindow' class='layui-hide'></div>") 
+$("#permissionWindow").load("./permissionWindow.html");
 function displayPermissionWindow(s){
-	//var thisWindow = $("#permissionWindow");
-
-	layer.alert(s,{
-		closeBtn:0,
-		title:0,
-		//area:["300px","200px"],
-		btn:["返回"],
-		yes:function(index){
-			//console.log(1);
-			window.location.href = "./index.html";
-			layer.close(index);
-		},
-		btnAlign: 'c',				//按钮居中
+	var thisWindow = $("#permissionWindow");
+				layer.open({
+			type:1,
+			title:0,
+			closeBtn:0,
+			resize:0,
+			skin:'login-popup',
+			content:thisWindow,
+			area:["500px","399px"],
+			shadeClose:1,
+			success:function(){
+				thisWindow.removeClass("layui-hide");
+			},
+			cancel: function(){ 
+				thisWindow.addClass("layui-hide");
+			}    
 	});
+	// layer.alert(s,{
+	// 	closeBtn:0,
+	// 	title:0,
+	// 	//area:["300px","200px"],
+	// 	btn:["返回"],
+	// 	yes:function(index){
+	// 		//console.log(1);
+	// 		window.location.href = "./index.html";
+	// 		layer.close(index);
+	// 	},
+	// 	btnAlign: 'c',				//按钮居中
+	// });
 	//layui.use('layer', function(){
 		//layer.open({
 			//type:1,
