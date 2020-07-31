@@ -9,8 +9,7 @@ var upload = layui.upload;
 //加载皮肤
 var layer = layui.layer;
 layer.config({
-	extend:'skin/LoginPopup/style.css',
-	extend:'skin/TimeDown/style.css'
+	extend:'skin/TotalSkin/style.css',
 });
 //监听侧边栏
 element.on('nav(left-nav)', function(elem){

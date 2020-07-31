@@ -1,0 +1,10 @@
+body .login-popup{
+    border-radius:10px;
+    opacity:1;
+}
+
+body .time-down{
+    background-color: black;
+    border-radius:10px;
+    opacity:0.8;
+}
