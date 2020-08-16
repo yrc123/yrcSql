@@ -1,4 +1,6 @@
-Mock.mock("/api/login",function(){
+Mock.mock("/api/login",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	var data = Mock.mock({
 		"statusCode|0-2":1,
 	})
@@ -10,20 +12,26 @@ Mock.mock("/api/login",function(){
 	return JSON.stringify(data);
 });
 
-Mock.mock("/api/logout",function(){
+Mock.mock("/api/logout",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	$.removeCookie("userID");
 	$.removeCookie("username");
 	$.removeCookie("character");
 });
 
-Mock.mock("/api/examStart",function(){
+Mock.mock("/api/examStart",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	var data = Mock.mock({
 		"examStart|1":1,
 	});
 	return JSON.stringify(data);
 });
 
-Mock.mock("/api/changePassword",function(){
+Mock.mock("/api/changePassword",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	return true;
 });
 
@@ -52,7 +60,9 @@ Mock.mock("/api/submitExam",function(Jans){
 	}
 });
 
-Mock.mock("/api/getExam",function(){
+Mock.mock("/api/getExam",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	var date = new Date();
 	date.setSeconds(date.getSeconds()+15*60);
 
@@ -87,7 +97,9 @@ Mock.mock("/api/getExam",function(){
 	return JSON.stringify(data);
 });
 
-Mock.mock("/api/getClassInExam",function(){
+Mock.mock("/api/getClassInExam",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
 	var res={};
 	var num=30;
 	var data=new Array();
@@ -107,20 +119,23 @@ Mock.mock("/api/getClassInExam",function(){
 	return JSON.stringify(res);
 });
 
-//Mock.mock("/api/setClassInExam",function(Jreq){
-	//var req = JSON.parse(Jreq.body);
-	//console.log(req);
-	//var data = Mock.mock({
-		//"statusCode|0":1,
-	//})
-	//return JSON.stringify(data);
-//});
+Mock.mock("/api/setClassInExam",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(Jreq);
+	console.log(req);
+	var data = Mock.mock({
+		"statusCode|0-1":1,
+	})
+	return JSON.stringify(data);
+});
 
 Mock.mock("/api/uploadStudentList",function(req){
 	//console.log(req.body.get("className"));
+	console.log(req);
+	console.log(req.body.get("className"));
 	console.log(req.body.get("studentForm"));
 	var data = Mock.mock({
-		"statusCode|0":1,
+		"statusCode|0-1":1,
 	})
 	//console.log(JSON.stringify(data));
 	return JSON.stringify(data);
@@ -130,7 +145,7 @@ Mock.mock("/api/delectClass",function(Jreq){
 	req = JSON.parse(Jreq.body);
 	console.log(req);
 	var data = Mock.mock({
-		"statusCode|0":1,
+		"statusCode|0-1":1,
 	})
 	//console.log(JSON.stringify(data));
 	return JSON.stringify(data);
@@ -139,7 +154,7 @@ Mock.mock("/api/delectClass",function(Jreq){
 Mock.mock("/api/getStudentInfo",function(Jreq){
 	var res={};
 	req = JSON.parse(Jreq.body);
-	console.log(req.classID);
+	console.log(req);
 	var num;
 	if(req.classID=="ALL"){
 		num=300;

@@ -116,9 +116,9 @@
 					type:"POST",
 					url:"/api/examStart",
 					dataType:"json",
-					data:{
+					data:JSON.stringify({
 						"examType":value
-					},
+					}),
 					async:false,
 					success:function(resp){
 						var data=JSON.parse(resp);

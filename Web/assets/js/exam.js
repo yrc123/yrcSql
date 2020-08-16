@@ -124,9 +124,9 @@ function checkExam(){
 			type:"POST",
 			url:"/api/examStart",
 			dataType:"json",
-			data:{
+			data:JSON.stringify({
 				"examType":examType
-			},
+			}),
 			async:false,
 			success:function(resp){
 				var data=JSON.parse(resp);

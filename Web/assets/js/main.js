@@ -189,15 +189,15 @@ form.on('submit(login)', function(){
 		type:"POST",
 		url:"/api/login",
 		dataType:"json",
-		data:{
+		data:JSON.stringify({
 			"username":username,
 			"password":password
-		},
+		}),
 		async:false,
 		success:function(resp){
 			var data=JSON.parse(resp);
 			console.log(data)
-			if(data["loginCode"]==0){
+			if(data["statusCode"]==0){
 				layer.msg("用户名或密码错误",{
 					shade:0.3,
 					time:500
@@ -243,9 +243,9 @@ form.on('submit(changePassword)', function(){
 		type:"POST",
 		url:"/api/changePassword",
 		dataType:"json",
-		data:{
+		data:JSON.stringify({
 			"newPassword":newPassword,
-		},
+		}),
 		async:false,
 		success:function(){
 			$.removeCookie("hasNotChangePassword");
