@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="modal inmodal" id="apImportModel" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" id="apImportDiv" >
+        <div class="modal-content animated fadeIn">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <form  class="dropzone"  id="dropzoneForm" enctype="multipart/form-data">
+                <div class="fallback">
+                    <input name="file" type="file" id="file_id" />
+                </div>
+            </form>
+            <button id="uploladBtn" class="btn btn-info mt-2" type="button" onclick="return uploadExcel()"><i class="fa fa-reply"></i>上传</button>
+            <button id="parseBtn" class="btn btn-info mt-2" type="button" onclick="return parseExcel()"><i class="fa fa-reply"></i>导入</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    function uploadExcel(){
+        debugger
+        var formData = new FormData();
+        var file=$("#file_id");
+        formData.append('file', file[0].files[0]);
+        $.ajax({
+            type: 'POST',
+            url: "/doImportExcel",
+            cache: false,  //禁用缓存
+            data:formData,
+            contentType: false,
+            dataType: "json",
+            processData:false,
+            success: function (result) {
+                debugger
+                alert(result.message)
+            }
+
+        })
+        return false;
+    }
+    function parseExcel(){
+        var url = "/parseExcel";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            cache: false,  //禁用缓存
+            contentType: false,
+            dataType: "json",
+            processData:false,
+            success: function (result) {
+                debugger
+                alert(result.message)
+            }
+        })
+        return false;
+    }
+</script>
+
+</html>
