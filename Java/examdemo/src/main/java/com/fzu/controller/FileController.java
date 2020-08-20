@@ -12,10 +12,7 @@ import com.fzu.service.TeacherServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -276,11 +273,11 @@ public class FileController {
                         String timeStamp=simpleDateFormat.format(new Date());
                         //拼接新的文件名
                         String newName ="题目表"+timeStamp+sname;//命名+时间戳+后缀
-                        //指定上传文件的路径
-                        String path = "C:/Users/11139/examsystem/" + newName;
+                        //指定上传文件的路径  C:/Users/11139/examsystem/
+                        String path = "S:/sqlTest/examsystem/" + newName;
                         //上传保存
-                        /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
+                        /* file.transferTo(); C:/Users/11139/examsystem/ */
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
                         //保存当前文件路径
                         request.getSession().setAttribute("currFilePath", path);
                     }
@@ -306,7 +303,7 @@ public class FileController {
      */
     @ResponseBody
     @RequestMapping("/parseQuestionExcel")
-    public Map<String, Object> parseQuestionExcel(HttpServletRequest request) {
+    public Map<String, Object> parseQuestionExcel(HttpServletRequest request) throws IOException {
         Map<String, Object> result = new HashMap<String, Object>();
         Workbook workbook = null;
         //获取文件路径
@@ -331,21 +328,27 @@ public class FileController {
             for(int currentRow=0;currentRow<rows;currentRow++){
                 QTable q = new QTable();
                 DataFormatter formatter = new DataFormatter();
-                Integer currentNum = new Integer(currentRow);
-                String id = currentNum.toString();      //自增的id 可能和设置的产生冲突 ？
-                String chapter = sheet.getRow(currentNum).getCell(0).getStringCellValue();
-                String title = sheet.getRow((currentRow)).getCell(1).getStringCellValue();
-                String type = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                String option1 = sheet.getRow(currentRow).getCell(3).getStringCellValue();
-                String option2 = sheet.getRow(currentRow).getCell(4).getStringCellValue();
-                String option3 = sheet.getRow(currentRow).getCell(5).getStringCellValue();
-                String option4 = sheet.getRow(currentRow).getCell(6).getStringCellValue();
-                String option5 = sheet.getRow(currentRow).getCell(7).getStringCellValue();
-                String option6 = sheet.getRow(currentRow).getCell(8).getStringCellValue();
+                //Integer currentNum = new Integer(currentRow);
+                //String id = currentNum.toString();      //自增的id 可能和设置的产生冲突 ？
+                String chapter = sheet.getRow(currentRow).getCell(0).getStringCellValue();
+                String type = sheet.getRow(currentRow).getCell(1).getStringCellValue();
+                String title = sheet.getRow((currentRow)).getCell(2).getStringCellValue();
+                String option1 = formatter.formatCellValue(sheet.getRow(currentRow).getCell(3));
+                String option2 = formatter.formatCellValue(sheet.getRow(currentRow).getCell(4));
+                String option3 = formatter.formatCellValue(sheet.getRow(currentRow).getCell(5));
+                String option4 = formatter.formatCellValue(sheet.getRow(currentRow).getCell(6));
                 String answer = sheet.getRow(currentRow).getCell(9).getStringCellValue();
+                answer = deleteCharInStr(answer,new char[]{'E','F'});   //在答案中删除 E F
+                q.setChapter(chapter);
+                q.setTitle(title);
+                q.setType(type);
+                q.setOption1(option1);
+                q.setOption2(option2);
+                q.setOption3(option3);
+                q.setOption4(option4);
+                q.setAnswer(answer);
                 qTables.add(q);
             }
-            String teacherId=(String)request.getSession().getAttribute("teacherId");
             adminService.importQuesiton(qTables);
 
         }
@@ -356,5 +359,23 @@ public class FileController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static String deleteCharInStr(String str, char[] chars){
+        String delStr = "";
+        int flag = 1;
+        for (int i = 0; i < str.length(); i++) {
+            flag = 1;
+            for (int j = 0; j < chars.length; j++) {
+                if(str.charAt(i) == chars[j]){
+                    //如果出现相同字符，则置位，删除
+                    flag = 0;
+                }
+            }
+            if(flag==1){
+                delStr += str.charAt(i);
+            }
+        }
+        return  delStr;
     }
 }

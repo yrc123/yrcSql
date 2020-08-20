@@ -17,8 +17,6 @@ public class AdminServiceImpl implements AdminService {
 
         for (int i = 0; i < qTables.size(); i++) {
             Question question = new Question();
-
-            question.setId(qTables.get(i).getId());
             question.setChapter(qTables.get(i).getChapter());
             question.setTitle(qTables.get(i).getTitle());
             question.setType(qTables.get(i).getType());
