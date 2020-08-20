@@ -1,8 +1,10 @@
 package com.fzu.controller;
 import com.fzu.pojo.STable;
 
-import com.fzu.service.StudentService;
-import com.fzu.service.StudentServiceImpl;
+import com.fzu.pojo.TTable;
+import com.fzu.service.examService;
+import com.fzu.service.examServiceImpl;
+import com.fzu.service.examServiceImpl;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
@@ -31,7 +33,7 @@ import java.util.*;
 public class FileController {
 
     @Autowired
-    StudentService studentService=new StudentServiceImpl();
+    examService examService=new examServiceImpl();
 
 
     @ResponseBody
@@ -95,38 +97,72 @@ public class FileController {
         System.out.println("测试路径"+path);//测试看看路径正确？
         //获取文件格式
         String fileType = path.substring(path.lastIndexOf(".") + 1, path.length());
+        String fileName = path.substring(0, 4);
         try {
-            InputStream stream = new FileInputStream(path);
-            //如果后缀名为xls，使用HSSF
-            if (fileType.equals("xls")) {
-                workbook = new HSSFWorkbook(stream);
-                //如果后缀名是xlsx，使用XSSF
-            }else if (fileType.equals("xlsx")){
-                workbook = new XSSFWorkbook(stream);
+            //如果导入的是学生表
+            if(fileName.equals("学生")){
+                InputStream stream = new FileInputStream(path);
+                //如果后缀名为xls，使用HSSF
+                if (fileType.equals("xls")) {
+                    workbook = new HSSFWorkbook(stream);
+                    //如果后缀名是xlsx，使用XSSF
+                }else if (fileType.equals("xlsx")){
+                    workbook = new XSSFWorkbook(stream);
 
+                }
+                Sheet sheet= workbook.getSheet("sheet1");
+                //获取行数
+                int rows=sheet.getPhysicalNumberOfRows();
+                List<STable> sTables=new ArrayList<>();
+                for(int currentRow=0;currentRow<rows;currentRow++){
+                    STable s=new STable();//表格的每一行为一个实例；
+                    DataFormatter formatter = new DataFormatter();
+                    String studentId = formatter.formatCellValue(sheet.getRow(currentRow).getCell(0));
+                    String name = sheet.getRow(currentRow).getCell(1).getStringCellValue();
+                    String classInfo = sheet.getRow(currentRow).getCell(2).getStringCellValue();
+                    s.setStudentId(studentId);
+                    s.setName(name);
+                    s.setClassInfo(classInfo);
+                    sTables.add(s);
+                }
+                String teacherId=(String)request.getSession().getAttribute("teacherId");
+                examService.importStudent(sTables,teacherId);
             }
-            Sheet sheet= workbook.getSheet("sheet1");
-            //获取行数
-            int rows=sheet.getPhysicalNumberOfRows();
-            List<STable> sTables=new ArrayList<>();
-            for(int currentRow=0;currentRow<rows;currentRow++){
-                STable s=new STable();//表格的每一行为一个实例；
-                DataFormatter formatter = new DataFormatter();
-                String studentId = formatter.formatCellValue(sheet.getRow(currentRow).getCell(0));
-                String name = sheet.getRow(currentRow).getCell(1).getStringCellValue();
-                String classInfo = sheet.getRow(currentRow).getCell(2).getStringCellValue();
-                s.setStudentId(studentId);
-                s.setName(name);
-                s.setClassInfo(classInfo);
-                sTables.add(s);
+
+
+            //如果导入的是教师表
+            if(fileName.equals("教师")){
+                InputStream stream = new FileInputStream(path);
+                //如果后缀名为xls，使用HSSF
+                if (fileType.equals("xls")) {
+                    workbook = new HSSFWorkbook(stream);
+                    //如果后缀名是xlsx，使用XSSF
+                }else if (fileType.equals("xlsx")){
+                    workbook = new XSSFWorkbook(stream);
+
+                }
+                Sheet sheet= workbook.getSheet("sheet1");
+                //获取行数
+                int rows=sheet.getPhysicalNumberOfRows();
+                List<TTable> tTables=new ArrayList<>();
+                for(int currentRow=0;currentRow<rows;currentRow++){
+                    TTable t=new TTable();//表格的每一行为一个实例；
+                    DataFormatter formatter = new DataFormatter();
+                    String teacherId = sheet.getRow(currentRow).getCell(0).getStringCellValue();
+                    String name = sheet.getRow(currentRow).getCell(1).getStringCellValue();
+                    t.setTeacherId(teacherId);
+                    t.setName(name);
+                    tTables.add(t);
+                }
+                examService.importTeacher(tTables);
             }
-        String teacherId=(String)request.getSession().getAttribute("teacherId");
-        studentService.importStudent(sTables,teacherId);
 
 
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         return result;
