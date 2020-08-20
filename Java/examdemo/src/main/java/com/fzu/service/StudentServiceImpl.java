@@ -14,13 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
-public class examServiceImpl implements examService {
+public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentDao studentDao;
     @Autowired
     ClassDao classDao;
-    @Autowired
-    TeacherDao teacherDao;
 
     @Override
     public void importStudent(List<STable> sTables,String teacherId) {
@@ -36,17 +34,6 @@ public class examServiceImpl implements examService {
       }
         System.out.println("键值对信息"+map.toString());
       classDao.addClass(map);
-    }
-
-    @Override
-    public void importTeacher(List<TTable> tTables) {
-        //数据库中对应的需要操作到：teacher表(添加教师)
-        for(int i=0;i<tTables.size();i++){
-            Teacher teacher=new Teacher();
-            teacher.setTeacherId(tTables.get(i).getTeacherId());
-            teacher.setName(tTables.get(i).getName());
-            teacherDao.addTeacher(teacher);
-        }
     }
 
 

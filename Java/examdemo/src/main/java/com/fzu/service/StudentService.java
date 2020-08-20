@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-public interface examService {
+public interface StudentService {
     //导入学生名单
     void importStudent(List<STable> STables,String teacherId);
-    void importTeacher(List<TTable> tTables);
 }
