@@ -1,6 +1,8 @@
 package com.fzu.controller;
 import com.fzu.pojo.STable;
 
+import com.fzu.service.AdminService;
+import com.fzu.service.AdminServiceImpl;
 import com.fzu.service.StudentService;
 import com.fzu.service.StudentServiceImpl;
 import org.apache.commons.io.FileUtils;
@@ -32,6 +34,8 @@ public class FileController {
 
     @Autowired
     StudentService studentService=new StudentServiceImpl();
+    @Autowired
+    AdminService adminService=new AdminServiceImpl();
 
 
     @ResponseBody
@@ -84,6 +88,7 @@ public class FileController {
         }
         return result;
     }
+
 
     @ResponseBody
     @RequestMapping("/parseExcel")
