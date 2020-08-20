@@ -1,4 +1,5 @@
 package com.fzu.controller;
+import com.fzu.pojo.QTable;
 import com.fzu.pojo.STable;
 
 import com.fzu.service.AdminService;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.DateFormatter;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -237,4 +239,122 @@ public class FileController {
         return result;
     }
 
+
+    /**
+     *  上传题目表
+     * @param request
+     * @param file
+     * @return
+     * @author lw
+     * @date 2020年8月20日 13:58
+     */
+    @ResponseBody
+    @RequestMapping("/doImportQuestionExcel")
+    public Map<String, Object> QuestionUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String fileName = "";
+        try {
+            //将当前上下文初始化给  CommonsMutipartResolver
+            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+            //检查form中是否有enctype="multipart/form-data"
+            if (multipartResolver.isMultipart(request)) {
+                //将request变成多部分request
+                MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+                //获取multiRequest 中所有的文件名
+                Iterator iter = multiRequest.getFileNames();
+                while (iter.hasNext()) {
+                    //一次遍历所有文件
+                    MultipartFile file1 = multiRequest.getFile(iter.next().toString());
+                    if (file != null) {
+                        //获取上传文件名
+                        fileName = file1.getOriginalFilename();
+                        //获取后缀名
+                        String sname = fileName.substring(fileName.lastIndexOf("."));
+                        //时间格式化格式
+                        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                        //获取当前时间并作为时间戳
+                        String timeStamp=simpleDateFormat.format(new Date());
+                        //拼接新的文件名
+                        String newName ="题目表"+timeStamp+sname;//命名+时间戳+后缀
+                        //指定上传文件的路径
+                        String path = "C:/Users/11139/examsystem/" + newName;
+                        //上传保存
+                        /* file.transferTo();*/
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
+                        //保存当前文件路径
+                        request.getSession().setAttribute("currFilePath", path);
+                    }
+                }
+            }
+
+            result.put("statusCode", "200");
+            result.put("message", "上传成功!");
+            result.put("filename", fileName);
+        } catch (Exception ex) {
+            result.put("statusCode", "300");
+            result.put("message", "上传失败:" + ex.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 导入题目文件到数据库
+     * @param request
+     * @return
+     * @author lw
+     * @date 2020年8月20日 14:05
+     */
+    @ResponseBody
+    @RequestMapping("/parseQuestionExcel")
+    public Map<String, Object> parseQuestionExcel(HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        Workbook workbook = null;
+        //获取文件路径
+        String path =(String)request.getSession().getAttribute("currFilePath");
+        System.out.println("测试路径"+path);//测试看看路径正确？
+        //获取文件格式
+        String fileType = path.substring(path.lastIndexOf(".") + 1, path.length());
+        try {
+            InputStream stream = new FileInputStream(path);
+            //如果后缀名为xls，使用HSSF
+            if (fileType.equals("xls")) {
+                workbook = new HSSFWorkbook(stream);
+                //如果后缀名是xlsx，使用XSSF
+            }else if (fileType.equals("xlsx")){
+                workbook = new XSSFWorkbook(stream);
+
+            }
+            Sheet sheet= workbook.getSheet("sheet1");
+            //获取行数
+            int rows=sheet.getPhysicalNumberOfRows();
+            List<QTable> qTables=new ArrayList<>();
+            for(int currentRow=0;currentRow<rows;currentRow++){
+                QTable q = new QTable();
+                DataFormatter formatter = new DataFormatter();
+                Integer currentNum = new Integer(currentRow);
+                String id = currentNum.toString();      //自增的id 可能和设置的产生冲突 ？
+                String chapter = sheet.getRow(currentNum).getCell(0).getStringCellValue();
+                String title = sheet.getRow((currentRow)).getCell(1).getStringCellValue();
+                String type = sheet.getRow(currentRow).getCell(2).getStringCellValue();
+                String option1 = sheet.getRow(currentRow).getCell(3).getStringCellValue();
+                String option2 = sheet.getRow(currentRow).getCell(4).getStringCellValue();
+                String option3 = sheet.getRow(currentRow).getCell(5).getStringCellValue();
+                String option4 = sheet.getRow(currentRow).getCell(6).getStringCellValue();
+                String option5 = sheet.getRow(currentRow).getCell(7).getStringCellValue();
+                String option6 = sheet.getRow(currentRow).getCell(8).getStringCellValue();
+                String answer = sheet.getRow(currentRow).getCell(9).getStringCellValue();
+                qTables.add(q);
+            }
+            String teacherId=(String)request.getSession().getAttribute("teacherId");
+            adminService.importQuesiton(qTables);
+
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
