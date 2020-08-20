@@ -2,8 +2,11 @@ package com.fzu.service;
 
 import com.fzu.dao.ClassDao;
 import com.fzu.dao.StudentDao;
+import com.fzu.dao.TeacherDao;
 import com.fzu.pojo.STable;
 import com.fzu.pojo.Student;
+import com.fzu.pojo.TTable;
+import com.fzu.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,4 +35,6 @@ public class StudentServiceImpl implements StudentService {
         System.out.println("键值对信息"+map.toString());
       classDao.addClass(map);
     }
+
+
 }
