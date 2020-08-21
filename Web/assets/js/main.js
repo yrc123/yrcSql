@@ -195,14 +195,14 @@ form.on('submit(login)', function(){
 		}),
 		async:false,
 		success:function(resp){
-			var data=JSON.parse(resp);
+			var data=(resp);
 			console.log(data)
-			if(data["statusCode"]==0){
+			if(data["status"]==0){
 				layer.msg("用户名或密码错误",{
 					shade:0.3,
 					time:500
 				});
-			}else if(data["statusCode"]==1){
+			}else if(data["status"]==1){
 				layer.msg("登录成功",{
 					shade:0.3,
 					time:500
@@ -210,7 +210,7 @@ form.on('submit(login)', function(){
 				setTimeout(function(){
 					location.href="./"+$.cookie("character")+".html";
 				},500);
-			}else if(data["statusCode"]==2){
+			}else if(data["status"]==2){
 				$.cookie("hasNotChangePassword","ture");
 				displayChangePasswordWindow(0);
 			}	
