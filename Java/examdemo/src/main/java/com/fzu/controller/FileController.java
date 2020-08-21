@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.DateFormatter;
 import java.io.*;
@@ -44,10 +45,11 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping("/doImportStudentExcel")
-    public Map<String, Object> StudentUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file,
-                                        @RequestParam("teacherId") String  teacherId) {
+    public Map<String, Object> StudentUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
         Map<String, Object> result = new HashMap<String, Object>();
         String fileName = "";
+        Cookie[]cookies= request.getCookies();
+        String teacherId =cookies[0].getValue();
         try {
             //将当前上下文初始化给  CommonsMutipartResolver
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());

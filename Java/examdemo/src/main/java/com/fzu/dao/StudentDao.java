@@ -19,7 +19,7 @@ public class StudentDao {
         String sql="insert into exam_system.student (student_id, password, name, classroom, score) values (?,?,?,?,?)";
         Object[] objects=new Object[5];
         objects[0]=student.getStudentId();
-        objects[1]="666666";//初始密码
+        objects[1]=ORIGINAL_PASSWORD;//初始密码
         objects[2]=student.getName();
         objects[3]=student.getClassroom();
         objects[4]=null;
