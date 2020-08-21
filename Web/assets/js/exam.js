@@ -44,6 +44,7 @@ function getExam(){
 		type:"POST",
 		data:null,
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		success:function(resp){
 			data=(resp);
 		},
@@ -124,6 +125,7 @@ function checkExam(){
 			type:"POST",
 			url:"/api/examStatus",
 			dataType:"json",
+			contentType: "application/json; charset=utf-8",
 			data:JSON.stringify({
 				"examType":examType
 			}),
@@ -245,6 +247,7 @@ function submitExam(){
 		type:"POST",
 		url:"/api/submitExam",
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		data:JSON.stringify(ans),
 		async:false,
 		success:function(resp){
@@ -283,19 +286,21 @@ form.on('submit', function(){
 
 //保存已选到cookie
 function saveCookie(no,value){
-	choiceInCookie.examID=examInfo.examID;
+	choiceInCookie.paperId=examInfo.paperId;
 	choiceInCookie.choice[no]=value;	
+	console.log(choiceInCookie);
 	$.cookie("choice",JSON.stringify(choiceInCookie));
+	$.cookie("paperId",examInfo.paperId);
 }
 //加载cookie中的选项
 function loadChoice(){
 	if($.cookie("choice")==null)return false;
-	console.log(examInfo.examID);
+	console.log(examInfo);
 	//console.log(choiceInCookie);
 	console.log(JSON.parse($.cookie("choice")));
 	choiceInCookie=JSON.parse($.cookie("choice"));
-	if(examInfo.examID!=choiceInCookie.examID){
-		choiceInCookie.examID=examInfo.examID;
+	if(examInfo.paperId!=choiceInCookie.paperId){
+		choiceInCookie.paperId=examInfo.paperId;
 		choiceInCookie.choice=cArr;
 		$.cookie("choice",JSON.stringify(choiceInCookie));
 		console.log(choiceInCookie);

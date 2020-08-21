@@ -22,8 +22,8 @@ element.on('nav(left-nav)', function(elem){
 });
 
 //修改登录和个人中心
-function checkUserID(){
-	if($.cookie('userID')!=null){
+function checkUserId(){
+	if($.cookie('userId')!=null){
 		$("#user-info").removeClass("layui-hide");
 		$("#user-name").text($.cookie('username'));
 	}else{
@@ -36,7 +36,7 @@ function loadHeader(s){
 	$(".layui-layout-admin").prepend('<div class="layui-header"></div>') 
 	$(".layui-header").load("./layuiHeader.html",function(){
 
-		checkUserID();
+		checkUserId();
 
 		//退出登录
 		$("#logout").click(function(){
@@ -139,7 +139,7 @@ function insertTitile(s){
 //是否第一次更改密码
 function checkChangePassword(){
 	if($.cookie("hasNotChangePassword")!=null){
-		$.removeCookie("userID");
+		$.removeCookie("userId");
 		$.removeCookie("username");
 		$.removeCookie("character");
 		$.removeCookie("hasNotChangePassword");
@@ -154,7 +154,7 @@ function checkPermission(s){
 	if(s=="index"){
 		return 1;
 	}
-	if($.cookie("userID") == null){
+	if($.cookie("userId") == null){
 		return 0;
 	}
 	if($.cookie("character")!=s){

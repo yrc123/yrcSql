@@ -5,7 +5,7 @@ Mock.mock("/api/login",function(Jreq){
 		"status|0-2":1,
 	})
 	if(data["status"]!=0){
-		$.cookie("userID",Mock.Random.string(16));
+		$.cookie("userId",Mock.Random.string(16));
 		$.cookie("username",Mock.Random.cname());
 		$.cookie("character","student");
 	}
@@ -15,7 +15,7 @@ Mock.mock("/api/login",function(Jreq){
 Mock.mock("/api/logout",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
-	$.removeCookie("userID");
+	$.removeCookie("userId");
 	$.removeCookie("username");
 	$.removeCookie("character");
 });
@@ -71,9 +71,9 @@ Mock.mock("/api/getExam",function(Jreq){
 
 	var id =Mock.Random.string(16);
 	var Qnum = [10,20,20]
-	id="same"
+	id="same";
 	var data = {
-		examID:id,
+		paperId:id,
 		date:ts,
 		Qtype:Qnum
 	}
@@ -107,7 +107,7 @@ Mock.mock("/api/getClassInExam",function(Jreq){
 			"classStatus|1":true
 		})
 		Tdata.className = "班级"+Mock.Random.cword('一二三四五六七八九十',1,2);
-		Tdata.classID = Mock.Random.string(16);
+		Tdata.classId = Mock.Random.string(16);
 		if(Tdata.classStatus){
 			Tdata.examTime = Mock.Random.date('yyyy/MM/dd')+" "+Mock.Random.time('HH:mm:ss')+" ~ "+Mock.Random.date('yyyy/MM/dd')+" "+Mock.Random.time('HH:mm:ss');
 		}
@@ -153,7 +153,7 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 	req = JSON.parse(Jreq.body);
 	console.log(req);
 	var num;
-	if(req.classID=="ALL"){
+	if(req.classId=="ALL"){
 		num=300;
 	}else{
 		num=50;

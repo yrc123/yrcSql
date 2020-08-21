@@ -4,7 +4,7 @@
 - 后端在收到操作时要对操作用户的权限进行判断（过滤器）
   - 对于没登录的用户转跳到登录界面
   - 对于权限不够的用户转跳到权限不足的页面。
-- 第一次登录时必须强制修改密码，不允许其他操作，在用户操作其他方法时强制下线(删除userID,username,character,注销userID)（过滤器）
+- 第一次登录时必须强制修改密码，不允许其他操作，在用户操作其他方法时强制下线(删除userId,username,character,注销userId)（过滤器）
 - 考试分为模拟考和真实考试
   - 模拟考在:一段时间内都可以考,考试时间按照考生点击进入考试的时间计算，并且在考试结束后直接返回做题情况(细节待补充).
   - 正式考试:考试开始时间在管理员按下考试开始时统一开始计算，考试结束后返回提交成功页面。
@@ -12,7 +12,7 @@
 
 ## cookie约定
 
-- userID:用户登录后获取的用户id
+- userId:用户登录后获取的用户id
 - username:用户登录后获取的用户的教师号/学号/admin
 - character:用户角色student/teacher/admin
 
@@ -47,7 +47,7 @@
 - 功能
 
   - 用户登入
-  - 设置userID，每次用户登录后获得的userID都是随机的
+  - 设置userId，每次用户登录后获得的userId都是随机的
   - 设置username
   - 设置character
   - 依据用户组转跳页面
@@ -62,10 +62,10 @@
   
   - void
 - 功能
-  - 删除userID
+  - 删除userId
   - 删除username
   - 删除character
-  - 后端注销userID
+  - 后端注销userId
   - 转跳到index.html
 
 ### changePassword
@@ -125,7 +125,7 @@
 
   - ```json
     {
-        "examID":string,
+        "examId":string,
         "date":string,
         "Qtype":[ number, number, number],
         "data":[
@@ -150,7 +150,7 @@
     }
     ```
     
-  - examID:考卷的唯一id，为随机值
+  - examId:考卷的唯一id，为随机值
   
   - date：代表考试剩余的时间,返回结束时的时间string "YYYY/MM/DD hh:mm:ss"
   
@@ -192,7 +192,7 @@
      	[ number, number, ...]
     ]
     ```
-    
+  
 - 格式同上
   
 - 功能
@@ -213,7 +213,7 @@
     [
         {
             "className":string,
-            "classID":sting,
+            "classId":sting,
             "classStatus":bool,
             "examTime":string
         }
@@ -223,7 +223,7 @@
     
   - className：班级名称，如"软件工程三班"
   
-- classID：班级唯一id
+- classId：班级唯一id
   
 - classStatus：班级状态，是否在考试中，返回bool值
   
@@ -240,7 +240,7 @@
   - ```json
     [
         {
-            "classID":sting,
+            "classId":sting,
             "classStatus":bool,
             "examTime":string
         }
@@ -248,7 +248,7 @@
     ]
     ```
     
-  - classID：班级唯一id
+  - classId：班级唯一id
   
   - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态
   
@@ -275,7 +275,7 @@
 
   - ```json
     //受到layui限制，数据格式为FormData
-    "studentForm":上传的文件
+    "file":上传的文件
     "className":上传的班级名称
     ```
 
@@ -303,7 +303,7 @@
     [string,string,...]
     ```
     
-  - 一个包含删除班级classID的数组
+  - 一个包含删除班级classId的数组
   
 - 返回
 
@@ -325,11 +325,11 @@
 
   - ```json
     {
-        "classID":string,
+        "classId":string,
     }
     ```
 
-  - classID：要获取的学生信息的班级id,"ALL"代表获取所有学生信息
+  - classId：要获取的学生信息的班级id,"ALL"代表获取所有学生信息
 
 - 返回
 

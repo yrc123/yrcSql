@@ -1,5 +1,5 @@
 var selectSetExamData;
-var getClassID="ALL";
+var getClassId="ALL";
 
 //获取班级信息
 function getClassInExam(){
@@ -107,7 +107,7 @@ function toSetExamFormat(data){
 	var res = new Array()
 	for(i=0;i<len;i++){
 		res.push({
-			classID:data[i].classID,
+			classId:data[i].classId,
 			classStatus:data[i].classStatus,
 			examTime:data[i].examTime,
 		});
@@ -254,7 +254,7 @@ upload.render({
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
 	exts:"xls|xlsx",
-	field:"studentForm",
+	field:"file",
 	size:10000,
 	bindAction:"#startUpload",
 	choose:function(obj){
@@ -335,7 +335,7 @@ table.render({
 
 //监听班级管理的每行的按钮
 table.on("tool(classTable)",function(obj){
-	var data =[obj.data.classID]
+	var data =[obj.data.classId]
 	var layEvent = obj.event;
 	if(layEvent=="classSub"){
 		layer.confirm('确认删除班级?', {icon: 3, title:'提示'}, function(index){
@@ -365,7 +365,7 @@ function setSelect(data){
 	for(i=0;i<len;i++){
 		var tdata={
 			className:data[i].className,
-			classID:data[i].classID,
+			classId:data[i].classId,
 		};
 		//console.log(tdata);
 		laytpl(selectTemplate[0].innerHTML).render(tdata,function(html){
@@ -377,12 +377,12 @@ function setSelect(data){
 }
 
 //监听获取班级提交
-form.on('submit(submitClassID)', function(data){
-	getClassID = data.field.classID;
-	console.log(getClassID);
+form.on('submit(submitClassId)', function(data){
+	getClassId = data.field.classId;
+	console.log(getClassId);
 	table.reload("studentTable",{
 		where: { 
-			classID:getClassID,
+			classId:getClassId,
 		}
 	});
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
@@ -400,7 +400,7 @@ table.render({
 	method:"POST",
 	contentType:'application/json',
 	where:{
-		classID:getClassID
+		classId:getClassId
 	},
 	parseData: function(res){ //res 即为原始返回的数据
 		res = (res);
