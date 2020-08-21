@@ -81,9 +81,20 @@ public class LoginController {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
            String username=cookies[1].getValue();
+            System.out.println(username);
+           //管理员
+            if (username.equals("admin")){
+                adminService.changePassword(username,newPassword);
+            }
+            //教师
+            else if (username.substring(0,1).equals("T")){
+                teacherService.changePassword(username,newPassword);
+            }
+            //学生
+            else{
+                studentService.changePassword(username,newPassword);
+            }
         }
-
-
     }
 
 

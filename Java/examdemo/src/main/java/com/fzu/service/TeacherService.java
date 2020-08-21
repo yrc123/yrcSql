@@ -9,4 +9,6 @@ public interface TeacherService {
     void importTeacher(List<TTable> tTables);
     //登录检验
     int teaCheck(String username,String password);
+    //修改密码
+    void changePassword(String username,String password);
 }

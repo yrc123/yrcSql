@@ -12,4 +12,6 @@ public interface StudentService {
     void importStudent(List<STable> STables,String teacherId);
     //登录检验
     int stuCheck(String username,String password);
+    //修改密码
+    void changePassword(String username,String password);
 }

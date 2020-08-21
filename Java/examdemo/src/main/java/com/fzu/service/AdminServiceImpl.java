@@ -12,6 +12,7 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     @Autowired
     QuestionDao questionDao;
+    @Autowired
     AdminDao adminDao;
 
     @Override
@@ -37,4 +38,11 @@ public class AdminServiceImpl implements AdminService {
     public int admCheck(String username, String password) {
         return adminDao.admCheck(username, password);
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+        adminDao.changePassword(username, password);
+    }
+
+
 }

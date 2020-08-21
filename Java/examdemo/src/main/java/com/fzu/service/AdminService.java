@@ -9,4 +9,6 @@ public interface AdminService {
     void importQuestion(List<QTable> qTables);
     //登录检验
     int admCheck(String username,String password);
+    //修改密码
+    void changePassword(String username,String password);
 }

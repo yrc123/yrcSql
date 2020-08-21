@@ -93,7 +93,6 @@ public class FileController {
         return result;
     }
 
-
     @ResponseBody
     @RequestMapping("/parseStudentExcel")
     public Map<String, Object> parseStudentExcel(HttpServletRequest request) {
@@ -131,7 +130,6 @@ public class FileController {
             }
             String teacherId=(String)request.getSession().getAttribute("teacherId");
             studentService.importStudent(sTables,teacherId);
-
 
         }
         catch (FileNotFoundException e) {
@@ -218,7 +216,8 @@ public class FileController {
             List<TTable> tTables=new ArrayList<>();
             for(int currentRow=0;currentRow<rows;currentRow++){
                 TTable t=new TTable();//表格的每一行为一个实例；
-                String teacherId = sheet.getRow(currentRow).getCell(0).getStringCellValue();
+                DataFormatter formatter = new DataFormatter();
+                String teacherId = formatter.formatCellValue(sheet.getRow(currentRow).getCell(0));
                 String name = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 t.setTeacherId(teacherId);
                 t.setName(name);
@@ -275,10 +274,11 @@ public class FileController {
                         //拼接新的文件名
                         String newName ="题目表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径  C:/Users/11139/examsystem/
-                        String path = "S:/sqlTest/examsystem/" + newName;
+                        // S:/sqlTest/examsystem/
+                        String path = "C:/Users/11139/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo(); C:/Users/11139/examsystem/ */
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
                         //保存当前文件路径
                         request.getSession().setAttribute("currFilePath", path);
                     }
@@ -350,7 +350,7 @@ public class FileController {
                 q.setAnswer(answer);
                 qTables.add(q);
             }
-            adminService.importQuesiton(qTables);
+            adminService.importQuestion(qTables);
 
         }
         catch (FileNotFoundException e) {

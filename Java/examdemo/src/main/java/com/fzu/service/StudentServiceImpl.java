@@ -41,5 +41,10 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.stuCheck(username, password);
     }
 
+    @Override
+    public void changePassword(String username, String password) {
+        studentDao.changePassword(username, password);
+    }
+
 
 }

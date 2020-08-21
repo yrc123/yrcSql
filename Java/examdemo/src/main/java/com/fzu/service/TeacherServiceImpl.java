@@ -26,4 +26,10 @@ public class TeacherServiceImpl implements TeacherService {
     public int teaCheck(String username, String password) {
         return teacherDao.teaCheck(username,password);
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+        teacherDao.changePassword(username, password);
+    }
+
 }
