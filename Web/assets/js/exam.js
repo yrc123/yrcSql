@@ -122,7 +122,7 @@ function checkExam(){
 	layui.use('layer', function(){
 		$.ajax({
 			type:"POST",
-			url:"/api/examStart",
+			url:"/api/examStatus",
 			dataType:"json",
 			data:JSON.stringify({
 				"examType":examType
