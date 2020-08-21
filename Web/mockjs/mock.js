@@ -2,14 +2,14 @@ Mock.mock("/api/login",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
 	var data = Mock.mock({
-		"statusCode|0-2":1,
+		"status|0-2":1,
 	})
-	if(data["statusCode"]!=0){
+	if(data["status"]!=0){
 		$.cookie("userID",Mock.Random.string(16));
 		$.cookie("username",Mock.Random.cname());
 		$.cookie("character","student");
 	}
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/logout",function(Jreq){
@@ -24,9 +24,9 @@ Mock.mock("/api/examStart",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
 	var data = Mock.mock({
-		"examStart|1":1,
+		"examStart|0":1,
 	});
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/changePassword",function(Jreq){
@@ -37,26 +37,26 @@ Mock.mock("/api/changePassword",function(Jreq){
 
 Mock.mock("/api/submitExam",function(Jans){
 	var ans = JSON.parse(Jans.body);
-	//console.log(JSON.parse(Jans.body));
-	ans.data=new Array();
+	//console.log((Jans.body));
+	console.log(ans);
+	ans[1]=new Array();
 	for(i=0;i<3;i++){
-		for(j=0;j<ans.Qtype[i];j++){
+		for(j=0;j<ans[0][i];j++){
 			if(i==0){
 				var num=[1,2,4,8];
-				ans["data"].push(num[Mock.Random.integer(0,3)]);
+				ans[1].push(num[Mock.Random.integer(0,3)]);
 			}else if(i==1){
-				ans["data"].push(Mock.Random.integer(1,15));
+				ans[1].push(Mock.Random.integer(1,15));
 			}else{
-				ans["data"].push(num[Mock.Random.integer(0,1)]);
+				ans[1].push(num[Mock.Random.integer(0,1)]);
 			}
 		}
 	}
 
-	//console.log(ans);
 	if($.cookie("examType")==0){
 		return null;
 	}else{
-		return JSON.stringify(ans);
+		return (ans);
 	}
 });
 
@@ -71,7 +71,7 @@ Mock.mock("/api/getExam",function(Jreq){
 
 	var id =Mock.Random.string(16);
 	var Qnum = [10,20,20]
-	//id="same"
+	id="same"
 	var data = {
 		examID:id,
 		date:ts,
@@ -94,13 +94,12 @@ Mock.mock("/api/getExam",function(Jreq){
 	}
 	data["data"]=Darr;
 	
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/getClassInExam",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
-	var res={};
 	var num=30;
 	var data=new Array();
 	for(i=0;i<num;i++){
@@ -114,19 +113,17 @@ Mock.mock("/api/getClassInExam",function(Jreq){
 		}
 		data.push(Tdata);
 	}
-	res.classNumber=num;
-	res.data=data;
-	return JSON.stringify(res);
+	res=data;
+	return (res);
 });
 
 Mock.mock("/api/setClassInExam",function(Jreq){
 	var req = JSON.parse(Jreq.body);
-	console.log(Jreq);
 	console.log(req);
 	var data = Mock.mock({
-		"statusCode|0-1":1,
+		"status|0":1,
 	})
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/uploadStudentList",function(req){
@@ -135,24 +132,24 @@ Mock.mock("/api/uploadStudentList",function(req){
 	console.log(req.body.get("className"));
 	console.log(req.body.get("studentForm"));
 	var data = Mock.mock({
-		"statusCode|0-1":1,
+		"status|0-1":1,
 	})
 	//console.log(JSON.stringify(data));
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/delectClass",function(Jreq){
 	req = JSON.parse(Jreq.body);
 	console.log(req);
 	var data = Mock.mock({
-		"statusCode|0-1":1,
+		"status|0":1,
 	})
 	//console.log(JSON.stringify(data));
-	return JSON.stringify(data);
+	return (data);
 });
 
 Mock.mock("/api/getStudentInfo",function(Jreq){
-	var res={};
+	var res;
 	req = JSON.parse(Jreq.body);
 	console.log(req);
 	var num;
@@ -161,6 +158,7 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 	}else{
 		num=50;
 	}
+	console.log(num);
 	var data=new Array();
 	for(i=0;i<num;i++){
 		var Tdata={};
@@ -169,7 +167,6 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 		Tdata.studentScore = Mock.Random.integer(30,100);
 		data.push(Tdata);
 	}
-	res.studentNumber=num;
-	res.data=data;
-	return JSON.stringify(res);
+	res=data;
+	return (res);
 });

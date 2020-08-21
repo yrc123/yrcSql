@@ -10,7 +10,7 @@ function getClassInExam(){
 		dataType:"json",
 		async:false,
 		success:function(resp){
-			data = JSON.parse(resp);
+			data = (resp);
 		},
 		error:function(){
 			layer.msg("服务器出错",{
@@ -38,23 +38,23 @@ table.render({
 	contentType:'application/json',
 	parseData: function(res){ //res 即为原始返回的数据
 		//console.log(res);
-		res = JSON.parse(res);
+		res = (res);
 		var data = {
 			"code": 0, //解析接口状态
 			"msg": res.message, //解析提示文本
 			"count": res.total, //解析数据长度
 		};
-		var len = res.classNumber;
+		var len = res.length;
 		for(i=0;i<len;i++){
-			if(res.data[i].classStatus==true){
-				res.data[i].classStatusText="考试已设定";
-				res.data[i].examTimeText=res.data[i].examTime;
+			if(res[i].classStatus==true){
+				res[i].classStatusText="考试已设定";
+				res[i].examTimeText=res[i].examTime;
 			}else{
-				res.data[i].classStatusText="考试未设定";
-				res.data[i].examTimeText="考试时间未定";
+				res[i].classStatusText="考试未设定";
+				res[i].examTimeText="考试时间未定";
 			}
 		}
-		data.data=res.data;
+		data.data=res;
 		//console.log(data);
 		return data; 
 	},
@@ -75,9 +75,9 @@ function sendData(url,data){
 		data:data,
 		async:false,
 		success:function(Jresp){
-			var resp = JSON.parse(Jresp);
+			var resp = (Jresp);
 			//console.log(resp);
-			if(resp.statusCode==0){
+			if(resp.status==0){
 				layer.msg("设置失败",{
 					shade:0.3,
 					time:500
@@ -104,27 +104,24 @@ function sendData(url,data){
 //将table内的数据格式转换为提交格式，data为要转换的数组
 function toSetExamFormat(data){
 	var len = data.length;
-	var res = {
-		classNumber:len,
-		data:new Array()
-	};
+	var res = new Array()
 	for(i=0;i<len;i++){
-		res.data.push({
+		res.push({
 			classID:data[i].classID,
 			classStatus:data[i].classStatus,
 			examTime:data[i].examTime,
 		});
 	}
-	return res;
+	return data;
 }
 //检查是否设置已设置考试或取消未设置考试
 function checkClassStatus( data, flag ){
-	var len = data.classNumber;
+	var len = data.length;
 	var thisFlag = true;
 	for(i=0;i<len;i++){
 		//console.log(data.data[i].classStatus);
 		//console.log(flag);
-		if(data.data[i].classStatus!=flag){
+		if(data[i].classStatus!=flag){
 			thisFlag=false;
 			break;
 		}
@@ -148,7 +145,7 @@ function checkClassStatus( data, flag ){
 //监听考试管理的每行的按钮
 table.on("tool(examTable)",function(obj){
 	var data =[obj.data];
-	data = toSetExamFormat(data);
+	//data = toSetExamFormat(data);
 	selectSetExamData=data;
 	//console.log(data);
 
@@ -162,10 +159,10 @@ table.on("tool(examTable)",function(obj){
 		if(checkClassStatus(selectSetExamData,true)==false)
 			return false;
 		layer.confirm('确认删除考试?', {icon: 3, title:'提示'}, function(index){
-			var len = selectSetExamData.classNumber;
+			var len = selectSetExamData.length;
 			for(i=0;i<len;i++){
-				selectSetExamData.data[i].classStatus=false;
-				selectSetExamData.data[i].examTime=null;
+				selectSetExamData[i].classStatus=false;
+				selectSetExamData[i].examTime=null;
 			}
 			sendData("/api/setClassInExam",selectSetExamData);
 			layer.close(index);
@@ -177,7 +174,7 @@ table.on("tool(examTable)",function(obj){
 table.on('toolbar(examTable)', function(obj){
 	var checkStatus = table.checkStatus(obj.config.id);
 	var data =checkStatus.data;
-	data = toSetExamFormat(data);
+	//data = toSetExamFormat(data);
 	selectSetExamData=data;
 	//console.log(selectSetExamData);
 
@@ -190,10 +187,10 @@ table.on('toolbar(examTable)', function(obj){
 		if(checkClassStatus(selectSetExamData,true)==false)
 			return false;
 		layer.confirm('确认删除考试?', {icon: 3, title:'提示'}, function(index){
-			var len = selectSetExamData.classNumber;
+			var len = selectSetExamData.length;
 			for(i=0;i<len;i++){
-				selectSetExamData.data[i].classStatus=false;
-				selectSetExamData.data[i].examTime=null;
+				selectSetExamData[i].classStatus=false;
+				selectSetExamData[i].examTime=null;
 			}
 			sendData("/api/setClassInExam", selectSetExamData);
 			layer.close(index);
@@ -240,10 +237,10 @@ function displaySelectExamWindow(){
 //监听设置考试提交
 form.on('submit(submitSetExam)', function(data){
 	var examTime = data.field.examTime;
-	var len = selectSetExamData.classNumber;
+	var len = selectSetExamData.length;
 	for(i=0;i<len;i++){
-		selectSetExamData.data[i].classStatus=true;
-		selectSetExamData.data[i].examTime=examTime;
+		selectSetExamData[i].classStatus=true;
+		selectSetExamData[i].examTime=examTime;
 	}
 	sendData("/api/setClassInExam",selectSetExamData);
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
@@ -277,12 +274,12 @@ upload.render({
 	done: function(res, index, upload){
 		layer.closeAll('loading');
 		//console.log(res);
-		if(res.statusCode==0){
+		if(res.status==0){
 			layer.msg("上传失败",{
 				shade:0.3,
 				time:500
 			});
-		}else if(res.statusCode==1){
+		}else if(res.status==1){
 			layer.msg("上传成功",{
 				shade:0.3,
 				time:500
@@ -311,23 +308,23 @@ table.render({
 	method:"POST",
 	contentType:'application/json',
 	parseData: function(res){ //res 即为原始返回的数据
-		res = JSON.parse(res);
+		res = (res);
 		var data = {
 			"code": 0, //解析接口状态
 			"msg": res.message, //解析提示文本
 			"count": res.total, //解析数据长度
 		};
-		var len = res.classNumber;
+		var len = res.length;
 		for(i=0;i<len;i++){
-			if(res.data[i].classStatus==true){
-				res.data[i].classStatusText="考试已设定";
-				res.data[i].examTimeText=res.data[i].examTime;
+			if(res[i].classStatus==true){
+				res[i].classStatusText="考试已设定";
+				res[i].examTimeText=res[i].examTime;
 			}else{
-				res.data[i].classStatusText="考试未设定";
-				res.data[i].examTimeText="考试时间未定";
+				res[i].classStatusText="考试未设定";
+				res[i].examTimeText="考试时间未定";
 			}
 		}
-		data.data=res.data;
+		data.data=res;
 		return data; 
 	},
 	toolbar:"#classToolbar", //开启头部工具栏，并为其绑定左侧模板
@@ -338,10 +335,7 @@ table.render({
 
 //监听班级管理的每行的按钮
 table.on("tool(classTable)",function(obj){
-	var data ={
-		classNumber:1,
-		data:[obj.data.classID]
-	};
+	var data =[obj.data.classID]
 	var layEvent = obj.event;
 	if(layEvent=="classSub"){
 		layer.confirm('确认删除班级?', {icon: 3, title:'提示'}, function(index){
@@ -363,15 +357,15 @@ table.on('toolbar(classTable)', function(obj){
 
 //设置select选项
 function setSelect(data){
-	var len = data.classNumber;
+	var len = data.length;
 	var selectTemplate = $("#selectTemplate");
 	var selectClass = $("#selectClass");
 	//console.log(selectClass.html());
 	selectClass.html('<option value="ALL" >ALL</option>');
 	for(i=0;i<len;i++){
 		var tdata={
-			className:data.data[i].className,
-			classID:data.data[i].classID,
+			className:data[i].className,
+			classID:data[i].classID,
 		};
 		//console.log(tdata);
 		laytpl(selectTemplate[0].innerHTML).render(tdata,function(html){
@@ -409,14 +403,14 @@ table.render({
 		classID:getClassID
 	},
 	parseData: function(res){ //res 即为原始返回的数据
-		res = JSON.parse(res);
+		res = (res);
 		var data = {
 			"code": 0, //解析接口状态
 			"msg": res.message, //解析提示文本
 			"count": res.total, //解析数据长度
-			"data":res.data
+			"data":res
 		};
-		data.data=res.data;
+		//data.data=res.data;
 		return data; 
 	},
 	toolbar:"<p>成绩表</p>", //开启头部工具栏，并为其绑定左侧模板

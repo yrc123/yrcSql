@@ -45,7 +45,7 @@ function getExam(){
 		data:null,
 		dataType:"json",
 		success:function(resp){
-			data=JSON.parse(resp);
+			data=(resp);
 		},
 		error:function(){
 			layer.msg("服务器出错",{
@@ -129,18 +129,21 @@ function checkExam(){
 			}),
 			async:false,
 			success:function(resp){
-				var data=JSON.parse(resp);
+				var data=(resp);
 				if(data["examStart"]==0){
 					layer.msg("考试还未开始",{
-				shade:0.3,
-				time:500
+						shade:0.3,
+						time:500
 					});
+					setTimeout(function(){
+						location.href="./student.html";
+					},500);
 				}
 			},
 			error:function(){
 				layer.msg("服务器出错",{
-				shade:0.3,
-				time:500
+					shade:0.3,
+					time:500
 				});
 			}
 		})
@@ -171,9 +174,11 @@ function getInput(data){
 //获取学生的答案
 function getAns(data){
 
-	var ans={} ;
+	//console.log("data");
+	//console.log(data);
+	var ans=new Array();
 	
-	ans.Qtype=data.Qtype;
+	ans.push(data.Qtype);
 	
 	var inputArr = getInput(data);
 	var tmp;
@@ -195,13 +200,16 @@ function getAns(data){
 			Qnum++;
 		}
 	}
-	ans.data=tmpArr;
+	ans.push(tmpArr);
+	//console.log(ans);
 	return ans;
 }
 
 //设置正确答案
 function setAns(ans,data){
 
+	//console.log(data);
+	//console.log(ans);
 	var inputArr = getInput(data);
 	var Qnum=0;
 	var tmp;
@@ -216,11 +224,11 @@ function setAns(ans,data){
 			for(z=0;z<item;z++){
 				//console.log(Qnum+" "+inputArr[Qnum][z].attr("value"));
 				if(inputArr[Qnum][z].is(":checked")){
-					if((ans.data[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))==0){
+					if((ans[1][Qnum]&parseInt(inputArr[Qnum][z].attr("value")))==0){
 						inputArr[Qnum][z].parent().css("background-color","#f6bbbb")
 					}
 				}
-				if((ans.data[Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
+				if((ans[1][Qnum]&parseInt(inputArr[Qnum][z].attr("value")))!=0){
 					inputArr[Qnum][z].parent().css("background-color","#e8f7d2")
 				}
 			}	
@@ -231,7 +239,8 @@ function setAns(ans,data){
 //提交考试
 function submitExam(){
 	var ans=getAns(examInfo);
-	console.log(form.val("examForm"));
+	console.log(ans);
+	//console.log(form.val("examForm"));
 	$.ajax({
 		type:"POST",
 		url:"/api/submitExam",
@@ -248,7 +257,7 @@ function submitExam(){
 					location.href="./student.html"
 				},500);
 			}else{
-				var ans=JSON.parse(resp);
+				var ans=(resp);
 				$('#timeBar').countdown('stop')
 				setTimeout(function(){
 					setAns(ans,examInfo);
