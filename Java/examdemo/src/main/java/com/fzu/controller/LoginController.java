@@ -39,8 +39,11 @@ public class LoginController {
         if (username.equals("admin")){
             String userId = UUIDUtils.getUUID();
             Cookie cookie1=new Cookie("userId",userId);
+            cookie1.setPath("/");
             Cookie cookie2=new Cookie("username",username);
+            cookie2.setPath("/");
             Cookie cookie3=new Cookie("character","admin");
+            cookie3.setPath("/");
             status=adminService.admCheck(username, password);
             result.put("status", status);
             response.addCookie(cookie1);
@@ -53,6 +56,9 @@ public class LoginController {
             Cookie cookie1=new Cookie("userId",userId);
             Cookie cookie2=new Cookie("username",username);
             Cookie cookie3=new Cookie("character","teacher");
+            cookie1.setPath("/");
+            cookie2.setPath("/");
+            cookie3.setPath("/");
             status=teacherService.teaCheck(username,password);
             result.put("status", status);
             response.addCookie(cookie1);
@@ -65,6 +71,9 @@ public class LoginController {
             Cookie cookie1=new Cookie("userId",userId);
             Cookie cookie2=new Cookie("username",username);
             Cookie cookie3=new Cookie("character","student");
+            cookie1.setPath("/");
+            cookie2.setPath("/");
+            cookie3.setPath("/");
             status=studentService.stuCheck(username, password);
             result.put("status", status);
             response.addCookie(cookie1);
@@ -76,8 +85,9 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("/changePassword")
-    public void changePassword(HttpServletRequest request, @RequestBody JSONObject jsonObject){
+    public Map<String,String> changePassword(HttpServletRequest request, @RequestBody JSONObject jsonObject){
         String newPassword=(String)jsonObject.get("newPassword");
+        Map<String,String> result=new HashMap<>();
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
            String username=cookies[1].getValue();
@@ -85,16 +95,20 @@ public class LoginController {
            //管理员
             if (username.equals("admin")){
                 adminService.changePassword(username,newPassword);
+                result.put("status","1");
             }
             //教师
             else if (username.substring(0,1).equals("T")){
                 teacherService.changePassword(username,newPassword);
+                result.put("status","1");
             }
             //学生
             else{
                 studentService.changePassword(username,newPassword);
+                result.put("status","1");
             }
         }
+        return result;
     }
 
 

@@ -19,7 +19,7 @@ public class TeacherDao {
         String sql="insert into exam_system.teacher (teacher_id, password, name) values (?,?,?)";
         Object[] objects=new Object[3];
         objects[0]=teacher.getTeacherId();
-        objects[1]="666666";//初始密码
+        objects[1]=ORIGINAL_PASSWORD;//初始密码
         objects[2]=teacher.getName();
         jdbcTemplate.update(sql,objects);
     }
