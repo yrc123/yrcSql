@@ -10,4 +10,6 @@ import java.util.List;
 public interface StudentService {
     //导入学生名单
     void importStudent(List<STable> STables,String teacherId);
+    //登录检验
+    int stuCheck(String username,String password);
 }

@@ -4,9 +4,9 @@ server:
     context-path: /
 spring:
   datasource:
-    username: root
-    password: Ldy9290804
-    url: jdbc:mysql://localhost:3306/exam_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: exam_system
+    password: 123456
+    url: jdbc:mysql://39.100.115.179:3306/exam_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
   ## springboot 2.X
   ##不操作

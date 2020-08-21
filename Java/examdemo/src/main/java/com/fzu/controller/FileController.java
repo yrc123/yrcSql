@@ -39,6 +39,7 @@ public class FileController {
     StudentService studentService=new StudentServiceImpl();
     @Autowired
     AdminService adminService=new AdminServiceImpl();
+    @Autowired
     TeacherService teacherService=new TeacherServiceImpl();
 
 

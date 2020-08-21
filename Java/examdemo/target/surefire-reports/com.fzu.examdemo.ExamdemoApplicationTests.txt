@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.fzu.examdemo.ExamdemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.039 s - in com.fzu.examdemo.ExamdemoApplicationTests
