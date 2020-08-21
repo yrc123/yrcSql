@@ -20,11 +20,11 @@ Mock.mock("/api/logout",function(Jreq){
 	$.removeCookie("character");
 });
 
-Mock.mock("/api/examStart",function(Jreq){
+Mock.mock("/api/examStatus",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
 	var data = Mock.mock({
-		"examStart|0":1,
+		"examStart|1":1,
 	});
 	return (data);
 });
