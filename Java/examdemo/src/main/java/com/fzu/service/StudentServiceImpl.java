@@ -36,5 +36,10 @@ public class StudentServiceImpl implements StudentService {
       classDao.addClass(map);
     }
 
+    @Override
+    public int stuCheck(String username, String password) {
+        return studentDao.stuCheck(username, password);
+    }
+
 
 }

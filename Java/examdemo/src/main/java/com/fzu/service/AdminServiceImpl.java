@@ -1,5 +1,6 @@
 package com.fzu.service;
 
+import com.fzu.dao.AdminDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.pojo.QTable;
 import com.fzu.pojo.Question;
@@ -11,9 +12,10 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     @Autowired
     QuestionDao questionDao;
+    AdminDao adminDao;
 
     @Override
-    public void importQuesiton(List<QTable> qTables) {
+    public void importQuestion(List<QTable> qTables) {
 
         for (int i = 0; i < qTables.size(); i++) {
             Question question = new Question();
@@ -29,5 +31,10 @@ public class AdminServiceImpl implements AdminService {
             question.setAnswer(qTables.get(i).getAnswer());
             questionDao.addQuestion(question);
         }
+    }
+
+    @Override
+    public int admCheck(String username, String password) {
+        return adminDao.admCheck(username, password);
     }
 }

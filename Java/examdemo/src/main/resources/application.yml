@@ -1,0 +1,17 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    username: exam_system
+    password: 123456
+    url: jdbc:mysql://39.100.115.179:3306/exam_system?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  ## springboot 2.X
+  ##不操作
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
