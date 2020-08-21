@@ -1,6 +1,6 @@
 # 数据库实践仓库
 
-- 所有请求使用post，使用json格式
+- 
 - 后端在收到操作时要对操作用户的权限进行判断（过滤器）
   - 对于没登录的用户转跳到登录界面
   - 对于权限不够的用户转跳到权限不足的页面。
@@ -8,7 +8,7 @@
 - 考试分为模拟考和真实考试
   - 模拟考在:一段时间内都可以考,考试时间按照考生点击进入考试的时间计算，并且在考试结束后直接返回做题情况(细节待补充).
   - 正式考试:考试开始时间在管理员按下考试开始时统一开始计算，考试结束后返回提交成功页面。
-- 要调用的函数路径为`./api/函数名`
+- 要调用的函数路径为`./函数名`
 
 ## cookie约定
 
@@ -37,11 +37,11 @@
 
   - ```json
     {
-        "statusCode":0|1|2|3
+        "status":0|1|2|3
     }
     ```
 
-  - loginCode：代表登录状态，0代表登录失败，1代表登录成功，2代表第一次登录未修改密码，3代表重复登录
+  - status：代表登录状态，0代表登录失败，1代表登录成功，2代表第一次登录未修改密码，3代表重复登录
 
 
 - 功能
@@ -167,15 +167,15 @@
 - 参数
 
   - ```json
-    {
-        "Qtype":[ number, number, number],
-        "data":[ number, number, ...]
-    }
+    [
+        [ number, number, number],
+     	[ number, number, ...]
+    ]
     ```
 
-  - Qtype：分别代表单选，多选，判断的题目数量
+  - 第一个数组：分别代表单选，多选，判断的题目数量
 
-  - data：代表考生选的选项，范围为0-15，使用二进制表示：
+  - 第二个数组：代表考生选的选项，范围为0-15，使用二进制表示：
 
     - 0代表未选
     - 1代表A选项或正确
@@ -187,15 +187,14 @@
 - 返回
 
   - ```json
-    {
-        //如果是模拟考试，返回正确答案
-        "Qtype":[ number, number, number],
-        "data":[ number, number, ...]
-    }
+    [
+        [ number, number, number],
+     	[ number, number, ...]
+    ]
     ```
-
-  - 格式同上
-
+    
+- 格式同上
+  
 - 功能
 
   - 提交学生选项
@@ -211,30 +210,25 @@
 - 返回
 
   - ```json
-    {
-        "classNumber":number,
-        "data":[
-            {
-                "className":string,
-                "classID":sting,
-                "classStatus":bool,
-                "examTime":string
-            }
-            ...
-        ]
-    }
+    [
+        {
+            "className":string,
+            "classID":sting,
+            "classStatus":bool,
+            "examTime":string
+        }
+        ...
+    ]
     ```
-
-  - classNumber：班级数量
-
+    
   - className：班级名称，如"软件工程三班"
-
-  - classID：班级唯一id
-
-  - classStatus：班级状态，是否在考试中，返回bool值
-
-  - examTime：如果班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
-
+  
+- classID：班级唯一id
+  
+- classStatus：班级状态，是否在考试中，返回bool值
+  
+- examTime：如果班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+  
 - 功能
   
   - 查询对应教师账号的所有班级考试状态
@@ -244,34 +238,31 @@
 - 参数
 
   - ```json
-    {
-        "classNumber":number,
-        "data":[
-            {
-                "classID":sting,
-                "classStatus":bool,
-                "examTime":string
-            }
-            ...
-        ]
-    }
+    [
+        {
+            "classID":sting,
+            "classStatus":bool,
+            "examTime":string
+        }
+        ...
+    ]
     ```
     
   - classID：班级唯一id
-
+  
   - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态
-
-  - examTime：如果设置班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
-
+  
+- examTime：如果设置班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+  
 - 返回
 
   - ```json
     {
-        "statusCode":0|1
+        "status":0|1
     }
     ```
 
-  - statusCode：0设置失败，1设置成功
+  - status：0设置失败，1设置成功
 
 - 功能
 
@@ -292,11 +283,11 @@
 
   - ```json
     {
-        "statusCode":0|1
+        "status":0|1
     }
     ```
 
-  - statusCode：0设置失败，1设置成功
+  - status：0设置失败，1设置成功
 
   - 对于参数不够返回失败
 
@@ -309,25 +300,20 @@
 - 参数
 
   - ```json
-    {
-        "classNumber":number,
-        "data":[string,string,...]
-    }
+    [string,string,...]
     ```
-
-  - classNumber:班级数量
-
-  - data：一个包含删除班级classID的数组
-
+    
+  - 一个包含删除班级classID的数组
+  
 - 返回
 
   - ```json
     {
-        "statusCode":0|1
+        "status":0|1
     }
     ```
 
-  - statusCode：0设置失败，1设置成功
+  - status：0设置失败，1设置成功
 
 - 功能
 
@@ -348,24 +334,21 @@
 - 返回
 
   - ```json
-    {
-        "studentNumber":number,
-        "data":[
-            {
-                "studentName":string,
-                "studentNo":number,
-                "studentScore":number,
-            }
-        ]
-    }
+    [
+        {
+            "studentName":string,
+            "studentNo":number,
+            "studentScore":number,
+        }
+    ]
     ```
-
+    
   - studetnName:代表学生姓名
-
-  - studentNo：代表学生学号
-
-  - studentScore：代表学生成绩
-
+  
+- studentNo：代表学生学号
+  
+- studentScore：代表学生成绩
+  
 - 功能
 
   - 获取指定班级的学生信息
