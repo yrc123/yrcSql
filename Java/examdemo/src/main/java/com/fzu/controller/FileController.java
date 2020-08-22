@@ -49,7 +49,11 @@ public class FileController {
         Map<String, Object> result = new HashMap<String, Object>();
         String fileName = "";
         Cookie[]cookies= request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            System.out.println(i+"--"+cookies[i].getValue());
+        }
         String teacherId =cookies[0].getValue();
+        String path = "";
         try {
             //将当前上下文初始化给  CommonsMutipartResolver
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -74,13 +78,14 @@ public class FileController {
                         //拼接新的文件名
                         String newName ="学生表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径
-                        String path = "C:/Users/11139/examsystem/" + newName;
+                        //"C:/Users/11139/examsystem/"
+                        path = "S:/sqlTest/examsystem/" + newName;
                         //上传保存
-                       /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
-                        //保存当前文件路径
-                        request.getSession().setAttribute("currFilePath", path);
-                        request.getSession().setAttribute("teacherId", teacherId);
+                        /* file.transferTo();*/
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        ////保存当前文件路径
+                        //request.getSession().setAttribute("currFilePath", path);
+                        //request.getSession().setAttribute("teacherId", teacherId);
                     }
                 }
             }
@@ -92,8 +97,11 @@ public class FileController {
             result.put("statusCode", "300");
             result.put("message", "上传失败:" + ex.getMessage());
         }
+        parseStudentExcel(request, path, teacherId);
+
         return result;
     }
+
 
     @ResponseBody
     @RequestMapping("/parseStudentExcel")
@@ -131,6 +139,7 @@ public class FileController {
                 sTables.add(s);
             }
             //String teacherId=(String)request.getSession().getAttribute("teacherId");
+            System.out.println("teacherId"+teacherId);
             studentService.importStudent(sTables,teacherId);
 
         }
@@ -143,6 +152,11 @@ public class FileController {
         return result;
     }
 
+    /**
+     * 教师文件上传导入 连续化
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/doImportTeacherExcel")
     public Map<String, Object> TeacherUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
@@ -198,7 +212,7 @@ public class FileController {
     }
 
     /**
-     * 已同导入文件整合，不推荐单独使用---导入题目文件到数据库
+     * 已同导入教师文件整合，不推荐单独使用---导入题目文件到数据库
      *      对比之前增加了path参数 为表格文件路径
      * @param request
      * @param path      表格文件路径
@@ -253,7 +267,7 @@ public class FileController {
 
 
     /**
-     *  上传题目表 整合 导入数据库(用parse)
+     * 上传题目表 整合 导入数据库(用parse)
      * @version 2.0
      * @param request
      * @param file
