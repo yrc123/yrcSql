@@ -30,8 +30,6 @@ public class IndexController {
             System.out.println("]");
         }
 
-
-
     }
 
     @ResponseBody

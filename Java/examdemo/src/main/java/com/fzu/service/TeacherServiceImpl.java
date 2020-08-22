@@ -1,6 +1,7 @@
 package com.fzu.service;
 
 import com.fzu.dao.TeacherDao;
+import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.TTable;
 import com.fzu.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,13 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void changePassword(String username, String password) {
         teacherDao.changePassword(username, password);
+    }
+
+    @Override
+    public List<ClassExam> getClassExamList(String teacherId) {
+        //先通过教师id获取班级id列表
+        //再遍历每个班级id获得班级考试
+        return null;
     }
 
 }

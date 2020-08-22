@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class TeacherDao {
@@ -44,4 +45,9 @@ public class TeacherDao {
         jdbcTemplate.update(sql,objects);
 
     }
+    //通过教师id获得班级的id集合
+    public List<Integer> getClassIdByTeacherId(Integer teacherId){
+
+    }
+
 }

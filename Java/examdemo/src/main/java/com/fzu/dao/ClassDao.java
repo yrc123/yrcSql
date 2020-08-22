@@ -1,5 +1,6 @@
 package com.fzu.dao;
 
+import com.fzu.pojo.ClassExam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,11 @@ public class ClassDao {
             System.out.println(mapKey);
             jdbcTemplate.update(sql,objects);
         }
+    }
+    //通过classId获取班级考试
+    public ClassExam getClassExamById(Integer classId){
 
     }
+
+
 }

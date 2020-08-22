@@ -1,5 +1,6 @@
 package com.fzu.service;
 
+import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.TTable;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface TeacherService {
     int teaCheck(String username,String password);
     //修改密码
     void changePassword(String username,String password);
+    //通过教师id获取班级考试列表
+    List<ClassExam> getClassExamList(String teacherId);
 }
