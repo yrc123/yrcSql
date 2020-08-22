@@ -34,9 +34,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public void updateClassExam(ClassExam classExam) {
+
+    }
+
+    @Override
     public List<ClassExam> getClassExamList(String teacherId) {
-        //先通过教师id获取班级id列表
-        //再遍历每个班级id获得班级考试
+
         return null;
     }
 

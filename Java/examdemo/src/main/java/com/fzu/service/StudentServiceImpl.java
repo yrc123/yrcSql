@@ -3,10 +3,7 @@ package com.fzu.service;
 import com.fzu.dao.ClassDao;
 import com.fzu.dao.StudentDao;
 import com.fzu.dao.TeacherDao;
-import com.fzu.pojo.STable;
-import com.fzu.pojo.Student;
-import com.fzu.pojo.TTable;
-import com.fzu.pojo.Teacher;
+import com.fzu.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +41,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void changePassword(String username, String password) {
         studentDao.changePassword(username, password);
+    }
+
+    @Override
+    public Integer getClassId(String studentId) {
+        return null;
+    }
+
+    @Override
+    public ClassExam getClassExam(Integer classId) {
+        return null;
     }
 
 

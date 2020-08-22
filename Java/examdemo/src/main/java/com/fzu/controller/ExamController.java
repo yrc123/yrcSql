@@ -34,15 +34,7 @@ public class ExamController {
         for(int i=0;i<classExamList.size();i++){
             ClassExam classExam;
             classExam=classExamList.get(i);
-            if(classExam.getClassStatus()==0){//删除考试
-
-            }
-            else if(classExam.getClassStatus()==1){//设置模拟考试
-
-            }
-            else if(classExam.getClassStatus()==2){//设置正式考试
-
-            }
+            teacherService.updateClassExam(classExam);
             System.out.println(i+classExam.toString());
         }
         return result;
@@ -68,12 +60,14 @@ public class ExamController {
         Cookie[]cookies=request.getCookies();
         String studentId=cookies[1].getValue();
         //通过学生id得到班级名字，通过班级名字得到班级id，通过班级id获取examstatus。
+        Integer classId=studentService.getClassId(studentId);
+        ClassExam classExam=studentService.getClassExam(classId);
         //如果为0则为未开始
 
 
 
         //如果非0，通过班级id获取考试开始时间。考试开始时间未到为未开始
-
+        return null;
     }
 
 }
