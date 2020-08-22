@@ -18,9 +18,8 @@
 					<ul class="layui-nav layui-nav-tree"  lay-filter="left-nav">
 						<li  class="layui-nav-item layui-this"><a type="0" href="#">教师名单管理</a></li>
 						<li  class="layui-nav-item"><a type="1" href="#">学生密码管理</a></li>
-                        <li  class="layui-nav-item"><a type="2" href="#">教师密码管理</a></li>
-                        <li  class="layui-nav-item"><a type="3" href="#">考试管理</a></li>
-                        <li  class="layui-nav-item"><a type="4" href="#">非法登录IP查询</a></li>
+                        <li  class="layui-nav-item"><a type="2" href="#">考试管理</a></li>
+                        <li  class="layui-nav-item"><a type="3" href="#">导入题库</a></li>
 					</ul>
 				</div>
 			</div>
@@ -37,9 +36,9 @@
 				<div class="side-item layui-hide">
 
 					<fieldset class="layui-elem-field layui-field-title">
-						<legend>班级信息</legend>
+						<legend>学生名单</legend>
 					</fieldset>
-					<table id="setClassTable" class="layui-table" lay-filter="classTable"></table>
+					<table id="studentTable" class="layui-table" lay-filter="classTable"></table>
 				</div>
 
 				<div class="side-item layui-hide">
@@ -81,23 +80,23 @@
 					</div>
 				</div>
 				<div style="padding:10px; border:1px dashed #e2e2e2;">
-					<input id="inputClassName" type="text" name="className" required  lay-verify="required" placeholder="请输入要上传的班级名" autocomplete="off" class="layui-input" style="margin-bottom:10px">
+					<!-- <input id="inputClassName" type="text" name="className" required  lay-verify="required" placeholder="请输入要上传的班级名" autocomplete="off" class="layui-input" style="margin-bottom:10px"> -->
 					<button id="startUpload" class="layui-btn layui-btn-normal layui-btn-fluid" id="startUpload"  >开始上传</button>
 				</div>
 			</div>
 		</div>
 
-		<script type="text/html" id="examBar">
-			<a href="#" class="add layui-icon layui-icon-add-circle" style="font-size: 30px;" lay-event="examAdd"></a>
-			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="examSub"></a>
+		<!-- 头部工具栏Bar 侧边工具栏为ToolBar -->
+		<script type="text/html" id="teacherListBar">			
+			<div class="layui-inline" lay-event="teacherAdd"><i class="layui-icon layui-icon-addition"></i></div>
+			<div class="layui-inline" lay-event="teacherSub"><i class="layui-icon layui-icon-subtraction"></i></div>
 		</script>
 
-		<script type="text/html" id="examToolbar">
-			<div class="layui-inline" lay-event="examAddMulti"><i class="layui-icon layui-icon-addition"></i></div>
-			<div class="layui-inline" lay-event="examSubMulti"><i class="layui-icon layui-icon-subtraction"></i></div>
+		<script type="text/html" id="teacherListToolBar">		
+			<a href="#" class="reset layui-icon layui-icon-password" style="font-size: 30px;" lay-event="teacherReset"></a>
 		</script>
 
-		<script type="text/html" id="classBar">
+		<script type="text/html" id="studentResetBar">
 			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="classSub"></a>
 		</script>
 

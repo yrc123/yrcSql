@@ -353,6 +353,39 @@
 
   - 获取指定班级的学生信息
 
+### getTeacherList
+
+- 参数
+
+  - void
+
+- 返回
+
+  - ```json
+    [
+        {
+            "teacherId":string,
+            "teacherName":sting,
+            "teacherStatus":bool
+        }
+        ...
+    ]
+    ```
+
+- teacherId：教师唯一id
+
+- teacherName:教师姓名
+
+- teacherStatu：教师状态，false表示教师被删除
+
+- 功能
+
+  - 查询所有的教师账号
+
+### resetPassword
+
+### 
+
 ## 前端需求
 
 ### 主页|index.html

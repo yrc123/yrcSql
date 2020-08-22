@@ -46,6 +46,7 @@ p{
 	color:#CCC;
 	transition:0.3s ease;
 }
+
 #timeBar{
 	text-align:center;
 	color:white;
@@ -54,4 +55,13 @@ p{
 	border-radius:10px 10px 10px 10px;	
 	padding-top: 9px;
 	padding-bottom: 13px;
+}
+
+.reset{
+	color:#CCC;
+	transition:0.3s ease;
+}
+
+.reset:hover{
+	color:rgb(30, 223, 213);
 }

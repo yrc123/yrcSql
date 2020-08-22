@@ -170,3 +170,28 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 	res=data;
 	return (res);
 });
+
+Mock.mock("/api/getTeacherList",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
+	var num=30;
+	var data=new Array();
+	for(i=0;i<num;i++){
+		var Tdata=Mock.mock({});
+		Tdata.teacherName = Mock.Random.cname();
+		Tdata.teacherId = "T"+Mock.Random.integer(10000,99999);
+		Tdata.techerStatus=true;
+		data.push(Tdata);
+	}
+	res=data;
+	return (res);
+});
+
+Mock.mock("/api/setTeacherList",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
+	var data = Mock.mock({
+		"status|0":1,
+	})
+	return (data);
+});
