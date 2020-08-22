@@ -3,7 +3,6 @@ package com.fzu.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
-import com.fzu.pojo.Question;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +20,18 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public void test(){
-        Question question = new Question();
-        question.setAnswer("BDd");
-        System.out.println(question.getAnswer());
+    public void test(@RequestBody List<List<Integer>> lists){
+        for(int i=0;i<lists.size();i++){
+            List<Integer> list=lists.get(i);
+            System.out.print(i+"[");
+            for(int j=0;j<list.size();j++){
+                System.out.print(list.get(j));
+            }
+            System.out.println("]");
+        }
+
+
+
     }
 
     @ResponseBody
