@@ -264,7 +264,7 @@ form.on('submit(submitSetExam)', function(data){
 //上传班级学生文件
 upload.render({
 	elem: '#uploadSpace',
-	url: "/api/uploadStudentList", //改成您自己的上传接口
+	url: "/api/doImportStudentExcel", //改成您自己的上传接口
 	auto: false,
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
