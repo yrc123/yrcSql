@@ -43,6 +43,7 @@ function loadHeader(s){
 			$.ajax({
 				type:"POST",
 				url:"/api/logout",
+				contentType: "application/json; charset=utf-8",
 				success:function(){
 					location.href="./index.html";
 				}
@@ -189,6 +190,7 @@ form.on('submit(login)', function(){
 		type:"POST",
 		url:"/api/login",
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		data:JSON.stringify({
 			"username":username,
 			"password":password
@@ -243,6 +245,7 @@ form.on('submit(changePassword)', function(){
 		type:"POST",
 		url:"/api/changePassword",
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		data:JSON.stringify({
 			"newPassword":newPassword,
 		}),
