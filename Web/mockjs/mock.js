@@ -126,7 +126,7 @@ Mock.mock("/api/setClassInExam",function(Jreq){
 	return (data);
 });
 
-Mock.mock("/api/uploadStudentList",function(req){
+Mock.mock("/api/doImportStudentExcel",function(req){
 	//console.log(req.body.get("className"));
 	console.log(req);
 	console.log(req.body.get("className"));
@@ -169,4 +169,29 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 	}
 	res=data;
 	return (res);
+});
+
+Mock.mock("/api/getTeacherList",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
+	var num=30;
+	var data=new Array();
+	for(i=0;i<num;i++){
+		var Tdata=Mock.mock({});
+		Tdata.teacherName = Mock.Random.cname();
+		Tdata.teacherId = "T"+Mock.Random.integer(10000,99999);
+		Tdata.techerStatus=true;
+		data.push(Tdata);
+	}
+	res=data;
+	return (res);
+});
+
+Mock.mock("/api/setTeacherList",function(Jreq){
+	var req = JSON.parse(Jreq.body);
+	console.log(req);
+	var data = Mock.mock({
+		"status|0":1,
+	})
+	return (data);
 });

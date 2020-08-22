@@ -272,7 +272,7 @@
   - 设置指定班级的考试时间范围
   - 如果该班级考试已开放，再次设置考试时间应当返回设置失败
 
-### uploadClassForm
+### doImportStudentExcel
 
 - 参数
 
@@ -355,6 +355,39 @@
 - 功能
 
   - 获取指定班级的学生信息
+
+### getTeacherList
+
+- 参数
+
+  - void
+
+- 返回
+
+  - ```json
+    [
+        {
+            "teacherId":string,
+            "teacherName":sting,
+            "teacherStatus":bool
+        }
+        ...
+    ]
+    ```
+
+- teacherId：教师唯一id
+
+- teacherName:教师姓名
+
+- teacherStatu：教师状态，false表示教师被删除
+
+- 功能
+
+  - 查询所有的教师账号
+
+### resetPassword
+
+### 
 
 ## 前端需求
 
