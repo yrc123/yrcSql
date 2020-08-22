@@ -1,2 +1,4 @@
 /Java/examdemo/.idea/
 /Java/examdemo/src/main/resources/application.yml
+/Java/examdemo/target
+/Java/examdemo/.mvn
