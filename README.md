@@ -115,7 +115,7 @@
 
   - 根据考试类型，返回对应考试状态
 
-### getExam*
+### getExam
 
 - 参数
 
@@ -201,7 +201,7 @@
   - 如果是模拟考则返回答案，正式考试返回null
   - 一定要用服务器数据来判断是否是模拟考，不能用cookie
   
-### getClassInExam
+### getClassInExam<<<
 
 - 参数
 
@@ -214,7 +214,7 @@
         {
             "className":string,
             "classId":sting,
-            "classStatus":bool,
+            "classStatus":0|1|2,<<<
             "examTime":string
         }
         ...
@@ -223,36 +223,39 @@
     
   - className：班级名称，如"软件工程三班"
   
-- classId：班级唯一id
-  
-- classStatus：班级状态，是否在考试中，返回bool值
-  
-- examTime：如果班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+  - classId：班级唯一id
+    
+  - classStatus：班级状态，是否在考试中，0代表不在考试中，1代表在模拟考试，2代表在正式考试
+    
+  - examTime：如果班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
   
 - 功能
   
   - 查询对应教师账号的所有班级考试状态
 
-### setClassInExam
+### setClassInExam<<<
 
 - 参数
 
   - ```json
     [
         {
+            "className":string,<<<
             "classId":sting,
-            "classStatus":bool,
+            "classStatus":0|1|2,<<<
             "examTime":string
         }
         ...
     ]
     ```
     
+  - className：班级名称，如"软件工程三班"
+  
   - classId：班级唯一id
   
-  - classStatus：班级状态，是否在考试中，如果为true，则设置班级为考试状态
+  - classStatus：班级状态，是否在考试中，0代表不在考试中，1代表在模拟考试，2代表在正式考试
   
-- examTime：如果设置班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+  - examTime：如果设置班级在考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
   
 - 返回
 
