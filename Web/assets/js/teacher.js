@@ -8,6 +8,7 @@ function getClassInExam(){
 		type:"POST",
 		url:"/api/getClassInExam",
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		async:false,
 		success:function(resp){
 			data = (resp);
@@ -72,6 +73,7 @@ function sendData(url,data){
 		type:"POST",
 		url:url,
 		dataType:"json",
+		contentType: "application/json; charset=utf-8",
 		data:data,
 		async:false,
 		success:function(Jresp){
