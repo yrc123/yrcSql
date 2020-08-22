@@ -19,6 +19,7 @@ public class ClassDao {
             Object[] objects=new Object[2];
             objects[0]=mapKey;
             objects[1]=mapValue;
+            System.out.println(mapKey);
             jdbcTemplate.update(sql,objects);
         }
 

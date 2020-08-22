@@ -104,7 +104,7 @@ Mock.mock("/api/getClassInExam",function(Jreq){
 	var data=new Array();
 	for(i=0;i<num;i++){
 		var Tdata=Mock.mock({
-			"classStatus|1":true
+			"classStatus|0-2":1
 		})
 		Tdata.className = "班级"+Mock.Random.cword('一二三四五六七八九十',1,2);
 		Tdata.classId = Mock.Random.string(16);
@@ -126,7 +126,7 @@ Mock.mock("/api/setClassInExam",function(Jreq){
 	return (data);
 });
 
-Mock.mock("/api/uploadStudentList",function(req){
+Mock.mock("/api/doImportStudentExcel",function(req){
 	//console.log(req.body.get("className"));
 	console.log(req);
 	console.log(req.body.get("className"));

@@ -49,7 +49,11 @@ public class FileController {
         Map<String, Object> result = new HashMap<String, Object>();
         String fileName = "";
         Cookie[]cookies= request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            System.out.println(i+"--"+cookies[i].getValue());
+        }
         String teacherId =cookies[0].getValue();
+        String path = "";
         try {
             //将当前上下文初始化给  CommonsMutipartResolver
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -74,13 +78,14 @@ public class FileController {
                         //拼接新的文件名
                         String newName ="学生表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径
-                        String path = "C:/Users/11139/examsystem/" + newName;
+                        //"C:/Users/11139/examsystem/"
+                        path = "S:/sqlTest/examsystem/" + newName;
                         //上传保存
-                       /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
-                        //保存当前文件路径
-                        request.getSession().setAttribute("currFilePath", path);
-                        request.getSession().setAttribute("teacherId", teacherId);
+                        /* file.transferTo();*/
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        ////保存当前文件路径
+                        //request.getSession().setAttribute("currFilePath", path);
+                        //request.getSession().setAttribute("teacherId", teacherId);
                     }
                 }
             }
@@ -92,16 +97,19 @@ public class FileController {
             result.put("statusCode", "300");
             result.put("message", "上传失败:" + ex.getMessage());
         }
+        parseStudentExcel(request, path, teacherId);
+
         return result;
     }
 
+
     @ResponseBody
     @RequestMapping("/parseStudentExcel")
-    public Map<String, Object> parseStudentExcel(HttpServletRequest request) {
+    public Map<String, Object> parseStudentExcel(HttpServletRequest request, String path, String teacherId) {
         Map<String, Object> result = new HashMap<String, Object>();
         Workbook workbook = null;
-        //获取文件路径
-        String path =(String)request.getSession().getAttribute("currFilePath");
+        ////获取文件路径
+        //String path =(String)request.getSession().getAttribute("currFilePath");
         System.out.println("测试路径"+path);//测试看看路径正确？
         //获取文件格式
         String fileType = path.substring(path.lastIndexOf(".") + 1, path.length());
@@ -130,7 +138,8 @@ public class FileController {
                 s.setClassInfo(classInfo);
                 sTables.add(s);
             }
-            String teacherId=(String)request.getSession().getAttribute("teacherId");
+            //String teacherId=(String)request.getSession().getAttribute("teacherId");
+            System.out.println("teacherId"+teacherId);
             studentService.importStudent(sTables,teacherId);
 
         }
@@ -143,11 +152,17 @@ public class FileController {
         return result;
     }
 
+    /**
+     * 教师文件上传导入 连续化
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/doImportTeacherExcel")
     public Map<String, Object> TeacherUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
         Map<String, Object> result = new HashMap<String, Object>();
         String fileName = "";
+        String path = "";
         try {
             //将当前上下文初始化给  CommonsMutipartResolver
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -172,12 +187,13 @@ public class FileController {
                         //拼接新的文件名
                         String newName ="教师表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径
-                        String path = "C:/Users/11139/examsystem/" + newName;
+                        //"C:/Users/11139/examsystem/"
+                        path = "S:/sqlTest/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
-                        //保存当前文件路径
-                        request.getSession().setAttribute("currFilePath", path);
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        ////保存当前文件路径
+                        //request.getSession().setAttribute("currFilePath", path);
                     }
                 }
             }
@@ -189,16 +205,26 @@ public class FileController {
             result.put("statusCode", "300");
             result.put("message", "上传失败:" + ex.getMessage());
         }
+
+        parseTeacherExcel(request,path);
+
         return result;
     }
 
+    /**
+     * 已同导入教师文件整合，不推荐单独使用---导入题目文件到数据库
+     *      对比之前增加了path参数 为表格文件路径
+     * @param request
+     * @param path      表格文件路径
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/parseTeacherExcel")
-    public Map<String, Object> parseTeacherExcel(HttpServletRequest request) {
+    public Map<String, Object> parseTeacherExcel(HttpServletRequest request, String path) {
         Map<String, Object> result = new HashMap<String, Object>();
         Workbook workbook = null;
-        //获取文件路径
-        String path =(String)request.getSession().getAttribute("currFilePath");
+        ////获取文件路径
+        //path =(String)request.getSession().getAttribute("currFilePath");
         System.out.println("测试路径"+path);//测试看看路径正确？
         //获取文件格式
         String fileType = path.substring(path.lastIndexOf(".") + 1, path.length());
@@ -217,6 +243,7 @@ public class FileController {
             int rows=sheet.getPhysicalNumberOfRows();
             List<TTable> tTables=new ArrayList<>();
             for(int currentRow=0;currentRow<rows;currentRow++){
+                System.out.println(currentRow);
                 TTable t=new TTable();//表格的每一行为一个实例；
                 DataFormatter formatter = new DataFormatter();
                 String teacherId = formatter.formatCellValue(sheet.getRow(currentRow).getCell(0));
@@ -240,18 +267,20 @@ public class FileController {
 
 
     /**
-     *  上传题目表
+     * 上传题目表 整合 导入数据库(用parse)
+     * @version 2.0
      * @param request
      * @param file
      * @return
      * @author lw
-     * @date 2020年8月20日 13:58
+     * @date 2020年8月22日 10:38
      */
     @ResponseBody
     @RequestMapping("/doImportQuestionExcel")
     public Map<String, Object> QuestionUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
         Map<String, Object> result = new HashMap<String, Object>();
         String fileName = "";
+        String path = "";
         try {
             //将当前上下文初始化给  CommonsMutipartResolver
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -277,12 +306,12 @@ public class FileController {
                         String newName ="题目表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径  C:/Users/11139/examsystem/
                         // S:/sqlTest/examsystem/
-                        String path = "C:/Users/11139/examsystem/" + newName;
+                        path = "S:/sqlTest/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo(); C:/Users/11139/examsystem/ */
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
-                        //保存当前文件路径
-                        request.getSession().setAttribute("currFilePath", path);
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        ////保存当前文件路径
+                        //request.getSession().setAttribute("currFilePath", path);
                     }
                 }
             }
@@ -294,23 +323,30 @@ public class FileController {
             result.put("statusCode", "300");
             result.put("message", "上传失败:" + ex.getMessage());
         }
+
+        //////以下为parse部分///////
+        parseQuestionExcel(request,path);
+
         return result;
     }
 
     /**
-     * 导入题目文件到数据库
+     * 已同导入文件整合，不推荐单独使用---导入题目文件到数据库
+     *      对比之前增加了path参数 为表格文件路径
+     * @version 2.0
      * @param request
+     * @param path 文件存储路径
      * @return
      * @author lw
-     * @date 2020年8月20日 14:05
+     * @date 2020年8月22日 10:40
      */
     @ResponseBody
     @RequestMapping("/parseQuestionExcel")
-    public Map<String, Object> parseQuestionExcel(HttpServletRequest request) throws IOException {
+    public Map<String, Object> parseQuestionExcel(HttpServletRequest request,String path) {
         Map<String, Object> result = new HashMap<String, Object>();
         Workbook workbook = null;
         //获取文件路径
-        String path =(String)request.getSession().getAttribute("currFilePath");
+        //String path =(String)request.getSession().getAttribute("currFilePath");
         System.out.println("测试路径"+path);//测试看看路径正确？
         //获取文件格式
         String fileType = path.substring(path.lastIndexOf(".") + 1, path.length());
@@ -364,6 +400,12 @@ public class FileController {
         return result;
     }
 
+    /**
+     * 删除str中的某些字符
+     * @param str   操作字符串
+     * @param chars 要删去的字符数组
+     * @return
+     */
     public static String deleteCharInStr(String str, char[] chars){
         String delStr = "";
         int flag = 1;
