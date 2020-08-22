@@ -35,7 +35,7 @@ public class LogoutController {
         System.out.println(username.substring(0,1));
         //管理员
         if (username.equals("admin")){
-            String userId = UUIDUtils.getUUID();
+            String userId = cookies[0].getValue();
             Cookie cookie1=new Cookie("userId",userId);
             cookie1.setMaxAge(0);
             cookie1.setPath("/");
@@ -53,7 +53,7 @@ public class LogoutController {
         }
         //教师
         else if (username.substring(0,1).equals("T")){
-            String userId = UUIDUtils.getUUID();
+            String userId = cookies[0].getValue();
             Cookie cookie1=new Cookie("userId",userId);
             Cookie cookie2=new Cookie("username",username);
             Cookie cookie3=new Cookie("character","teacher");
@@ -71,7 +71,7 @@ public class LogoutController {
         }
         //学生
         else{
-            String userId = UUIDUtils.getUUID();
+            String userId = cookies[0].getValue();
             Cookie cookie1=new Cookie("userId",userId);
             Cookie cookie2=new Cookie("username",username);
             Cookie cookie3=new Cookie("character","student");
