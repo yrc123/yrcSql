@@ -272,7 +272,7 @@
   - 设置指定班级的考试时间范围
   - 如果该班级考试已开放，再次设置考试时间应当返回设置失败
 
-### uploadClassForm
+### doImportStudentExcel
 
 - 参数
 

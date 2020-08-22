@@ -126,7 +126,7 @@ Mock.mock("/api/setClassInExam",function(Jreq){
 	return (data);
 });
 
-Mock.mock("/api/uploadStudentList",function(req){
+Mock.mock("/api/doImportStudentExcel",function(req){
 	//console.log(req.body.get("className"));
 	console.log(req);
 	console.log(req.body.get("className"));
