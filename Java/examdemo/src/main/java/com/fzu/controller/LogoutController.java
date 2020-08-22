@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +28,9 @@ public class LogoutController {
 
     @ResponseBody
     @RequestMapping("/logout")
-    public Map<String, Object> logout(HttpServletResponse response, @RequestBody JSONObject jsonObject){
-        int status;
-        String username=(String)jsonObject.get("username");
-        String password=(String)jsonObject.get("password");
+    public Map<String, Object> logout(HttpServletResponse response, HttpServletRequest request, @RequestBody JSONObject jsonObject){
+        Cookie[] cookies = request.getCookies();
+        String username=cookies[1].getValue();
         Map<String, Object> result = new HashMap<String, Object>();
         System.out.println(username.substring(0,1));
         //管理员
@@ -46,7 +46,7 @@ public class LogoutController {
             cookie3.setMaxAge(0);
             cookie3.setPath("/");
             //status=adminService.admCheck(username, password);
-            //result.put("status", status);
+            result.put("status", "1");
             response.addCookie(cookie1);
             response.addCookie(cookie2);
             response.addCookie(cookie3);
@@ -64,7 +64,7 @@ public class LogoutController {
             cookie2.setPath("/");
             cookie3.setPath("/");
             //status=teacherService.teaCheck(username,password);
-            //result.put("status", status);
+            result.put("status", "1");
             response.addCookie(cookie1);
             response.addCookie(cookie2);
             response.addCookie(cookie3);
@@ -82,7 +82,7 @@ public class LogoutController {
             cookie2.setPath("/");
             cookie3.setPath("/");
             //status=studentService.stuCheck(username, password);
-            //result.put("status", status);
+            result.put("status", "1");
             response.addCookie(cookie1);
             response.addCookie(cookie2);
             response.addCookie(cookie3);
