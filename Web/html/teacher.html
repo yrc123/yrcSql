@@ -49,12 +49,12 @@
 							<div class="layui-col-md8">
 								<label class="layui-form-label">选择班级</label>
 								<div class="layui-input-block">
-									<select  lay-verify="required" id="selectClass" name="classID" lay-verify="selectClass" lay-search>
+									<select  lay-verify="required" id="selectClass" name="classId" lay-verify="selectClass" lay-search>
 									</select>   
 								</div>
 							</div>
 							<div class="layui-col-md2 layui-col-md-offset1">
-								<button lay-submit class="layui-btn layui-btn-lg layui-btn-normal layui-btn-fluid" style="height:38px;" lay-filter="submitClassID" >确 认</button>
+								<button lay-submit class="layui-btn layui-btn-lg layui-btn-normal layui-btn-fluid" style="height:38px;" lay-filter="submitClassId" >确 认</button>
 							</div>
 						</div>
 					</form>
@@ -119,7 +119,7 @@
 		</script>
 
 		<script id="selectTemplate" type="text/html">
-			<option value="{{d.classID}}">{{d.className}}</option>
+			<option value="{{d.classId}}">{{d.className}}</option>
 		</script>
 
 		<script src="../assets/js/back-main.js"></script>

@@ -47,12 +47,15 @@ table.render({
 		};
 		var len = res.length;
 		for(i=0;i<len;i++){
-			if(res[i].classStatus==true){
-				res[i].classStatusText="考试已设定";
+			if(res[i].classStatus==1){
+				res[i].classStatusText="模拟考试已设定";
 				res[i].examTimeText=res[i].examTime;
-			}else{
+			}else if(res[i].classStatus==0){
 				res[i].classStatusText="考试未设定";
 				res[i].examTimeText="考试时间未定";
+			}else if(res[i].classStatus==2){
+				res[i].classStatusText="正式考试已设定";
+				res[i].examTimeText=res[i].examTime;
 			}
 		}
 		data.data=res;
@@ -119,22 +122,31 @@ function toSetExamFormat(data){
 //检查是否设置已设置考试或取消未设置考试
 function checkClassStatus( data, flag ){
 	var len = data.length;
-	var thisFlag = true;
+	var thisFlag = 1;
+	var has2=0;
+
 	for(i=0;i<len;i++){
 		//console.log(data.data[i].classStatus);
 		//console.log(flag);
 		if(data[i].classStatus!=flag){
-			thisFlag=false;
+			if(data[i].classStatus==2)
+				has2=1;
+			thisFlag=0;
 			break;
 		}
 	}
-	if(thisFlag==false){
-		if(flag==true){
+	if(thisFlag==0){
+		if(has2==1){
+			layer.msg("不能修改正式考试",{
+					shade:0.3,
+					time:500
+			});
+		}else if(flag==1){
 			layer.msg("未有预设的考试",{
 					shade:0.3,
 					time:500
 			});
-		}else{
+		}else if(flag==0){
 			layer.msg("已有预设的考试",{
 					shade:0.3,
 					time:500
@@ -150,21 +162,22 @@ table.on("tool(examTable)",function(obj){
 	//data = toSetExamFormat(data);
 	selectSetExamData=data;
 	//console.log(data);
-
+	console.log(data);
 
 	var layEvent = obj.event;
 	if(layEvent=="examAdd"){
-		if(checkClassStatus(selectSetExamData,false)==false)
+		if(checkClassStatus(selectSetExamData,0)==0)
 			return false;
 		displaySelectExamWindow();
 	}else if(layEvent=="examSub"){
-		if(checkClassStatus(selectSetExamData,true)==false)
+		if(checkClassStatus(selectSetExamData,1)==0)
 			return false;
 		layer.confirm('确认删除考试?', {icon: 3, title:'提示'}, function(index){
 			var len = selectSetExamData.length;
 			for(i=0;i<len;i++){
-				selectSetExamData[i].classStatus=false;
+				selectSetExamData[i].classStatus=0;
 				selectSetExamData[i].examTime=null;
+				//selectSetExamData[i].className=null;
 			}
 			sendData("/api/setClassInExam",selectSetExamData);
 			layer.close(index);
@@ -182,16 +195,16 @@ table.on('toolbar(examTable)', function(obj){
 
 	var layEvent = obj.event;
 	if(layEvent=="examAddMulti"){
-		if(checkClassStatus(selectSetExamData,false)==false)
+		if(checkClassStatus(selectSetExamData,0)==0)
 			return false;
 		displaySelectExamWindow();
 	}else if(layEvent=="examSubMulti"){
-		if(checkClassStatus(selectSetExamData,true)==false)
+		if(checkClassStatus(selectSetExamData,1)==0)
 			return false;
 		layer.confirm('确认删除考试?', {icon: 3, title:'提示'}, function(index){
 			var len = selectSetExamData.length;
 			for(i=0;i<len;i++){
-				selectSetExamData[i].classStatus=false;
+				selectSetExamData[i].classStatus=0;
 				selectSetExamData[i].examTime=null;
 			}
 			sendData("/api/setClassInExam", selectSetExamData);
@@ -241,7 +254,7 @@ form.on('submit(submitSetExam)', function(data){
 	var examTime = data.field.examTime;
 	var len = selectSetExamData.length;
 	for(i=0;i<len;i++){
-		selectSetExamData[i].classStatus=true;
+		selectSetExamData[i].classStatus=1;
 		selectSetExamData[i].examTime=examTime;
 	}
 	sendData("/api/setClassInExam",selectSetExamData);
@@ -318,12 +331,15 @@ table.render({
 		};
 		var len = res.length;
 		for(i=0;i<len;i++){
-			if(res[i].classStatus==true){
-				res[i].classStatusText="考试已设定";
+			if(res[i].classStatus==1){
+				res[i].classStatusText="模拟考试已设定";
 				res[i].examTimeText=res[i].examTime;
-			}else{
+			}else if(res[i].classStatus==0){
 				res[i].classStatusText="考试未设定";
 				res[i].examTimeText="考试时间未定";
+			}else if(res[i].classStatus==2){
+				res[i].classStatusText="正式考试已设定";
+				res[i].examTimeText=res[i].examTime;
 			}
 		}
 		data.data=res;
