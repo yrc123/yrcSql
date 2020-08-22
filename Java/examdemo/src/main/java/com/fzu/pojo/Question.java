@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Question {
-    //int id;//题号
+    int id;//题号
     String chapter;//单元
     String title;//题干
     String type;//题型
