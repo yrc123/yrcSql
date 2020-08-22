@@ -74,7 +74,6 @@ table.on('toolbar(teacherTable)', function(obj){
 	}
 });
 
-
 //监听教师名单的每行的按钮
 table.on("tool(teacherTable)",function(obj){
 	var data =[obj.data];
@@ -195,14 +194,14 @@ upload.render({
 	},
 });
 
-//设置教师名单
+//设置学生名单
 table.render({
     elem:"#studentTable",
 	cols:[[
 		// {type: 'checkbox', fixed: 'left'},
 		{field:"studentNo",title:"学生账号",width:"20%",sort:true},
 		{field:"studentName",title:"学生姓名",width:"50%",sort:true},
-		{fixed: 'right', title: '重置密码', toolbar: '#teacherListToolBar', width:"25%" ,unresize:true}
+		{fixed: 'right', title: '重置密码', toolbar: '#studentResetToolBar', width:"25%" ,unresize:true}
 	]],
 	url:"/api/getStudentInfo",
 	method:"POST",
@@ -228,9 +227,12 @@ table.render({
 //监听学生名单的每行的按钮
 table.on("tool(studentTable)",function(obj){
 	var data =[obj.data];
+
 	var layEvent = obj.event;
-	if(layEvent=="teacherReset"){
+	if(layEvent=="studentReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
+			var len = data.length;
+
 			sendData("/api/resetPassword",data);			//
 			layer.close(index);
 		});

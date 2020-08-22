@@ -34,20 +34,19 @@
 				</div>
 
 				<div class="side-item layui-hide">
-
 					<fieldset class="layui-elem-field layui-field-title">
 						<legend>学生名单</legend>
 					</fieldset>
 					<table id="studentTable" class="layui-table" lay-filter="classTable"></table>
 				</div>
-
+<!-- 
 				<div class="side-item layui-hide">
 					<fieldset class="layui-elem-field layui-field-title">
 						<legend>学生成绩</legend>
 					</fieldset>
 
 					<table id="studentTable" class="layui-table" lay-filter="studentTable"></table>
-				</div>
+				</div> -->
 
 			</div>
 
@@ -96,9 +95,10 @@
 			<a href="#" class="reset layui-icon layui-icon-password" style="font-size: 30px;" lay-event="teacherReset"></a>
 		</script>
 
-		<script type="text/html" id="studentResetBar">
-			<a href="#" class="sub layui-icon layui-icon-reduce-circle" style="font-size: 30px;" lay-event="classSub"></a>
+		<script type="text/html" id="studentResetToolBar">
+			<a href="#" class="reset layui-icon layui-icon-password" style="font-size: 30px;" lay-event="studentReset"></a>
 		</script>
+
 
 		<script type="text/html" id="classToolbar">
 			<p style="display:inline">班级表    </p>
