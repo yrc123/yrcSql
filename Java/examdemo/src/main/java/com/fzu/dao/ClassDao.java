@@ -47,7 +47,7 @@ public class ClassDao {
             cont.setClassId(obj.getClassId());
             cont.setClassName(obj.getClassName());
             if(obj.getClassStatus()!=null) cont.setClassStatus(obj.getClassStatus());
-            if(obj.getStart()!=null && obj.getOver()!=null)cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
+            if(obj.getStartTime()!=null && obj.getOverTime()!=null)cont.setExamTime(obj.getStartTime().toString()+" ~ "+obj.getOverTime().toString());
             result.add(cont);
         }
         System.out.println(result);

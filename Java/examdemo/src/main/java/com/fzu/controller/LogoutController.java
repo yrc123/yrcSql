@@ -29,6 +29,7 @@ public class LogoutController {
         //System.out.println(username.substring(0,1));
         for(Cookie i:cookies){
             i.setMaxAge(0);
+            i.setPath("/");
         }
         result.put("status", "1");
         /*
