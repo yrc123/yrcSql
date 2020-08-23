@@ -23,7 +23,7 @@ public class Question {
      * 标准答案转换成数值
      * @return 答案数值
      */
-    public int getAnswer(){
+    public int exchangeAnswer(){
         int sum = 0;
         for (int i = 0; i < answer.length() ; i++) {
             switch (answer.charAt(i)){
@@ -50,6 +50,6 @@ public class Question {
      * @return 对/错
      */
     public boolean checkAnswer(int stuAns){
-        return stuAns==getAnswer();
+        return stuAns==exchangeAnswer();
     }
 }

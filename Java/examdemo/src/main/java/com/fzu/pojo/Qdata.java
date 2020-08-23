@@ -9,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 /*与前端交互的类*/
 public class Qdata {
+    int id;
     String title;//标题
     List<String> choice;
 }

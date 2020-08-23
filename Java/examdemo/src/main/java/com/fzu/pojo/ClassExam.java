@@ -15,6 +15,4 @@ public class ClassExam {
     String examTime;//格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
 
 
-
-
 }

@@ -3,7 +3,10 @@ package com.fzu.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.fzu.dao.QuestionDao;
 import com.fzu.pojo.Question;
+import com.fzu.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,9 @@ import java.util.Map;
 
 @Controller
 public class IndexController {
+    @Autowired
+    QuestionDao questionDao;
+
     @RequestMapping("/hi")
     public String index(){
         return "index";
@@ -24,15 +30,13 @@ public class IndexController {
     public void test(){
         Question question = new Question();
         question.setAnswer("BDd");
-        System.out.println(question.getAnswer());
+        System.out.println(question.exchangeAnswer());
     }
 
     @ResponseBody
     @RequestMapping("/test2")
-    public void test(@RequestBody JSONObject jsonObject){
-        String username=(String) jsonObject.get("username");
-        System.out.println(username);
-        System.out.println("password:"+jsonObject.get("password"));
+    public void test2(){
+        System.out.println(questionDao.getQuestionList(1));
     }
 
 }

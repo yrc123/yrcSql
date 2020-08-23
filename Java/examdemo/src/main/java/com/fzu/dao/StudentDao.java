@@ -45,4 +45,16 @@ public class StudentDao {
         String sql="update exam_system.student set password =? where student_id=?";
         jdbcTemplate.update(sql,objects);
     }
+    //获得教师id
+    public String getTeacherId(String studentId){
+        String sql="select paper.teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
+        return jdbcTemplate.queryForObject(sql,String.class);
+    }
+
+    //写入正式考试的成绩
+    public void updateScore(Integer score){
+        String sql="update student set score =?";
+        jdbcTemplate.update(sql,new Object[]{score});
+    }
+
 }

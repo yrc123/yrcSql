@@ -43,7 +43,6 @@ public class TeacherDao {
         objects[1]=username;
         String sql="update exam_system.teacher set password =? where teacher_id =?";
         jdbcTemplate.update(sql,objects);
-
     }
 
     //通过教师id获得班级的id集合

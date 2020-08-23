@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.Map;
 @Repository
 public class ClassDao {
@@ -33,6 +34,11 @@ public class ClassDao {
     //添加(更新)考试
     public void updateClassExam(ClassExam classExam){
         //先转化然后逐个参数对应上传到数据库。
+    }
+    //获得班级考试的开始时间(用于判断是否可以进入考试)
+    public Date getStarttime(Integer classId){
+        String sql="select class_teacher.start_time from class_teacher where class_id=?";
+        return jdbcTemplate.queryForObject(sql,new Object[]{classId},Date.class);
     }
 
 

@@ -1,21 +1,24 @@
 package com.fzu.service;
 
-import com.fzu.dao.ClassDao;
-import com.fzu.dao.StudentDao;
-import com.fzu.dao.TeacherDao;
+import com.fzu.dao.*;
 import com.fzu.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentDao studentDao;
     @Autowired
     ClassDao classDao;
+    @Autowired
+    QuestionDao questionDao;
+    @Autowired
+    ExamDao examDao;
 
     @Override
     public void importStudent(List<STable> sTables,String teacherId) {
@@ -52,6 +55,119 @@ public class StudentServiceImpl implements StudentService {
     public ClassExam getClassExam(Integer classId) {
         return null;
     }
+
+    @Override
+    public String getTeacherId(String studentId) {
+        return studentDao.getTeacherId(studentId);
+    }
+
+    @Override
+    public Date getStarttime(Integer classId) {
+        return classDao.getStarttime(classId);
+    }
+
+    @Override
+    public ExamPaper getExamPaper(String studentId) throws ParseException {
+        ExamPaper examPaper=new ExamPaper();
+        int paperId=examDao.initPaperId();
+        List<Qdata> qdataList=new ArrayList<>();
+        List<Question> questionList1=questionDao.getRandomQuestion("单选题");
+        for (int i=0;i<questionList1.size();i++){
+            Qdata qdata=new Qdata();
+            qdata.setId(questionList1.get(i).getId());
+            qdata.setTitle(questionList1.get(i).getTitle());
+            List<String> choice=new ArrayList<>();
+            choice.add(questionList1.get(i).getOption1());
+            choice.add(questionList1.get(i).getOption2());
+            choice.add(questionList1.get(i).getOption3());
+            choice.add(questionList1.get(i).getOption4());
+            qdata.setChoice(choice);
+
+            qdataList.add(qdata);
+            examDao.insert(paperId,qdata.getId());
+        }
+
+        List<Question> questionList2=questionDao.getRandomQuestion("多选题");
+        for (int i=0;i<questionList2.size();i++){
+            Qdata qdata=new Qdata();
+            qdata.setId(questionList2.get(i).getId());
+            qdata.setTitle(questionList2.get(i).getTitle());
+            List<String> choice=new ArrayList<>();
+            choice.add(questionList2.get(i).getOption1());
+            choice.add(questionList2.get(i).getOption2());
+            choice.add(questionList2.get(i).getOption3());
+            choice.add(questionList2.get(i).getOption4());
+            qdata.setChoice(choice);
+
+            qdataList.add(qdata);
+            examDao.insert(paperId,qdata.getId());
+        }
+
+        List<Question> questionList3=questionDao.getRandomQuestion("判断题");
+        for (int i=0;i<questionList2.size();i++){
+            Qdata qdata=new Qdata();
+            qdata.setId(questionList3.get(i).getId());
+            qdata.setTitle(questionList3.get(i).getTitle());
+            List<String> choice=new ArrayList<>();
+            choice.add(questionList3.get(i).getOption1());
+            choice.add(questionList3.get(i).getOption2());
+            qdata.setChoice(choice);
+
+            qdataList.add(qdata);
+            examDao.insert(paperId,qdata.getId());
+        }
+        examPaper.setPaperId(paperId);
+        examPaper.setQtype(new int[]{15,15,15});
+        examPaper.setQdataList(qdataList);
+        Date date=new Date();
+        Date begin=date;
+        date.setTime(date.getTime() + 1 * 60 * 60 * 1000);
+        examPaper.setDate(date);
+        Date over=date;
+        String teacherId=this.getTeacherId(studentId);
+        examDao.addPaper(paperId,begin,over,studentId,teacherId);
+        return examPaper;
+    }
+
+
+    @Override
+    public Date getOvertime(Integer paperId) {
+        return examDao.getOvertime(paperId);
+    }
+
+    @Override
+    public List<List<Integer>> getAnswerList(Integer paperId) {
+        List<Question> questions;
+        List<List<Integer>> result=new ArrayList<>();
+        List<Integer> number=new ArrayList<>();
+        number.add(15);
+        number.add(15);
+        number.add(15);
+        List<Integer> answer=new ArrayList<>();
+        questions=questionDao.getQuestionList(paperId);
+        for(int i=0;i<questions.size();i++){
+            Question question=questions.get(i);
+            answer.add(question.exchangeAnswer());
+        }
+        result.add(number);
+        result.add(answer);
+        return result;
+    }
+
+    @Override
+    public void setScore(Integer paperId, String studentId,List<List<Integer>>stuAnswer) {
+        int score=0;
+        List<Question> questions=new ArrayList<>();
+        List<Integer> stuAnswerList=stuAnswer.get(1);
+        questions=questionDao.getQuestionList(paperId);
+        for(int i=0;i<questions.size();i++){
+            Question question=questions.get(i);
+            if(question.checkAnswer(stuAnswerList.get(i)))
+                score+=2;
+        }
+
+    }
+
 
 
 }

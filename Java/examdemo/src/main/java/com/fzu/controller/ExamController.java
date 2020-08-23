@@ -2,6 +2,7 @@ package com.fzu.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fzu.pojo.ClassExam;
+import com.fzu.pojo.ExamPaper;
 import com.fzu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.*;
 
 @Controller
 public class ExamController {
@@ -56,18 +55,53 @@ public class ExamController {
     @RequestMapping("/examStatus")
     @ResponseBody
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
+        Map<String,Integer> result=new HashMap<>();
         Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
         Cookie[]cookies=request.getCookies();
         String studentId=cookies[1].getValue();
-        //通过学生id得到班级名字，通过班级名字得到班级id，通过班级id获取examstatus。
+        //通过学生id得到班级id，通过班级id获取examstatus。
         Integer classId=studentService.getClassId(studentId);
         ClassExam classExam=studentService.getClassExam(classId);
         //如果为0则为未开始
-
-
-
+        if(classExam.getClassStatus()==0)
+           result.put("examStart",0);
         //如果非0，通过班级id获取考试开始时间。考试开始时间未到为未开始
-        return null;
+        else{
+            Date startTime=studentService.getStarttime(classId);
+            Date now=new Date();
+            if(now.before(startTime))result.put("examStart",0);
+            else result.put("examStart",1);
+        }
+        return result;
     }
 
+    //获得考试卷
+    @RequestMapping("/getPaper")
+    @ResponseBody
+    public ExamPaper getPaper(HttpServletRequest request,HttpServletResponse response) throws ParseException {
+        Cookie[] cookies=request.getCookies();
+        String studentId=cookies[1].getValue();
+        ExamPaper examPaper= studentService.getExamPaper(studentId);
+        Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
+        response.addCookie(cookie);
+        return examPaper;
+    }
+
+    //提交试卷
+    @RequestMapping("/submitPaper")
+    @ResponseBody
+    public List<List<Integer>> submitPaper(HttpServletRequest request,@RequestBody List<List<Integer>> stuAnswer){
+        Cookie[] cookies=request.getCookies();
+        String studentId=cookies[1].getValue();
+        Integer classId=studentService.getClassId(studentId);
+        Integer paperId=Integer.valueOf(cookies[3].getValue());
+        ClassExam classExam=studentService.getClassExam(classId);
+        if(classExam.getClassStatus()==2)//正式考
+        {
+            studentService.setScore(paperId,studentId,stuAnswer);
+            return null;
+        }
+        else//模拟考，返回答案
+            return studentService.getAnswerList(paperId);
+    }
 }
