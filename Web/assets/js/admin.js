@@ -56,13 +56,15 @@ table.on('toolbar(teacherTable)', function(obj){
 //监听教师名单的每行的按钮
 table.on("tool(teacherTable)",function(obj){
 	var data =[obj.data];
-
+	var ndata= new Array();
+	for( i=0;i<data.length;i++ ){
+		ndata.push(data[i].teacherId);
+	}
+	console.log(ndata);
 	var layEvent = obj.event;
 	if(layEvent=="teacherReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
-			var len = data.length;
-
-			sendData("/api/resetPassword",data);			//
+			sendData("/api/resetPassword",ndata);			//
 			layer.close(index);
 		});
 	}
@@ -127,7 +129,7 @@ function displayUploadWindow(){
 //上传教师名单文件
 upload.render({
 	elem: '#uploadSpace',
-	url: "/api/uploadStudentList", //改成您自己的上传接口
+	url: "/api/uploadQuestionBank", //改成您自己的上传接口
 	auto: false,
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
@@ -206,13 +208,17 @@ table.render({
 //监听学生名单的每行的按钮
 table.on("tool(studentTable)",function(obj){
 	var data =[obj.data];
-
+	var ndata = new Array();
+	for(i=0;i<data.length;i++){
+		ndata.push(""+data[i].studentNo);
+	}
+	console.log(ndata);
 	var layEvent = obj.event;
 	if(layEvent=="studentReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
-			var len = data.length;
+			
 
-			sendData("/api/resetPassword",data);			//
+			sendData("/api/resetPassword",ndata);			//
 			layer.close(index);
 		});
 	}

@@ -46,7 +46,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<ClassExam> getClassExamList(String teacherId) {
-        return null;
+
+        List<ClassExam> result=classDao.getClassExamById(teacherId);
+        return result;
+
     }
 
 }
