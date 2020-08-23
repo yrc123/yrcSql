@@ -1,27 +1,6 @@
 var selectSetExamData;
 var getClassID="ALL";
 
-//获取班级信息
-function getClassInExam(){
-	var data;
-	$.ajax({
-		type:"POST",
-		url:"/api/getClassInExam",
-		dataType:"json",
-		async:false,
-		success:function(resp){
-			data = JSON.parse(resp);
-		},
-		error:function(){
-			layer.msg("服务器出错",{
-					shade:0.3,
-					time:500
-			});
-		}
-	})
-	//console.log(data);
-	return data;
-}
 
 //设置教师名单
 table.render({
@@ -238,3 +217,87 @@ table.on("tool(studentTable)",function(obj){
 		});
 	}
 })
+
+//题库上传窗口
+function displayQuestionUploadWindow(){
+	var thisWindow = $("#uploadWindow");
+	layer.open({
+		type:1,
+		title:"上传题库文件",
+		content:thisWindow,
+		area:["400px","320px"],
+		resize:false,
+		success:function(){
+			thisWindow.removeClass("layui-hide");
+		},
+		cancel: function(){ 
+			thisWindow.addClass("layui-hide");
+		}    
+	})
+}
+
+//上传题库文件文件
+upload.render({
+	elem: '#uploadSpace',
+	url: "/api/uploadQuestionBank", //改成您自己的上传接口
+	auto: false,
+	accept:"file",
+	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
+	exts:"xls|xlsx",
+	field:"file",
+	size:10000,
+	bindAction:"#startUpload",
+	choose:function(obj){
+		obj.preview(function(index,file,result){
+			$("#uploadSpace i").removeClass("layui-icon-upload-drag");
+			$("#uploadSpace i").addClass("layui-icon-file");
+			$("#uploadFileName").removeClass("layui-hide");
+			$("#uploadFileName p").text(file.name);
+		})
+	},
+	before: function(obj){
+		var className=$("#inputClassName").val();
+		//console.log(obj);
+		this.data.className=className;
+		layer.load(1);
+	},
+	done: function(res, index, upload){
+		layer.closeAll('loading');
+		//console.log(res);
+		if(res.status==0){
+			layer.msg("上传失败",{
+				shade:0.3,
+				time:500
+			});
+		}else if(res.status==1){
+			layer.msg("上传成功",{
+				shade:0.3,
+				time:500
+			});
+		}
+	},
+	error:function(index,upload){
+		layer.closeAll('loading');
+		layer.msg("服务器出错",{
+			shade:0.3,
+			time:500
+		});
+	},
+});
+
+//显示选择正式考试时间的窗口
+function displaySelectExamWindow(){
+	var thisWindow = $("#selectExamWindow");
+	layer.open({
+		type:1,
+		title:"设置考试时间",
+		content:thisWindow,
+		area:["500px","200px"],
+		success:function(){
+			thisWindow.removeClass("layui-hide");
+		},
+		cancel: function(){ 
+			thisWindow.addClass("layui-hide");
+		}    
+	})
+}

@@ -35,7 +35,7 @@ Mock.mock("/api/changePassword",function(Jreq){
 	return true;
 });
 
-Mock.mock("/api/submitExam",function(Jans){
+Mock.mock("/api/submitPaper",function(Jans){
 	var ans = JSON.parse(Jans.body);
 	//console.log((Jans.body));
 	console.log(ans);
@@ -60,7 +60,7 @@ Mock.mock("/api/submitExam",function(Jans){
 	}
 });
 
-Mock.mock("/api/getExam",function(Jreq){
+Mock.mock("/api/getPaper",function(Jreq){
 	var req = JSON.parse(Jreq.body);
 	console.log(req);
 	var date = new Date();
