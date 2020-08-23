@@ -39,7 +39,7 @@ public class ClassDao {
         List<ClassExam> result=new ArrayList<>();
         String sql="select * from exam_system.class_teacher where teacher_id = ? ";
         List<class_teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(class_teacher.class),teacherId);
-        //System.out.println("List:"+list);
+        System.out.println("List:"+list);
         System.out.println(teacherId);
         for(int i=0;i<list.size();i++){
             class_teacher obj=list.get(i);
@@ -47,7 +47,7 @@ public class ClassDao {
             cont.setClassId(obj.getClassId());
             cont.setClassName(obj.getClassName());
             if(obj.getClassStatus()!=null) cont.setClassStatus(obj.getClassStatus());
-            if(obj.getStart()!=null && obj.getOver()!=null)cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
+            if(obj.getStart_time()!=null && obj.getOver_time()!=null)cont.setExamTime(obj.getStart_time().toString()+" ~ "+obj.getOver_time().toString());
             result.add(cont);
         }
         System.out.println(result);
