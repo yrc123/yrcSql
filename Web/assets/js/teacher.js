@@ -411,8 +411,8 @@ table.render({
 	elem:"#studentTable",
 	cols:[[
 		{field:"studentNo",title:"学号",width:"33%",sort:true},
-		{field:"studentName",title:"姓名",width:"33%"},
-		{field:"studentScoreString",title:"成绩",width:"33%"},
+		{field:"studentName",title:"姓名",width:"33%",sort:true},
+		{field:"studentScoreString",title:"成绩",width:"33%",sort:true},
 	]],
 	url:"/api/getStudentInfo",
 	method:"POST",
