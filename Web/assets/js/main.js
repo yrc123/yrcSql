@@ -279,3 +279,24 @@ function goSide(no){
 	}
 	sideArr[no].classList.remove("layui-hide");
 }
+
+//显示IP和端口
+function showIP(){
+	$.ajax({
+		type:"POST",
+		url:"/api/getServerIP",
+		dataType:"json",
+		contentType: "application/json; charset=utf-8",
+		async:false,
+		success:function(Jresp){
+			var resp = (Jresp);
+			console.log("来自服务器:"+resp.IP+":"+resp.port);
+		},
+		error:function(){
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
+		}
+	})
+}
