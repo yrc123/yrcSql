@@ -55,7 +55,7 @@ public class TeacherDao {
         List<TTable> result=new ArrayList<>();
         String sql="select * from exam_system.teacher";
         List<Teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Teacher.class));
-        System.out.println("List:"+list);
+
         for(int i=0;i<list.size();i++){
             Teacher obj=list.get(i);
             TTable cont=new TTable();
@@ -63,6 +63,7 @@ public class TeacherDao {
             cont.setTeacherId(obj.getTeacherId());
             result.add(cont);
         }
+        System.out.println(result);
         return result;
     }
 }

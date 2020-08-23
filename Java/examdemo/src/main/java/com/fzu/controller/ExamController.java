@@ -46,8 +46,11 @@ public class ExamController {
     public List<ClassExam> getClassInExam(HttpServletRequest request){
         List<ClassExam> classExamList=new ArrayList<ClassExam>();
         //获取某个老师管理的班级的考试信息(需要从cookie中拿出教师id)
+        String teacher_id="";
         Cookie[] cookies=request.getCookies();
-        String teacher_id=cookies[1].getValue();
+        for(Cookie i:cookies){
+            if(i.getName()=="username") teacher_id=i.getValue();
+        }
         classExamList=teacherService.getClassExamList(teacher_id);
         return classExamList;
     }
@@ -58,8 +61,11 @@ public class ExamController {
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
         Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
-        Cookie[]cookies=request.getCookies();
-        String studentId=cookies[1].getValue();
+        String studentId="";
+        Cookie[] cookies=request.getCookies();
+        for(Cookie i:cookies){
+            if(i.getName()=="username") studentId=i.getValue();
+        }
         //通过学生id得到班级id，通过班级id获取examstatus。
         Integer classId=studentService.getClassId(studentId);
         ClassExam classExam=studentService.getClassExam(classId);
@@ -80,8 +86,12 @@ public class ExamController {
     @RequestMapping("/getPaper")
     @ResponseBody
     public ExamPaper getPaper(HttpServletRequest request,HttpServletResponse response) throws ParseException {
+
+        String studentId="";
         Cookie[] cookies=request.getCookies();
-        String studentId=cookies[1].getValue();
+        for(Cookie i:cookies){
+            if(i.getName()=="username") studentId=i.getValue();
+        }
         ExamPaper examPaper= studentService.getExamPaper(studentId);
         Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
         response.addCookie(cookie);
@@ -92,10 +102,16 @@ public class ExamController {
     @RequestMapping("/submitPaper")
     @ResponseBody
     public List<List<Integer>> submitPaper(HttpServletRequest request,@RequestBody List<List<Integer>> stuAnswer){
+        String studentId="";
         Cookie[] cookies=request.getCookies();
-        String studentId=cookies[1].getValue();
+        for(Cookie i:cookies){
+            if(i.getName()=="username") studentId=i.getValue();
+        }
         Integer classId=studentService.getClassId(studentId);
-        Integer paperId=Integer.valueOf(cookies[3].getValue());
+        Integer paperId=0;
+        for(Cookie i:cookies){
+            if(i.getName()=="paperId") paperId=Integer.valueOf(i.getValue());
+        }
         ClassExam classExam=studentService.getClassExam(classId);
         if(classExam.getClassStatus()==2)//正式考
         {
