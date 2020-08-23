@@ -368,13 +368,12 @@
     [
         {
             "teacherId":string,
-            "teacherName":sting,
-            "teacherStatus":bool
+            "teacherName":sting
         }
         ...
     ]
     ```
-
+  
 - teacherId：教师唯一id
 
 - teacherName:教师姓名
@@ -387,10 +386,44 @@
 
 ### resetPassword
 
+* 参数
+
+  * ```json
+    [
+        String
+        ...
+    ]
+    ```
+
+  * String:代表要重置密码的学生或教师的ID
+
+* 返回
+
+  * void
+
 * 功能
   * 重置密码
 
-### uploadQuestionBank
+### doImportQuestionExcel
+
+* 参数
+
+  * ```json
+    //受到layui限制，数据格式为FormData
+    "file":上传的文件
+    ```
+
+* 返回
+
+  - ```json
+    {
+        "status":0|1
+    }
+    ```
+
+  - status：0设置失败，1设置成功
+
+  - 对于参数不够返回失败
 
 * 功能
   * 上传题库文件
@@ -399,6 +432,51 @@
 
 * 功能
   * 设置正式考试
+
+### deleteTeacher
+
+* 参数
+
+  * ```json
+    [
+        String
+    ]
+    ```
+
+  * String:将要删除的教师ID
+
+* 返回
+
+  * void
+
+* 功能
+  * 删除教师
+
+### doImportTeacherExcel
+
+* 参数
+
+  * ```json
+    //受到layui限制，数据格式为FormData
+    "file":上传的文件
+    ```
+
+* 返回
+
+  - ```json
+    {
+        "status":0|1
+    }
+    ```
+
+  - status：0设置失败，1设置成功
+
+  - 对于参数不够返回失败
+
+* 功能
+  * 上传教师文件
+
+
 
 ### 
 

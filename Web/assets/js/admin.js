@@ -34,18 +34,18 @@ table.render({
 
 //监听教师名单的表头的按钮
 table.on('toolbar(teacherTable)', function(obj){
-	//console.log("test111");
 	var checkStatus = table.checkStatus(obj.config.id);
 	var data =checkStatus.data;
-
+	var ndata=new Array();
+	for(i=0;i<data.length;i++){
+		ndata.push(data[i].teacherId);
+	}
+	console.log(ndata);
 	var layEvent = obj.event;
 	if(layEvent=="teacherSub"){
 		layer.confirm('确认删除教师?', {icon: 3, title:'提示'}, function(index){
 			var len = data.length;
-			for(i=0;i<len;i++){
-				data[i].teacherStatus=false;
-			}
-			sendData("/api/setTeacherList", data);
+			sendData("/api/deleteTeacher", ndata);
 			layer.close(index);
 		});
 	}else if(layEvent=="teacherAdd"){
@@ -129,7 +129,7 @@ function displayUploadWindow(){
 //上传教师名单文件
 upload.render({
 	elem: '#uploadSpace',
-	url: "/api/uploadQuestionBank", //改成您自己的上传接口
+	url: "/api/doImportTeacherExcel", //改成您自己的上传接口
 	auto: false,
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
@@ -146,9 +146,7 @@ upload.render({
 		})
 	},
 	before: function(obj){
-		var className=$("#inputClassName").val();
 		//console.log(obj);
-		this.data.className=className;
 		layer.load(1);
 	},
 	done: function(res, index, upload){
@@ -226,7 +224,7 @@ table.on("tool(studentTable)",function(obj){
 
 //题库上传窗口
 function displayQuestionUploadWindow(){
-	var thisWindow = $("#uploadWindow");
+	var thisWindow = $("#uploadQuestionWindow");
 	layer.open({
 		type:1,
 		title:"上传题库文件",
@@ -244,8 +242,8 @@ function displayQuestionUploadWindow(){
 
 //上传题库文件文件
 upload.render({
-	elem: '#uploadSpace',
-	url: "/api/uploadQuestionBank", //改成您自己的上传接口
+	elem: '#uploadQuestionSpace',
+	url: "/api/doImportQuestionExcel", //改成您自己的上传接口
 	auto: false,
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
@@ -255,16 +253,14 @@ upload.render({
 	bindAction:"#startUpload",
 	choose:function(obj){
 		obj.preview(function(index,file,result){
-			$("#uploadSpace i").removeClass("layui-icon-upload-drag");
-			$("#uploadSpace i").addClass("layui-icon-file");
-			$("#uploadFileName").removeClass("layui-hide");
-			$("#uploadFileName p").text(file.name);
+			$("#uploadQuestionSpace i").removeClass("layui-icon-upload-drag");
+			$("#uploadQuestionSpace i").addClass("layui-icon-file");
+			$("#uploadQuestionFileName").removeClass("layui-hide");
+			$("#uploadQuestionFileName p").text(file.name);
 		})
 	},
 	before: function(obj){
-		var className=$("#inputClassName").val();
 		//console.log(obj);
-		this.data.className=className;
 		layer.load(1);
 	},
 	done: function(res, index, upload){
