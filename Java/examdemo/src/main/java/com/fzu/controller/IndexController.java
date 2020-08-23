@@ -50,6 +50,20 @@ public class IndexController {
     public Map<String, String> getServerIP(HttpServletRequest request){
         Map<String, String> result = new HashMap<String, String>();
         studentDao.getClassId("20191112");
+        String IP = request.getLocalAddr();
+        int p = request.getLocalPort();
+        String port = Integer.toString(p);
+        result.put("IP",IP);
+        result.put("port",port);
+        System.out.println(result);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getClientIP")
+    public Map<String, String> getClientIP(HttpServletRequest request){
+        Map<String, String> result = new HashMap<String, String>();
+        studentDao.getClassId("20191112");
         String IP = request.getRemoteAddr();
         int p = request.getRemotePort();
         String port = Integer.toString(p);
