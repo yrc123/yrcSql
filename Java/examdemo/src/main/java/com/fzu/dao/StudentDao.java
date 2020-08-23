@@ -1,13 +1,19 @@
 package com.fzu.dao;
 
 import com.fzu.pojo.Student;
+import com.fzu.pojo.StudentInfo;
+import com.fzu.pojo.TTable;
+import com.fzu.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class StudentDao {
@@ -68,4 +74,24 @@ public class StudentDao {
         jdbcTemplate.update(sql,new Object[]{score});
     }
 
+    //读取学生成绩信息
+    public List<StudentInfo> getStudentInfoById(int classId){
+        String sql1="select class_name from exam_system.class_teacher where class_id = ? ";
+        String className = jdbcTemplate.queryForObject(sql1,new BeanPropertyRowMapper<>(String.class),classId);
+
+        List<StudentInfo> result=new ArrayList<>();
+        String sql2="select student_id,name,score from exam_system.student where classroom= ? ";
+        List<Student> list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class),className);
+        System.out.println("List:"+list);
+        for(int i=0;i<list.size();i++){
+            Student obj=list.get(i);
+            StudentInfo cont=new StudentInfo();
+            cont.setStudentId(obj.getStudentId());
+            cont.setName(obj.getName());
+            if(obj.getScore()==null) cont.setScore(-1);
+            else cont.setScore(obj.getScore());
+            result.add(cont);
+        }
+        return result;
+    }
 }
