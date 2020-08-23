@@ -45,8 +45,8 @@ public class ClassDao {
             ClassExam cont=new ClassExam();
             cont.setClassId(obj.getClassId());
             cont.setClassName(obj.getClassName());
-            cont.setClassStatus(obj.getClassStatus());
-            cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
+            if(obj.getClassStatus()!=null)cont.setClassStatus(obj.getClassStatus());
+            if(obj.getStart()!=null&&obj.getOver()!=null) cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
             result.add(cont);
         }
         return result;
