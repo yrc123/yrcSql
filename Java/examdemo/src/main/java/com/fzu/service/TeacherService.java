@@ -1,6 +1,7 @@
 package com.fzu.service;
 
 import com.fzu.pojo.ClassExam;
+import com.fzu.pojo.StudentInfo;
 import com.fzu.pojo.TTable;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface TeacherService {
     //先通过教师id获取班级id列表 teacherDao
     //再遍历每个班级id获得班级考试 classDao
     List<ClassExam> getClassExamList(String teacherId);
+    //获取所有老师的id和name
+    List<TTable> getTeacherList();
+    //获取学生成绩信息
+    List<StudentInfo> getStudentInfo(String classId);
 }

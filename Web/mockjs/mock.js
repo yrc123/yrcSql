@@ -164,7 +164,7 @@ Mock.mock("/api/getStudentInfo",function(Jreq){
 		var Tdata={};
 		Tdata.studentName = Mock.Random.cname();
 		Tdata.studentNo = Mock.Random.integer(100000000,999999999);
-		Tdata.studentScore = Mock.Random.integer(30,100);
+		Tdata.studentScore = Mock.Random.integer(-1,10);
 		data.push(Tdata);
 	}
 	res=data;

@@ -402,6 +402,7 @@
   * void
 
 * 功能
+  
   * 重置密码
 
 ### doImportQuestionExcel
@@ -426,6 +427,7 @@
   - 对于参数不够返回失败
 
 * 功能
+  
   * 上传题库文件
 
 ### setOfficialExam
@@ -450,6 +452,7 @@
   * void
 
 * 功能
+  
   * 删除教师
 
 ### doImportTeacherExcel
@@ -474,6 +477,7 @@
   - 对于参数不够返回失败
 
 * 功能
+  
   * 上传教师文件
 
 ### getServerIP
@@ -487,13 +491,32 @@
   * ```json
     {
         "IP":String,
-        "Port":String
+        "port":String
     }
     ```
 
 * 功能
 
   * 返回当前服务器的IP和端口号
+
+### getClientIP
+
+* 参数
+
+  * void
+
+* 返回
+
+  * ```json
+    {
+        "IP":String,
+        "port":String
+    }
+    ```
+
+* 功能
+
+  * 返回当前客户端的IP和端口号
 
 ### 
 

@@ -1,13 +1,14 @@
 package com.fzu.dao;
 
-import com.fzu.pojo.Student;
-import com.fzu.pojo.Teacher;
+import com.fzu.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,4 +51,19 @@ public class TeacherDao {
         return null;
     }
 
+    public List<TTable> getTeacher(){
+        List<TTable> result=new ArrayList<>();
+        String sql="select * from exam_system.teacher";
+        List<Teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Teacher.class));
+
+        for(int i=0;i<list.size();i++){
+            Teacher obj=list.get(i);
+            TTable cont=new TTable();
+            cont.setName(obj.getName());
+            cont.setTeacherId(obj.getTeacherId());
+            result.add(cont);
+        }
+        System.out.println(result);
+        return result;
+    }
 }

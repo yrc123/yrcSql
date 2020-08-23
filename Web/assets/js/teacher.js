@@ -412,7 +412,7 @@ table.render({
 	cols:[[
 		{field:"studentNo",title:"学号",width:"33%",sort:true},
 		{field:"studentName",title:"姓名",width:"33%"},
-		{field:"studentScore",title:"成绩",width:"33%"},
+		{field:"studentScoreString",title:"成绩",width:"33%"},
 	]],
 	url:"/api/getStudentInfo",
 	method:"POST",
@@ -422,6 +422,12 @@ table.render({
 	},
 	parseData: function(res){ //res 即为原始返回的数据
 		res = (res);
+		for(i=0;i<res.length;i++){
+			if(res[i].studentScore==-1)
+				res[i].studentScoreString="暂无成绩";
+			else
+				res[i].studentScoreString=res[i].studentScore;
+		}
 		var data = {
 			"code": 0, //解析接口状态
 			"msg": res.message, //解析提示文本
@@ -432,7 +438,8 @@ table.render({
 		return data; 
 	},
 	toolbar:"<p>成绩表</p>", //开启头部工具栏，并为其绑定左侧模板
-    defaultToolbar: ['filter', 'exports', 'print'],
+    defaultToolbar: ['filter', 'exports', 'print']
+	,
 	title:"学生成绩表",
 	height: 'full-340',
 });
