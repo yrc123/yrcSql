@@ -30,6 +30,7 @@ public class LogoutController {
         for(Cookie i:cookies){
             i.setMaxAge(0);
             i.setPath("/");
+            response.addCookie(i);
         }
         result.put("status", "1");
         /*
