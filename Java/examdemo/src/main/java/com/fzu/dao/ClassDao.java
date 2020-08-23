@@ -56,8 +56,9 @@ public class ClassDao {
     //添加(更新)考试
     public void updateClassExam(ClassExam classExam) {
         //先转化然后逐个参数对应上传到数据库。
-        String sql1 = "update exam_system.class_teacher set start_time = ? where class_id = ?";
-        String sql2 = "update exam_system.class_teacher set over_time = ? where class_id = ?";
+        //String sql1 = "update exam_system.class_teacher set start_time = ? where class_id = ?";
+       // String sql2 = "update exam_system.class_teacher set over_time = ? where class_id = ?";
+        String sql="update exam_system.class_teacher set start_time=?,over_time=?,class_status=? where class_id=?";
         String time = classExam.getExamTime();
         String[] t = time.split("~");
         //默认分两段
@@ -79,8 +80,7 @@ public class ClassDao {
         Timestamp ts2 = new Timestamp(d2.getTime());
         System.out.println("ts2 = "+ts2.toString());
 
-        jdbcTemplate.update(sql1,ts1,classExam.getClassId());
-        jdbcTemplate.update(sql2,ts2,classExam.getClassId());
+       jdbcTemplate.update(sql,new Object[] {ts1,ts2,classExam.getClassStatus(),classExam.getClassId()});
     }
     //获得班级考试的开始时间(用于判断是否可以进入考试)
     public Date getStarttime(Integer classId){

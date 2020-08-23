@@ -16,8 +16,8 @@ public class AdminDao {
         String sql="select password from exam_system.admin where username = ?";
         try{
             String result=jdbcTemplate.queryForObject(sql,new Object[]{username},String.class);
-            if (result.equals(ORIGINAL_PASSWORD)) return 2;
-            else if(result.equals(password)) return 1;
+            if (result.equals(password)&&result.equals(ORIGINAL_PASSWORD)) return 2;
+            else if(result.equals(password)&&!result.equals(ORIGINAL_PASSWORD)) return 1;
             else return 0;
         }catch (EmptyResultDataAccessException e){
             return 0;
