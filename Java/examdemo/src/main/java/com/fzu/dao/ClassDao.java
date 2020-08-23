@@ -39,16 +39,18 @@ public class ClassDao {
         List<ClassExam> result=new ArrayList<>();
         String sql="select * from exam_system.class_teacher where teacher_id = ? ";
         List<class_teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(class_teacher.class),teacherId);
-        System.out.println("List:"+list);
+        //System.out.println("List:"+list);
+        System.out.println(teacherId);
         for(int i=0;i<list.size();i++){
             class_teacher obj=list.get(i);
             ClassExam cont=new ClassExam();
             cont.setClassId(obj.getClassId());
             cont.setClassName(obj.getClassName());
-            cont.setClassStatus(obj.getClassStatus());
-            cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
+            if(obj.getClassStatus()!=null) cont.setClassStatus(obj.getClassStatus());
+            if(obj.getStart()!=null && obj.getOver()!=null)cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
             result.add(cont);
         }
+        System.out.println(result);
         return result;
     }
     //添加(更新)考试

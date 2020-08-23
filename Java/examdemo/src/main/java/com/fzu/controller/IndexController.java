@@ -3,6 +3,7 @@ package com.fzu.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.fzu.dao.ClassDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.dao.StudentDao;
 import com.fzu.pojo.Question;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,8 @@ public class IndexController {
     QuestionDao questionDao;
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    ClassDao classDao;
 
     @RequestMapping("/hi")
     public String index(){
@@ -30,16 +35,29 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public void test(){
-        Question question = new Question();
-        question.setAnswer("BDd");
-        System.out.println(question.exchangeAnswer());
+    public void test(@RequestBody JSONObject jsonobject){
+        classDao.getClassExamById(jsonobject.getString("teacherId"));
     }
 
     @ResponseBody
     @RequestMapping("/test2")
     public void test2(){
-       studentDao.getClassId("20191112");
+       classDao.getClassExamById("T19036");
     }
+
+    @ResponseBody
+    @RequestMapping("/getServerIP")
+    public Map<String, String> getServerIP(HttpServletRequest request){
+        Map<String, String> result = new HashMap<String, String>();
+        studentDao.getClassId("20191112");
+        String IP = request.getRemoteAddr();
+        int p = request.getRemotePort();
+        String port = Integer.toString(p);
+        result.put("IP",IP);
+        result.put("port",port);
+        System.out.println(result);
+        return result;
+    }
+
 
 }
