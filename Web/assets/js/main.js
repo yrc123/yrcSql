@@ -140,10 +140,10 @@ function insertTitile(s){
 //是否第一次更改密码
 function checkChangePassword(){
 	if($.cookie("hasNotChangePassword")!=null){
-		$.removeCookie("userId");
-		$.removeCookie("username");
-		$.removeCookie("character");
-		$.removeCookie("hasNotChangePassword");
+		$.removeCookie("userId",{ path: '/' });
+		$.removeCookie("username",{ path: '/' });
+		$.removeCookie("character",{ path: '/' });
+		$.removeCookie("hasNotChangePassword",{ path: '/' });
 	}
 }
 //权限检查
@@ -213,7 +213,7 @@ form.on('submit(login)', function(){
 					location.href="./"+$.cookie("character")+".html";
 				},500);
 			}else if(data["status"]==2){
-				$.cookie("hasNotChangePassword","ture");
+				$.cookie("hasNotChangePassword","ture",{ path: '/' });
 				displayChangePasswordWindow(0);
 			}	
 		},
@@ -251,7 +251,7 @@ form.on('submit(changePassword)', function(){
 		}),
 		async:false,
 		success:function(){
-			$.removeCookie("hasNotChangePassword");
+			$.removeCookie("hasNotChangePassword",{ path: '/' });
 			layer.msg("密码修改成功",{
 				shade:0.3,
 				time:500
