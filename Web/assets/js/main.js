@@ -140,10 +140,10 @@ function insertTitile(s){
 //是否第一次更改密码
 function checkChangePassword(){
 	if($.cookie("hasNotChangePassword")!=null){
-		$.removeCookie("userId");
-		$.removeCookie("username");
-		$.removeCookie("character");
-		$.removeCookie("hasNotChangePassword");
+		$.removeCookie("userId",{ path: '/' });
+		$.removeCookie("username",{ path: '/' });
+		$.removeCookie("character",{ path: '/' });
+		$.removeCookie("hasNotChangePassword",{ path: '/' });
 	}
 }
 //权限检查
