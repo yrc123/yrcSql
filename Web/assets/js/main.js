@@ -140,10 +140,10 @@ function insertTitile(s){
 //是否第一次更改密码
 function checkChangePassword(){
 	if($.cookie("hasNotChangePassword")!=null){
-		$.removeCookie("userId");
-		$.removeCookie("username");
-		$.removeCookie("character");
-		$.removeCookie("hasNotChangePassword");
+		$.removeCookie("userId",{ path: '/' });
+		$.removeCookie("username",{ path: '/' });
+		$.removeCookie("character",{ path: '/' });
+		$.removeCookie("hasNotChangePassword",{ path: '/' });
 	}
 }
 //权限检查
@@ -281,7 +281,7 @@ function goSide(no){
 }
 
 //显示IP和端口
-function showIP(){
+function showServerIP(){
 	$.ajax({
 		type:"POST",
 		url:"/api/getServerIP",
@@ -290,7 +290,26 @@ function showIP(){
 		async:false,
 		success:function(Jresp){
 			var resp = (Jresp);
-			console.log("来自服务器:"+resp.IP+":"+resp.port);
+			console.log("来自服务器:"+resp.IP+":"+resp.port+"的响应");
+		},
+		error:function(){
+			layer.msg("服务器出错",{
+				shade:0.3,
+				time:500
+			});
+		}
+	})
+}
+function showClientIP(){
+	$.ajax({
+		type:"POST",
+		url:"/api/getClientIP",
+		dataType:"json",
+		contentType: "application/json; charset=utf-8",
+		async:false,
+		success:function(Jresp){
+			var resp = (Jresp);
+			console.log("来自客户端:"+resp.IP+":"+resp.port+"的请求");
 		},
 		error:function(){
 			layer.msg("服务器出错",{

@@ -10,7 +10,7 @@
 	<li id="user-info" class="layui-nav-item layui-hide">
 		<a href="javascript:;">个人中心</a>
 		<dl class="layui-nav-child"> <!-- 二级菜单 -->
-			<dd><a id="user-name" onclick="myHtml()" href="#"></a></dd>
+			<dd><a id="user-name" onclick='checkPagePermission($.cookie("character"))' href="#"></a></dd>
 			<dd><a onclick="displayChangePasswordWindow()"  href="#">修改密码</a></dd>
 			<dd><a id="logout" href="#">退出</a></dd>
 		</dl>

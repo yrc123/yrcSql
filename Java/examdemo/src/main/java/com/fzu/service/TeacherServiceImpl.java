@@ -1,11 +1,11 @@
 package com.fzu.service;
 
 import com.fzu.dao.ClassDao;
+import com.fzu.dao.StudentDao;
 import com.fzu.dao.TeacherDao;
-import com.fzu.pojo.ClassExam;
-import com.fzu.pojo.TTable;
-import com.fzu.pojo.Teacher;
+import com.fzu.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -16,6 +16,8 @@ public class TeacherServiceImpl implements TeacherService {
     TeacherDao teacherDao;
     @Autowired
     ClassDao classDao;
+    @Autowired
+    StudentDao studentDao;
     @Override
     public void importTeacher(List<TTable> tTables) {
         //数据库中对应的需要操作到：teacher表(添加教师)
@@ -57,5 +59,13 @@ public class TeacherServiceImpl implements TeacherService {
         List<TTable> result=teacherDao.getTeacher();
         return result;
 
+    }
+
+    @Override
+    public List<StudentInfo> getStudentInfo(String classId){
+        int id=Integer.valueOf(classId);
+        List<StudentInfo> result=studentDao.getStudentInfoById(id);
+
+        return result;
     }
 }
