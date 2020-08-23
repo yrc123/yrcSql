@@ -45,6 +45,17 @@ public class StudentDao {
         String sql="update exam_system.student set password =? where student_id=?";
         jdbcTemplate.update(sql,objects);
     }
+    //获得班级id
+    public Integer getClassId(String studentId){
+        String sql = "select class_id from class_teacher, student " +
+                "where class_teacher.class_name = student.classroom " +
+                "AND student_id = ?";
+        Integer integer;
+        integer = jdbcTemplate.queryForObject(sql,new Object[]{ studentId},Integer.class);
+
+        System.out.println(integer);
+        return integer;
+    }
     //获得教师id
     public String getTeacherId(String studentId){
         String sql="select paper.teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
