@@ -1,14 +1,18 @@
 package com.fzu.dao;
 
 import com.fzu.pojo.ClassExam;
+import com.fzu.pojo.class_teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 @Repository
 public class ClassDao {
@@ -30,9 +34,22 @@ public class ClassDao {
     }
 
     //通过classId获取班级考试
-    public ClassExam getClassExamById(Integer classId){
+    public List<ClassExam> getClassExamById(String teacherId){
         //从数据库中拿到的数据转化成跟ClassExam对应的
-        return null;
+        List<ClassExam> result=new ArrayList<>();
+        String sql="select * from exam_system.class_teacher where teacher_id = ? ";
+        List<class_teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(class_teacher.class),teacherId);
+        System.out.println("List:"+list);
+        for(int i=0;i<list.size();i++){
+            class_teacher obj=list.get(i);
+            ClassExam cont=new ClassExam();
+            cont.setClassId(obj.getClassId());
+            cont.setClassName(obj.getClassName());
+            cont.setClassStatus(obj.getClassStatus());
+            cont.setExamTime(obj.getStart().toString()+" ~ "+obj.getOver().toString());
+            result.add(cont);
+        }
+        return result;
     }
     //添加(更新)考试
     public void updateClassExam(ClassExam classExam) {
