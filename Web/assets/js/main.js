@@ -251,7 +251,7 @@ form.on('submit(changePassword)', function(){
 		}),
 		async:false,
 		success:function(){
-			$.removeCookie("hasNotChangePassword");
+			$.removeCookie("hasNotChangePassword",{ path: '/' });
 			layer.msg("密码修改成功",{
 				shade:0.3,
 				time:500
