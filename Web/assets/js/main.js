@@ -213,7 +213,7 @@ form.on('submit(login)', function(){
 					location.href="./"+$.cookie("character")+".html";
 				},500);
 			}else if(data["status"]==2){
-				$.cookie("hasNotChangePassword","ture");
+				$.cookie("hasNotChangePassword","ture",{ path: '/' });
 				displayChangePasswordWindow(0);
 			}	
 		},
