@@ -379,7 +379,7 @@
 
 - teacherName:教师姓名
 
-- teacherStatu：教师状态，false表示教师被删除
+- teacherStatus：教师状态，false表示教师被删除
 
 - 功能
 

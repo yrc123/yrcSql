@@ -60,8 +60,7 @@ table.on("tool(teacherTable)",function(obj){
 	var layEvent = obj.event;
 	if(layEvent=="teacherReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
-			var len = data.length;
-
+			console.log(data);
 			sendData("/api/resetPassword",data);			//
 			layer.close(index);
 		});
@@ -127,7 +126,7 @@ function displayUploadWindow(){
 //上传教师名单文件
 upload.render({
 	elem: '#uploadSpace',
-	url: "/api/uploadStudentList", //改成您自己的上传接口
+	url: "/api/uploadQuestionBank", //改成您自己的上传接口
 	auto: false,
 	accept:"file",
 	acceptMime:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
@@ -210,7 +209,7 @@ table.on("tool(studentTable)",function(obj){
 	var layEvent = obj.event;
 	if(layEvent=="studentReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
-			var len = data.length;
+			
 
 			sendData("/api/resetPassword",data);			//
 			layer.close(index);
