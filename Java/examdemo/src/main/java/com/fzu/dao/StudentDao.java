@@ -77,12 +77,13 @@ public class StudentDao {
     //读取学生成绩信息
     public List<StudentInfo> getStudentInfoById(int classId){
         String sql1="select class_name from exam_system.class_teacher where class_id = ? ";
-        String className = jdbcTemplate.queryForObject(sql1,new BeanPropertyRowMapper<>(String.class),classId);
+        String className = jdbcTemplate.queryForObject(sql1,new Object[]{ classId},String.class);
+        System.out.println(classId);
+        System.out.println(className);
 
         List<StudentInfo> result=new ArrayList<>();
         String sql2="select student_id,name,score from exam_system.student where classroom= ? ";
         List<Student> list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class),className);
-        System.out.println("List:"+list);
         for(int i=0;i<list.size();i++){
             Student obj=list.get(i);
             StudentInfo cont=new StudentInfo();
@@ -92,6 +93,7 @@ public class StudentDao {
             else cont.setScore(obj.getScore());
             result.add(cont);
         }
+        System.out.println(result);
         return result;
     }
 }
