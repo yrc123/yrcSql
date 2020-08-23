@@ -20,4 +20,6 @@ public interface TeacherService {
     //先通过教师id获取班级id列表 teacherDao
     //再遍历每个班级id获得班级考试 classDao
     List<ClassExam> getClassExamList(String teacherId);
+    //获取所有老师的id和name
+    List<TTable> getTeacherList();
 }

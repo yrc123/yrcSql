@@ -18,21 +18,20 @@ import java.util.Map;
 
 @Controller
 public class LogoutController {
-    /*@Autowired
-    StudentService studentService=new StudentServiceImpl();
-    @Autowired
-    AdminService adminService=new AdminServiceImpl();
-    @Autowired
-    TeacherService teacherService=new TeacherServiceImpl();*/
 
 
     @ResponseBody
     @RequestMapping("/logout")
-    public Map<String, Object> logout(HttpServletResponse response, HttpServletRequest request, @RequestBody JSONObject jsonObject){
+    public Map<String, Object> logout(HttpServletResponse response, HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-        String username=cookies[1].getValue();
+        //String username=cookies[1].getValue();
         Map<String, Object> result = new HashMap<String, Object>();
-        System.out.println(username.substring(0,1));
+        //System.out.println(username.substring(0,1));
+        for(Cookie i:cookies){
+            i.setMaxAge(0);
+        }
+        result.put("status", "1");
+        /*
         //管理员
         if (username.equals("admin")){
             String userId = cookies[0].getValue();
@@ -86,7 +85,7 @@ public class LogoutController {
             response.addCookie(cookie1);
             response.addCookie(cookie2);
             response.addCookie(cookie3);
-        }
+        }*/
         return result;
     }
 }
