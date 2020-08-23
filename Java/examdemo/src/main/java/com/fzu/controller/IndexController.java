@@ -6,6 +6,7 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.fzu.dao.ClassDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.dao.StudentDao;
+import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.Question;
 import com.fzu.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public void test(@RequestBody JSONObject jsonobject){
-        classDao.getClassExamById(jsonobject.getString("teacherId"));
+    public void test(@RequestBody ClassExam classExam){
+        classDao.updateClassExam(classExam);
     }
 
     @ResponseBody
@@ -48,6 +49,20 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("/getServerIP")
     public Map<String, String> getServerIP(HttpServletRequest request){
+        Map<String, String> result = new HashMap<String, String>();
+        studentDao.getClassId("20191112");
+        String IP = request.getLocalAddr();
+        int p = request.getLocalPort();
+        String port = Integer.toString(p);
+        result.put("IP",IP);
+        result.put("port",port);
+        System.out.println(result);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getClientIP")
+    public Map<String, String> getClientIP(HttpServletRequest request){
         Map<String, String> result = new HashMap<String, String>();
         studentDao.getClassId("20191112");
         String IP = request.getRemoteAddr();
