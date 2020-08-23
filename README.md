@@ -387,6 +387,19 @@
 
 ### resetPassword
 
+* 功能
+  * 重置密码
+
+### uploadQuestionBank
+
+* 功能
+  * 上传题库文件
+
+### setOfficialExam
+
+* 功能
+  * 设置正式考试
+
 ### 
 
 ## 前端需求
