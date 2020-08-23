@@ -36,8 +36,9 @@ public class StudentDao {
         String sql="select password from exam_system.student where student_id = ?";
         try{
             String result=jdbcTemplate.queryForObject(sql,new Object[]{username},String.class);
-            if (result.equals(ORIGINAL_PASSWORD)) return 2;
-            else if(result.equals(password)) return 1;
+            System.out.println(result);
+            if (result.equals(password)&&result.equals(ORIGINAL_PASSWORD)) return 2;
+            else if(result.equals(password)&&!result.equals(ORIGINAL_PASSWORD)) return 1;
             else return 0;
         }catch (EmptyResultDataAccessException e){
             return 0;
@@ -64,7 +65,7 @@ public class StudentDao {
     }
     //获得教师id
     public String getTeacherId(String studentId){
-        String sql="select paper.teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
+        String sql="select teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
         return jdbcTemplate.queryForObject(sql,String.class);
     }
 
