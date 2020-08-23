@@ -52,7 +52,12 @@ public class FileController {
         for (int i = 0; i < cookies.length; i++) {
             System.out.println(i+"--"+cookies[i].getValue());
         }
-        String teacherId =cookies[0].getValue();
+        String teacherId = "";
+        for (Cookie cookie : cookies) {
+            if(cookie.getValue().charAt(0)=='T'){
+                teacherId = cookie.getValue();
+            }
+        }
         String path = "";
         try {
             //将当前上下文初始化给  CommonsMutipartResolver

@@ -3,9 +3,15 @@ package com.fzu.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.fzu.pojo.ClassExam;
+import com.fzu.pojo.Question;
+import com.fzu.service.TeacherService;
+import com.fzu.service.TeacherServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -18,20 +24,12 @@ public class IndexController {
         return "index";
     }
 
+    @Autowired
+    TeacherService teacherService = new TeacherServiceImpl();
     @ResponseBody
     @RequestMapping("/test")
-    public void test(@RequestBody List<List<Integer>> lists){
-        for(int i=0;i<lists.size();i++){
-            List<Integer> list=lists.get(i);
-            System.out.print(i+"[");
-            for(int j=0;j<list.size();j++){
-                System.out.print(list.get(j));
-            }
-            System.out.println("]");
-        }
-
-
-
+    public void test(@RequestBody ClassExam classExam){
+        teacherService.updateClassExam(classExam);
     }
 
     @ResponseBody

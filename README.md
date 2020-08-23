@@ -115,7 +115,7 @@
 
   - 根据考试类型，返回对应考试状态
 
-### getExam
+### getPaper
 
 - 参数
 
@@ -125,7 +125,7 @@
 
   - ```json
     {
-        "examId":string,
+        "paperId":string,
         "date":string,
         "Qtype":[ number, number, number],
         "data":[
@@ -162,7 +162,7 @@
 
   - 返回考试试题
 
-### submitExam
+### submitPaper
 
 - 参数
 
@@ -201,7 +201,7 @@
   - 如果是模拟考则返回答案，正式考试返回null
   - 一定要用服务器数据来判断是否是模拟考，不能用cookie
   
-### getClassInExam<<<
+### getClassInExam
 
 - 参数
 
@@ -214,7 +214,7 @@
         {
             "className":string,
             "classId":sting,
-            "classStatus":0|1|2,<<<
+            "classStatus":0|1|2,
             "examTime":string
         }
         ...
@@ -233,16 +233,16 @@
   
   - 查询对应教师账号的所有班级考试状态
 
-### setClassInExam<<<
+### setClassInExam
 
 - 参数
 
   - ```json
     [
         {
-            "className":string,<<<
+            "className":string,
             "classId":sting,
-            "classStatus":0|1|2,<<<
+            "classStatus":0|1|2,
             "examTime":string
         }
         ...
@@ -387,6 +387,19 @@
 
 ### resetPassword
 
+* 功能
+  * 重置密码
+
+### uploadQuestionBank
+
+* 功能
+  * 上传题库文件
+
+### setOfficialExam
+
+* 功能
+  * 设置正式考试
+
 ### 
 
 ## 前端需求
@@ -446,5 +459,3 @@
 - [x] 权限不足弹窗
 
 ## 后端需求
-
-- 

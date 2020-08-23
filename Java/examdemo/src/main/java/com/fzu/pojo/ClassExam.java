@@ -11,8 +11,9 @@ import java.util.Date;
 public class ClassExam {
     int classId;//班级编号(id自增)
     String className;//班级名
-    boolean classStatus;//班级状态
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date deadline;//截止日期
+    int classStatus;//班级状态
+    String examTime;//格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+
+
 
 }

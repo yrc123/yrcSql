@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class TeacherDao {
@@ -23,7 +24,7 @@ public class TeacherDao {
         objects[2]=teacher.getName();
         jdbcTemplate.update(sql,objects);
     }
-    //教师登录检验
+    //教师登录检验(已完成)
     public int teaCheck(String username,String password){
         String sql="select password from exam_system.teacher where teacher_id = ?";
         try{
@@ -35,7 +36,7 @@ public class TeacherDao {
             return 0;
         }
     }
-    //修改密码
+    //修改密码(已完成)
     public void changePassword(String username,String password){
         Object[] objects=new Object[2];
         objects[0]=password;
@@ -44,4 +45,10 @@ public class TeacherDao {
         jdbcTemplate.update(sql,objects);
 
     }
+
+    //通过教师id获得班级的id集合
+    public List<Integer> getClassIdByTeacherId(Integer teacherId){
+        return null;
+    }
+
 }
