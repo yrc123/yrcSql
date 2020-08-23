@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ClassExam getClassExam(Integer classId) {
-        return null;
+        return classDao.getClassExam(classId);
     }
 
     @Override

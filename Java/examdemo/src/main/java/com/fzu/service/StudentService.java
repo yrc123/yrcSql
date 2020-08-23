@@ -22,7 +22,6 @@ public interface StudentService {
     Integer getClassId(String studentId);
     //通过自己的班级id获得考试信息(未完成)
     ClassExam getClassExam(Integer classId);
-
     //获取一份试卷
     ExamPaper getExamPaper(String studentId) throws ParseException;
     //获得教师id

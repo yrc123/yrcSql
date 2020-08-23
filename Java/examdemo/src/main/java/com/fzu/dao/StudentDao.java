@@ -65,8 +65,8 @@ public class StudentDao {
     }
     //获得教师id
     public String getTeacherId(String studentId){
-        String sql="select teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
-        return jdbcTemplate.queryForObject(sql,String.class);
+        String sql="select teacher_id from class_teacher,student where student.classroom=class_teacher.class_name and student_id= ?";
+        return jdbcTemplate.queryForObject(sql,new Object[]{studentId},String.class);
     }
 
     //写入正式考试的成绩

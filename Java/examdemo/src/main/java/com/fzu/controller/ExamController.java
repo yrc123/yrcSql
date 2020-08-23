@@ -93,6 +93,7 @@ public class ExamController {
             if(i.getName().equals("username")) studentId=i.getValue();
         }
         ExamPaper examPaper= studentService.getExamPaper(studentId);
+        System.out.println("考卷"+examPaper);
         Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
         response.addCookie(cookie);
         return examPaper;

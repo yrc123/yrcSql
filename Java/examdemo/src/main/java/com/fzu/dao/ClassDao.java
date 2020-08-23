@@ -91,6 +91,19 @@ public class ClassDao {
         //jdbcTemplate.update(sql1,ts1,classExam.getClassId());
         //jdbcTemplate.update(sql2,ts2,classExam.getClassId());
     }
+    //通过班级id查询班级考试
+    public ClassExam getClassExam(Integer classId){
+        System.out.println(classId);
+        String sql="select * from exam_system.class_teacher where class_id=?";
+        class_teacher obj=jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(class_teacher.class),new Object[]{classId});
+        System.out.println(obj);
+        ClassExam cont=new ClassExam();
+        cont.setClassId(obj.getClassId());
+        cont.setClassName(obj.getClassName());
+        if(obj.getClassStatus()!=null) cont.setClassStatus(obj.getClassStatus());
+        if(obj.getStart_time()!=null && obj.getOver_time()!=null)cont.setExamTime(obj.getStart_time().toString()+" ~ "+obj.getOver_time().toString());
+        return cont;
+    }
     //获得班级考试的开始时间(用于判断是否可以进入考试)
     public Date getStarttime(Integer classId){
         String sql="select class_teacher.start_time from class_teacher where class_id=?";
