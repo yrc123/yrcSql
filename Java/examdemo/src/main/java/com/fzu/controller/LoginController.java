@@ -97,9 +97,12 @@ public class LoginController {
     public Map<String,String> changePassword(HttpServletRequest request, @RequestBody JSONObject jsonObject){
         String newPassword=(String)jsonObject.get("newPassword");
         Map<String,String> result=new HashMap<>();
-        Cookie[] cookies = request.getCookies();
+        Cookie[] cookies=request.getCookies();
+        String username="";
         if (cookies != null) {
-           String username=cookies[1].getValue();
+            for(Cookie i:cookies){
+                if(i.getName().equals("username")) username=i.getValue();
+            }
             System.out.println(username);
            //管理员
             if (username.equals("admin")){

@@ -43,7 +43,7 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("/test2")
     public void test2(){
-       classDao.getClassExamById("T19036");
+        classDao.getClassExamById("T19036");
     }
 
     @ResponseBody

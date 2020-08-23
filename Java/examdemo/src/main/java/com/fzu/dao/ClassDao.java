@@ -39,7 +39,7 @@ public class ClassDao {
         List<ClassExam> result=new ArrayList<>();
         String sql="select * from exam_system.class_teacher where teacher_id = ? ";
         List<class_teacher> list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(class_teacher.class),teacherId);
-        //System.out.println("List:"+list);
+        System.out.println("List:"+list);
         System.out.println(teacherId);
         for(int i=0;i<list.size();i++){
             class_teacher obj=list.get(i);
@@ -47,7 +47,7 @@ public class ClassDao {
             cont.setClassId(obj.getClassId());
             cont.setClassName(obj.getClassName());
             if(obj.getClassStatus()!=null) cont.setClassStatus(obj.getClassStatus());
-            if(obj.getStartTime()!=null && obj.getOverTime()!=null)cont.setExamTime(obj.getStartTime().toString()+" ~ "+obj.getOverTime().toString());
+            if(obj.getStart_time()!=null && obj.getOver_time()!=null)cont.setExamTime(obj.getStart_time().toString()+" ~ "+obj.getOver_time().toString());
             result.add(cont);
         }
         System.out.println(result);
@@ -56,8 +56,8 @@ public class ClassDao {
     //添加(更新)考试
     public void updateClassExam(ClassExam classExam) {
         //先转化然后逐个参数对应上传到数据库。
-        String sql1 = "update exam_system.class_teacher set start_time = ?,over_time = ?,class_status = ? where class_id = ?";
-        //String sql2 = "update exam_system.class_teacher set over_time = ? where class_id = ?";
+        String sql1 = "update exam_system.class_teacher set start_time = ? where class_id = ?";
+        String sql2 = "update exam_system.class_teacher set over_time = ? where class_id = ?";
         String time = classExam.getExamTime();
         String[] t = time.split("~");
         //默认分两段
@@ -74,15 +74,13 @@ public class ClassDao {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int status = classExam.getClassStatus();
-        int id = classExam.getClassId();
         Timestamp ts1 = new Timestamp(d1.getTime());
         System.out.println("ts1 = "+ts1.toString());
         Timestamp ts2 = new Timestamp(d2.getTime());
-        //System.out.println("ts2 = "+ts2.toString());
-        Object[] params = new Object[]{ ts1,ts2,status,id};
-        jdbcTemplate.update(sql1,params);
-        //jdbcTemplate.update(sql2,ts2,classExam.getClassId());
+        System.out.println("ts2 = "+ts2.toString());
+
+        jdbcTemplate.update(sql1,ts1,classExam.getClassId());
+        jdbcTemplate.update(sql2,ts2,classExam.getClassId());
     }
     //获得班级考试的开始时间(用于判断是否可以进入考试)
     public Date getStarttime(Integer classId){
