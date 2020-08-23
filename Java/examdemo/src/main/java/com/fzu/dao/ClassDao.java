@@ -33,7 +33,7 @@ public class ClassDao {
         }
     }
 
-    //通过classId获取班级考试
+    //通过teacherId获取班级考试
     public List<ClassExam> getClassExamById(String teacherId){
         //从数据库中拿到的数据转化成跟ClassExam对应的
         List<ClassExam> result=new ArrayList<>();
