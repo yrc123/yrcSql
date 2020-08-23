@@ -39,7 +39,7 @@ function setTime(date){
 function getExam(){
 	var data;
 	$.ajax({
-		url:"/api/getExam",
+		url:"/api/getPaper",
 		async:false,
 		type:"POST",
 		data:null,
@@ -245,7 +245,7 @@ function submitExam(){
 	//console.log(form.val("examForm"));
 	$.ajax({
 		type:"POST",
-		url:"/api/submitExam",
+		url:"/api/submitPaper",
 		dataType:"json",
 		contentType: "application/json; charset=utf-8",
 		data:JSON.stringify(ans),
