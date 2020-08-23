@@ -60,7 +60,7 @@ table.on("tool(teacherTable)",function(obj){
 	var layEvent = obj.event;
 	if(layEvent=="teacherReset"){
 		layer.confirm('确认重置为初始密码?', {icon: 3, title:'提示'}, function(index){
-			console.log(data);
+			
 			sendData("/api/resetPassword",data);			//
 			layer.close(index);
 		});
