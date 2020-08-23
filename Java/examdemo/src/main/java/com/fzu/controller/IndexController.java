@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.fzu.dao.QuestionDao;
+import com.fzu.dao.StudentDao;
 import com.fzu.pojo.Question;
 import com.fzu.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class IndexController {
     @Autowired
     QuestionDao questionDao;
+    @Autowired
+    StudentDao studentDao;
 
     @RequestMapping("/hi")
     public String index(){
@@ -36,7 +39,7 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("/test2")
     public void test2(){
-        System.out.println(questionDao.getQuestionList(1));
+       studentDao.getClassId("20191112");
     }
 
 }

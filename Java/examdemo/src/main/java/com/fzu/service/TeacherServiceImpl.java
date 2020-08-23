@@ -46,7 +46,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<ClassExam> getClassExamList(String teacherId) {
-
         return null;
     }
 
