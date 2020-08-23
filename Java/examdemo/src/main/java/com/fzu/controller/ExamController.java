@@ -49,7 +49,7 @@ public class ExamController {
         String teacher_id="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
-            if(i.getName()=="username") teacher_id=i.getValue();
+            if(i.getName().equals("username")) teacher_id=i.getValue();
         }
         classExamList=teacherService.getClassExamList(teacher_id);
         return classExamList;
@@ -64,7 +64,7 @@ public class ExamController {
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
-            if(i.getName()=="username") studentId=i.getValue();
+            if(i.getName().equals("username")) studentId=i.getValue();
         }
         //通过学生id得到班级id，通过班级id获取examstatus。
         Integer classId=studentService.getClassId(studentId);
@@ -90,7 +90,7 @@ public class ExamController {
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
-            if(i.getName()=="username") studentId=i.getValue();
+            if(i.getName().equals("username")) studentId=i.getValue();
         }
         ExamPaper examPaper= studentService.getExamPaper(studentId);
         Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
@@ -105,12 +105,12 @@ public class ExamController {
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
-            if(i.getName()=="username") studentId=i.getValue();
+            if(i.getName().equals("username")) studentId=i.getValue();
         }
         Integer classId=studentService.getClassId(studentId);
         Integer paperId=0;
         for(Cookie i:cookies){
-            if(i.getName()=="paperId") paperId=Integer.valueOf(i.getValue());
+            if(i.getName().equals("paperId")) paperId=Integer.valueOf(i.getValue());
         }
         ClassExam classExam=studentService.getClassExam(classId);
         if(classExam.getClassStatus()==2)//正式考
