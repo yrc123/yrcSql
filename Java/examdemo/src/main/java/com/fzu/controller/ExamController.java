@@ -1,8 +1,8 @@
 package com.fzu.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fzu.pojo.ClassExam;
-import com.fzu.pojo.ExamPaper;
+import com.fzu.pojo.*;
 import com.fzu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,4 +121,16 @@ public class ExamController {
         else//模拟考，返回答案
             return studentService.getAnswerList(paperId);
     }
+    @RequestMapping("/getStudentInfo")
+    @ResponseBody
+    public List<StudentInfo> getStudentInfo(@RequestBody JSONObject jsonObject){
+        String classId=jsonObject.getString("classId");
+        return teacherService.getStudentInfo(classId);
+    }
+    @RequestMapping("/getTeacherList")
+    @ResponseBody
+    public List<TTable> getStudentInfo(){
+        return teacherService.getTeacherList();
+    }
+
 }
