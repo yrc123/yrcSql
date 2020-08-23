@@ -52,4 +52,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     }
 
+    @Override
+    public List<TTable> getTeacherList() {
+
+        List<TTable> result=teacherDao.getTeacher();
+        return result;
+
+    }
 }
