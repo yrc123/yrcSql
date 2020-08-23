@@ -476,7 +476,24 @@
 * 功能
   * 上传教师文件
 
+### getServerIP
 
+* 参数
+
+  * void
+
+* 返回
+
+  * ```json
+    {
+        "IP":String,
+        "Port":String
+    }
+    ```
+
+* 功能
+
+  * 返回当前服务器的IP和端口号
 
 ### 
 
