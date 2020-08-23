@@ -1,5 +1,6 @@
 package com.fzu.service;
 
+import com.fzu.dao.ClassDao;
 import com.fzu.dao.TeacherDao;
 import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.TTable;
@@ -7,11 +8,14 @@ import com.fzu.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherDao teacherDao;
+    @Autowired
+    ClassDao classDao;
     @Override
     public void importTeacher(List<TTable> tTables) {
         //数据库中对应的需要操作到：teacher表(添加教师)
@@ -35,6 +39,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void updateClassExam(ClassExam classExam) {
+        System.out.println(classExam);
+        classDao.updateClassExam(classExam);
 
     }
 
