@@ -36,6 +36,7 @@ public class ExamController {
             teacherService.updateClassExam(classExam);
             System.out.println(i+classExam.toString());
         }
+        result.put("status",1);
         return result;
     }
 
