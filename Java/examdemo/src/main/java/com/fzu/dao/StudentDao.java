@@ -1,6 +1,7 @@
 package com.fzu.dao;
 
 import com.fzu.pojo.Student;
+import jdk.nashorn.internal.scripts.JD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -44,5 +45,16 @@ public class StudentDao {
         objects[1]=username;
         String sql="update exam_system.student set password =? where student_id=?";
         jdbcTemplate.update(sql,objects);
+    }
+    //获得班级id
+    public Integer getClassId(String studentId){
+        String sql = "select class_id from class_teacher, student " +
+                        "where class_teacher.class_name = student.classroom " +
+                        "AND student_id = ?";
+        Integer integer;
+        integer = jdbcTemplate.queryForObject(sql,new Object[]{ studentId},Integer.class);
+
+        System.out.println(integer);
+        return integer;
     }
 }

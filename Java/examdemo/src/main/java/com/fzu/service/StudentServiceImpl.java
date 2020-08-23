@@ -45,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Integer getClassId(String studentId) {
-        return null;
+        return studentDao.getClassId(studentId);
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.Question;
+import com.fzu.service.StudentService;
+import com.fzu.service.StudentServiceImpl;
 import com.fzu.service.TeacherService;
 import com.fzu.service.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,12 @@ public class IndexController {
         teacherService.updateClassExam(classExam);
     }
 
+    @Autowired
+    StudentService studentService = new StudentServiceImpl();
     @ResponseBody
     @RequestMapping("/test2")
-    public void test(@RequestBody JSONObject jsonObject){
-        String username=(String) jsonObject.get("username");
-        System.out.println(username);
-        System.out.println("password:"+jsonObject.get("password"));
+    public void test(@RequestBody String studentId){
+        studentService.getClassId(studentId);
     }
 
 }
