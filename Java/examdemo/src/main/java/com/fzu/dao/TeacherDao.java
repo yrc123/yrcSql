@@ -59,7 +59,7 @@ public class TeacherDao {
         for(int i=0;i<list.size();i++){
             Teacher obj=list.get(i);
             TTable cont=new TTable();
-            cont.setName(obj.getName());
+            cont.setTeacherName(obj.getName());
             cont.setTeacherId(obj.getTeacherId());
             result.add(cont);
         }

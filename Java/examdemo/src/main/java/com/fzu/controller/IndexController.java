@@ -42,8 +42,8 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/test2")
-    public void test2(){
-        classDao.getClassExamById("T19036");
+    public void test2(@RequestBody JSONObject jsonObject){
+        studentDao.getStudentInfoById(jsonObject.getInteger("classId"));
     }
 
     @ResponseBody

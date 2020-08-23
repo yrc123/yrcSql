@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TTable {
     String teacherId;//工号
-    String name;//姓名
+    String teacherName;//姓名
 }
