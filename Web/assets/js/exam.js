@@ -255,7 +255,7 @@ function submitExam(){
 				shade:0.3,
 				time:500
 			});
-			if(resp==null){
+			if(resp==1){
 				setTimeout(function(){
 					location.href="./student.html"
 				},500);
