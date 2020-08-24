@@ -250,7 +250,7 @@ upload.render({
 	exts:"xls|xlsx",
 	field:"file",
 	size:10000,
-	bindAction:"#startUpload",
+	bindAction:"#startQuestionUpload",
 	choose:function(obj){
 		obj.preview(function(index,file,result){
 			$("#uploadQuestionSpace i").removeClass("layui-icon-upload-drag");
