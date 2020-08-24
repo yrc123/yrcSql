@@ -309,8 +309,8 @@ function displaySelectExamWindow(){
 //监听设置正式考试提交
 form.on('submit(submitSetExam)', function(data){
 	var examTime = data.field.examTime;
-	var ndata=new {
-		ndata=examTime
+	var ndata={
+		ndata:examTime
 	};
 	sendData("/api/setOfficialExam",ndata);
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
