@@ -28,7 +28,7 @@ table.render({
 	},
 	toolbar:  '#teacherListBar' , //开启头部工具栏，并为其绑定左侧模板
     defaultToolbar: ['filter', 'exports', 'print'],
-	title:"班级考表",
+	title:"教师名单",
 	height: 'full-240',
 });
 
@@ -185,6 +185,9 @@ table.render({
 	url:"/api/getStudentInfo",
 	method:"POST",
 	contentType:'application/json',
+	where:{
+		classId:"ALL"
+	},
 	parseData: function(res){ //res 即为原始返回的数据
 		//console.log(res);
 		res =(res);
@@ -194,11 +197,10 @@ table.render({
 			"count": res.total, //解析数据长度
 		};
 		data.data=res;
-		//console.log(data);
 		return data; 
 	},
-	//toolbar:  '#teacherListBar' , //开启头部工具栏，并为其绑定左侧模板
-    //defaultToolbar: ['filter', 'exports', 'print'],
+	toolbar:  '#studentListBar' , //开启头部工具栏，并为其绑定左侧模板
+    defaultToolbar: ['filter', 'exports', 'print'],
 	title:"班级考表",
 	height: 'full-240',
 });
@@ -304,3 +306,12 @@ function displaySelectExamWindow(){
 	})
 }
 
+//监听设置正式考试提交
+form.on('submit(submitSetExam)', function(data){
+	var examTime = data.field.examTime;
+	var ndata={
+		ndata:examTime
+	};
+	sendData("/api/setOfficialExam",ndata);
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+});

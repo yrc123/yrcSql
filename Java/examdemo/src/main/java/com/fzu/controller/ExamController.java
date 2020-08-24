@@ -39,6 +39,16 @@ public class ExamController {
         result.put("status",1);
         return result;
     }
+    //将所有班级设置为正式考试
+    @RequestMapping("/setOfficialExam")
+    @ResponseBody
+    public Map<String,Integer> setOfficialExam(JSONObject jsonObject){
+        String examTime=jsonObject.getString("examTime");
+        Map<String,Integer> result=new HashMap<>();
+        adminService.setOfficialExam(examTime);
+        result.put("status",1);
+        return result;
+    }
 
     //获得班级考试信息(列表)
     @RequestMapping("/getClassInExam")
@@ -61,6 +71,7 @@ public class ExamController {
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
         Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
+        examType += 1;
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
@@ -76,8 +87,14 @@ public class ExamController {
         else{
             Date startTime=studentService.getStarttime(classId);
             Date now=new Date();
-            if(now.before(startTime))result.put("examStart",0);
-            else result.put("examStart",1);
+            System.out.println(examType+"--"+classExam.getClassStatus());
+            boolean isSame = examType==classExam.getClassStatus();
+            if(now.before(startTime)) result.put("examStart",0);
+            else if (isSame) result.put("examStart",1);
+            else {
+                System.out.println("examStatus isn't same");
+                result.put("examStart",0);
+            }
         }
         return result;
     }
