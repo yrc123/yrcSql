@@ -360,7 +360,7 @@ table.on("tool(classTable)",function(obj){
 	var layEvent = obj.event;
 	if(layEvent=="classSub"){
 		layer.confirm('确认删除班级?', {icon: 3, title:'提示'}, function(index){
-			sendData("/api/delectClass",data);
+			sendData("/api/deleteClass",data);
 			layer.close(index);
 		});
 	}
