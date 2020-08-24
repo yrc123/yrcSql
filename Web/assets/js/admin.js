@@ -321,3 +321,22 @@ form.on('submit(submitSetExam)', function(data){
 	sendData("/api/setOfficialExam",ndata);
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 });
+
+form.on('submit(stopExam)', function(data){
+	var ndata=1;
+	sendData("/api/closeOfficialExam",ndata);
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+});
+
+
+form.on('submit(cleanAll)', function(data){
+	layer.confirm('确认清空数据库?', {icon: 3, title:'提示'}, function(index){
+		var ndata=1;
+		sendData("/api/cleanAll",ndata);
+		layer.close(index);
+	});
+	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+});
+
+
+
