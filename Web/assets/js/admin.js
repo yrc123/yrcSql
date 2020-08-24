@@ -163,6 +163,9 @@ upload.render({
 				time:500
 			});
 		}
+		setTimeout(function(){
+			location.reload();
+		},500);
 	},
 	error:function(index,upload){
 		layer.closeAll('loading');
@@ -279,6 +282,9 @@ upload.render({
 				time:500
 			});
 		}
+		setTimeout(function(){
+			location.reload();
+		},500);
 	},
 	error:function(index,upload){
 		layer.closeAll('loading');
@@ -310,7 +316,7 @@ function displaySelectExamWindow(){
 form.on('submit(submitSetExam)', function(data){
 	var examTime = data.field.examTime;
 	var ndata={
-		ndata:examTime
+		examTime:examTime
 	};
 	sendData("/api/setOfficialExam",ndata);
 	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

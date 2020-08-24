@@ -300,6 +300,9 @@ upload.render({
 				time:500
 			});
 		}
+		setTimeout(function(){
+			location.reload();
+		},500);
 	},
 	error:function(index,upload){
 		layer.closeAll('loading');

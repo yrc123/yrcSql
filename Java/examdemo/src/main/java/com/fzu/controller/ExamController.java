@@ -71,8 +71,16 @@ public class ExamController {
     @ResponseBody
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
-        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
-        examType += 1;
+        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟 1->2 2->1
+        int temp = -1;
+        if(examType==1)
+            temp = 1;
+        else if(examType==0)
+            temp = 2;
+        else
+            System.out.println("出错的examType");
+
+        examType = temp;
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
@@ -141,9 +149,23 @@ public class ExamController {
     }
     @RequestMapping("/getStudentInfo")
     @ResponseBody
-    public List<StudentInfo> getStudentInfo(@RequestBody JSONObject jsonObject){
+    public List<StudentInfo> getStudentInfo(HttpServletRequest request,@RequestBody JSONObject jsonObject){
+        Cookie[] cookies=request.getCookies();
+        int flag = -1;
+        String username="";
+        for(Cookie i:cookies){
+            if(i.getName().equals("username")){
+                username=i.getValue();
+            }
+            if(i.getName().equals("character")&&i.getValue().equals("admin")){
+                flag=0;
+            }
+            else if(i.getName().equals("character")&&i.getValue().equals("teacher")){
+                flag=1;
+            }
+        }
         String classId=jsonObject.getString("classId");
-        return teacherService.getStudentInfo(classId);
+        return teacherService.getStudentInfo(flag,username,classId);
     }
     @RequestMapping("/getTeacherList")
     @ResponseBody

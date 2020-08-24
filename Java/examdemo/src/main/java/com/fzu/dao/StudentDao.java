@@ -76,12 +76,16 @@ public class StudentDao {
     }
 
     //读取学生成绩信息
-    public List<StudentInfo> getStudentInfoById(int classId){
+    public List<StudentInfo> getStudentInfoById(int classId,String username){
         List<StudentInfo> result=new ArrayList<>();
         List<Student> list;
         if(classId==0){
-            String sql2="select student_id,name,score from exam_system.student";
-            list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class));
+            String sql="select * from exam_system.student";
+            list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Student.class));
+        }
+        else if(classId==1){
+            String sql="select * from exam_system.student where classroom in (select class_name from class_teacher where teacher_id =?)";
+            list = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Student.class),username);
         }
         else{
             String sql1="select class_name from exam_system.class_teacher where class_id = ? ";
@@ -89,7 +93,7 @@ public class StudentDao {
             System.out.println(classId);
             System.out.println(className);
 
-            String sql2="select student_id,name,score from exam_system.student where classroom= ? ";
+            String sql2="select * from exam_system.student where classroom= ? ";
             list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class),className);
         }
 
