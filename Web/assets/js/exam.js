@@ -268,6 +268,7 @@ function submitExam(){
 					goSide(0);
 				},500);
 			}
+			$.removeCookie("paperId",{ path: '/' });
 		},
 		error:function(){
 			layer.msg("服务器出错",{
