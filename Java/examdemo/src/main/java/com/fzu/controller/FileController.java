@@ -96,10 +96,12 @@ public class FileController {
             }
 
             result.put("statusCode", "200");
+            result.put("status",1);
             result.put("message", "上传成功!");
             result.put("filename", fileName);
         } catch (Exception ex) {
             result.put("statusCode", "300");
+            result.put("status",0);
             result.put("message", "上传失败:" + ex.getMessage());
         }
         parseStudentExcel(request, path, teacherId);
@@ -204,10 +206,12 @@ public class FileController {
             }
 
             result.put("statusCode", "200");
+            result.put("status",1);
             result.put("message", "上传成功!");
             result.put("filename", fileName);
         } catch (Exception ex) {
             result.put("statusCode", "300");
+            result.put("status",0);
             result.put("message", "上传失败:" + ex.getMessage());
         }
 
@@ -322,10 +326,12 @@ public class FileController {
             }
 
             result.put("statusCode", "200");
+            result.put("status",1);
             result.put("message", "上传成功!");
             result.put("filename", fileName);
         } catch (Exception ex) {
             result.put("statusCode", "300");
+            result.put("status",0);
             result.put("message", "上传失败:" + ex.getMessage());
         }
 
