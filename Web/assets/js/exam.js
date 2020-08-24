@@ -72,9 +72,9 @@ function getQuestion(){
 //设置考试
 function setExam(data){
 
-	if($.cookie("examType")==0){
+	if($.cookie("examType",{path:'/'})==0){
 		$("#examType").text("正式考试");
-	}if($.cookie("examType")==1){
+	}if($.cookie("examType",{path:'/'})==1){
 		$("#examType").text("模拟考试");
 	}
 	
@@ -119,7 +119,7 @@ function setExam(data){
 
 //检查考试是否开始
 function checkExam(){
-	var examType = $.cookie("examType");
+	var examType = $.cookie("examType",{path:'/'});
 	layui.use('layer', function(){
 		$.ajax({
 			type:"POST",
@@ -256,7 +256,7 @@ function submitExam(){
 				time:500
 			});
 			$.removeCookie("paperId",{ path: '/' });
-			if($.cookie("examType")==0){
+			if($.cookie("examType",{path:'/'})==0){
 				setTimeout(function(){
 					location.href="./student.html"
 				},500);
@@ -290,20 +290,20 @@ function saveCookie(no,value){
 	choiceInCookie.paperId=examInfo.paperId;
 	choiceInCookie.choice[no]=value;	
 	console.log(choiceInCookie);
-	$.cookie("choice",JSON.stringify(choiceInCookie));
-	$.cookie("paperId",examInfo.paperId);
+	$.cookie("choice",JSON.stringify(choiceInCookie),{path:'/'});
+	$.cookie("paperId",examInfo.paperId,{path:'/'});
 }
 //加载cookie中的选项
 function loadChoice(){
-	if($.cookie("choice")==null)return false;
+	if($.cookie("choice",{path:'/'})==null)return false;
 	console.log(examInfo);
 	//console.log(choiceInCookie);
-	console.log(JSON.parse($.cookie("choice")));
-	choiceInCookie=JSON.parse($.cookie("choice"));
+	console.log(JSON.parse($.cookie("choice"),{path:'/'}));
+	choiceInCookie=JSON.parse($.cookie("choice"),{path:'/'});
 	if(examInfo.paperId!=choiceInCookie.paperId){
 		choiceInCookie.paperId=examInfo.paperId;
 		choiceInCookie.choice=cArr;
-		$.cookie("choice",JSON.stringify(choiceInCookie));
+		$.cookie("choice",JSON.stringify(choiceInCookie),{path:'/'});
 		console.log(choiceInCookie);
 		return false;
 	}
