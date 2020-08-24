@@ -42,8 +42,9 @@ public class ExamController {
     //将所有班级设置为正式考试
     @RequestMapping("/setOfficialExam")
     @ResponseBody
-    public Map<String,Integer> setOfficialExam(JSONObject jsonObject){
+    public Map<String,Integer> setOfficialExam(@RequestBody JSONObject jsonObject){
         String examTime=jsonObject.getString("examTime");
+        System.out.println("examTime");
         Map<String,Integer> result=new HashMap<>();
         adminService.setOfficialExam(examTime);
         result.put("status",1);
@@ -103,7 +104,6 @@ public class ExamController {
     @RequestMapping("/getPaper")
     @ResponseBody
     public ExamPaper getPaper(HttpServletRequest request,HttpServletResponse response) throws ParseException {
-
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
