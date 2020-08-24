@@ -330,7 +330,7 @@ form.on('submit(stopExam)', function(data){
 
 
 form.on('submit(cleanAll)', function(data){
-	layer.confirm('确认删除教师?', {icon: 3, title:'提示'}, function(index){
+	layer.confirm('确认清空数据库?', {icon: 3, title:'提示'}, function(index){
 		var ndata=1;
 		sendData("/api/cleanAll",ndata);
 		layer.close(index);
