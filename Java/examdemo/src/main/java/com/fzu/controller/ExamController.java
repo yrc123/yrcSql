@@ -50,6 +50,15 @@ public class ExamController {
         result.put("status",1);
         return result;
     }
+    @RequestMapping("/closeOfficialExam")
+    @ResponseBody
+    public Map<String,Integer> closeOfficialExam(){
+        adminService.closeOfficialExam();
+        Map<String,Integer> result=new HashMap<>();
+        result.put("status",1);
+        return result;
+    }
+
 
     //获得班级考试信息(列表)
     @RequestMapping("/getClassInExam")
@@ -136,6 +145,7 @@ public class ExamController {
             ExamPaper examPaper= studentService.getExamPaper(studentId);
             System.out.println("考卷"+examPaper);
             Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
+            cookie.setPath("/");
             response.addCookie(cookie);
             return examPaper;
         }

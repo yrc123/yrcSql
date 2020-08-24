@@ -49,4 +49,19 @@ public class AdminDao {
             jdbcTemplate.update(sql,objects);
         }
     }
+
+    public void cleanAll(){
+        String sql1="delete from class_teacher;";
+        String sql2="delete from  paper";
+        String sql3="delete from paper_question";
+        String sql4="delete from question";
+        String sql5="delete from student";
+        String sql6="delete from teacher";
+        jdbcTemplate.update(sql1);
+        jdbcTemplate.update(sql2);
+        jdbcTemplate.update(sql3);
+        jdbcTemplate.update(sql4);
+        jdbcTemplate.update(sql5);
+        jdbcTemplate.update(sql6);
+    }
 }

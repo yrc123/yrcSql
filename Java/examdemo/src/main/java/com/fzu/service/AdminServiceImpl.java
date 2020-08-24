@@ -67,5 +67,15 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public void closeOfficialExam() {
+        examDao.closeOfficialExam();
+    }
+
+    @Override
+    public void cleanAll() {
+        adminDao.cleanAll();
+    }
+
 
 }

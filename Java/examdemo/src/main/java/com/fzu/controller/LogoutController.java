@@ -18,7 +18,8 @@ import java.util.Map;
 
 @Controller
 public class LogoutController {
-
+    @Autowired
+    AdminService adminService=new AdminServiceImpl();
 
     @ResponseBody
     @RequestMapping("/logout")
@@ -36,61 +37,16 @@ public class LogoutController {
 
         }
         result.put("status", "1");
-        /*
-        //管理员
-        if (username.equals("admin")){
-            String userId = cookies[0].getValue();
-            Cookie cookie1=new Cookie("userId",userId);
-            cookie1.setMaxAge(0);
-            cookie1.setPath("/");
-            Cookie cookie2=new Cookie("username",username);
-            cookie1.setMaxAge(0);
-            cookie2.setPath("/");
-            Cookie cookie3=new Cookie("character","admin");
-            cookie3.setMaxAge(0);
-            cookie3.setPath("/");
-            //status=adminService.admCheck(username, password);
-            result.put("status", "1");
-            response.addCookie(cookie1);
-            response.addCookie(cookie2);
-            response.addCookie(cookie3);
-        }
-        //教师
-        else if (username.substring(0,1).equals("T")){
-            String userId = cookies[0].getValue();
-            Cookie cookie1=new Cookie("userId",userId);
-            Cookie cookie2=new Cookie("username",username);
-            Cookie cookie3=new Cookie("character","teacher");
-            cookie1.setMaxAge(0);
-            cookie2.setMaxAge(0);
-            cookie3.setMaxAge(0);
-            cookie1.setPath("/");
-            cookie2.setPath("/");
-            cookie3.setPath("/");
-            //status=teacherService.teaCheck(username,password);
-            result.put("status", "1");
-            response.addCookie(cookie1);
-            response.addCookie(cookie2);
-            response.addCookie(cookie3);
-        }
-        //学生
-        else{
-            String userId = cookies[0].getValue();
-            Cookie cookie1=new Cookie("userId",userId);
-            Cookie cookie2=new Cookie("username",username);
-            Cookie cookie3=new Cookie("character","student");
-            cookie1.setMaxAge(0);
-            cookie2.setMaxAge(0);
-            cookie3.setMaxAge(0);
-            cookie1.setPath("/");
-            cookie2.setPath("/");
-            cookie3.setPath("/");
-            //status=studentService.stuCheck(username, password);
-            result.put("status", "1");
-            response.addCookie(cookie1);
-            response.addCookie(cookie2);
-            response.addCookie(cookie3);
-        }*/
+
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/cleanAll")
+    public Map<String,Integer> cleanAll(){
+        adminService.cleanAll();
+        Map<String,Integer> result=new HashMap<>();
+        result.put("status",1);
         return result;
     }
 }

@@ -80,5 +80,9 @@ public class ExamDao {
         Object[] params = new Object[]{ts1,ts2};
         jdbcTemplate.update(sql,params);
     }
+    public void closeOfficialExam(){
+        String sql="update class_teacher set class_status = 0";
+        jdbcTemplate.update(sql);
+    }
 
 }

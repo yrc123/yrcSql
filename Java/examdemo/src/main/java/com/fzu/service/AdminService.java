@@ -17,4 +17,8 @@ public interface AdminService {
     void setOfficialExam(String examTime);
     //删除教师
     void deleteTeacher(List<String> teacherId);
+    //取消正式考试
+    void closeOfficialExam();
+    //删除数据库中的信息
+    void cleanAll();
 }

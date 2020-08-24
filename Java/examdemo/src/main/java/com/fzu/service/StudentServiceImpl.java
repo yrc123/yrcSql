@@ -194,7 +194,7 @@ public class StudentServiceImpl implements StudentService {
             if(question.checkAnswer(stuAnswerList.get(i)))
                 score+=2;
         }
-        studentDao.updateScore(score);
+        studentDao.updateScore(score,studentId);
     }
 
 

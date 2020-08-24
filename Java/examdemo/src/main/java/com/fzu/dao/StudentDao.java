@@ -70,9 +70,9 @@ public class StudentDao {
     }
 
     //写入正式考试的成绩
-    public void updateScore(Integer score){
-        String sql="update student set score =?";
-        jdbcTemplate.update(sql,new Object[]{score});
+    public void updateScore(Integer score,String studentId){
+        String sql="update student set score =? where student_id=?";
+        jdbcTemplate.update(sql,new Object[]{score,studentId});
     }
 
     //读取学生成绩信息
