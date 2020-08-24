@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -123,5 +124,12 @@ public class LoginController {
         return result;
     }
 
-
+    @ResponseBody
+    @RequestMapping("/resetPassword")
+    public void resetPassword(@RequestBody List<String> list) {
+        for(int i=0;i<list.size();i++){
+            String username= list.get(i);
+            adminService.resetPassword(username);
+        }
+    }
 }

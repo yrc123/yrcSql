@@ -130,7 +130,7 @@ public class ExamController {
     }
     @RequestMapping("/getTeacherList")
     @ResponseBody
-    public List<TTable> getStudentInfo(){
+    public List<TTable> getTeacherInfo(){
         return teacherService.getTeacherList();
     }
 

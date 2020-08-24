@@ -32,4 +32,21 @@ public class AdminDao {
         jdbcTemplate.update(sql,objects);
 
     }
+    //重置密码
+    public void resetPassword(String username){
+        if(username.substring(0,1).equals("T")){
+            String sql="update exam_system.teacher set password = ? where teacher_id =?";
+            Object[] objects=new Object[2];
+            objects[0]=ORIGINAL_PASSWORD;//初始密码
+            objects[1]=username;
+            jdbcTemplate.update(sql,objects);
+        }
+        else{
+            String sql="update exam_system.student set password = ? where student_id =?";
+            Object[] objects=new Object[2];
+            objects[0]=ORIGINAL_PASSWORD;//初始密码
+            objects[1]=username;
+            jdbcTemplate.update(sql,objects);
+        }
+    }
 }
