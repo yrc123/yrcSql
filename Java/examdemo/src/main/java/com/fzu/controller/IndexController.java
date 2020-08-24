@@ -3,6 +3,7 @@ package com.fzu.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.fzu.dao.AdminDao;
 import com.fzu.dao.ClassDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.dao.StudentDao;
@@ -31,6 +32,9 @@ public class IndexController {
     @Autowired
     StudentService studentService;
 
+    AdminDao adminDao;
+
+
     @RequestMapping("/hi")
     public String index(){
         return "index";
@@ -38,8 +42,9 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public void test(@RequestBody ClassExam classExam){
-        classDao.updateClassExam(classExam);
+    public void test(@RequestBody JSONObject jsonObject){
+        String username= jsonObject.getString("username");
+        adminDao.resetPassword(username);
     }
 
     @ResponseBody

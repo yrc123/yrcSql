@@ -61,6 +61,7 @@ public class ExamController {
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
         Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
+        examType += 1;
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
@@ -76,8 +77,14 @@ public class ExamController {
         else{
             Date startTime=studentService.getStarttime(classId);
             Date now=new Date();
-            if(now.before(startTime))result.put("examStart",0);
-            else result.put("examStart",1);
+            System.out.println(examType+"--"+classExam.getClassStatus());
+            boolean isSame = examType==classExam.getClassStatus();
+            if(now.before(startTime)) result.put("examStart",0);
+            else if (isSame) result.put("examStart",1);
+            else {
+                System.out.println("examStatus isn't same");
+                result.put("examStart",0);
+            }
         }
         return result;
     }
@@ -130,7 +137,7 @@ public class ExamController {
     }
     @RequestMapping("/getTeacherList")
     @ResponseBody
-    public List<TTable> getStudentInfo(){
+    public List<TTable> getTeacherInfo(){
         return teacherService.getTeacherList();
     }
 

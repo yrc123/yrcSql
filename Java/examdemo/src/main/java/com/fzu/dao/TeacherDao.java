@@ -66,4 +66,11 @@ public class TeacherDao {
         System.out.println(result);
         return result;
     }
+
+    //delete 0 rows
+    public void deleteTeacher(String teacherId){
+        String sql = "delete from teacher where teacher_id = ? cascade";
+        int status = jdbcTemplate.update(sql,new Object[]{ teacherId});
+        System.out.println("delete status = "+status);
+    }
 }

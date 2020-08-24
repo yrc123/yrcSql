@@ -148,6 +148,7 @@ public class StudentServiceImpl implements StudentService {
         System.out.println("接收顺序测试"+questions);
         for(int i=0;i<questions.size();i++){
             Question question=questions.get(i);
+            System.out.println(question.getId() +" "+ question.getAnswer()+"--"+question.exchangeAnswer());
             answer.add(question.exchangeAnswer());
         }
         result.add(number);

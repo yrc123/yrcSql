@@ -28,7 +28,7 @@ table.render({
 	},
 	toolbar:  '#teacherListBar' , //开启头部工具栏，并为其绑定左侧模板
     defaultToolbar: ['filter', 'exports', 'print'],
-	title:"班级考表",
+	title:"教师名单",
 	height: 'full-240',
 });
 
@@ -250,7 +250,7 @@ upload.render({
 	exts:"xls|xlsx",
 	field:"file",
 	size:10000,
-	bindAction:"#startUpload",
+	bindAction:"#startQuestionUpload",
 	choose:function(obj){
 		obj.preview(function(index,file,result){
 			$("#uploadQuestionSpace i").removeClass("layui-icon-upload-drag");

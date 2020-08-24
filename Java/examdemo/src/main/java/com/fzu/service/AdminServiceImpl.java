@@ -44,5 +44,10 @@ public class AdminServiceImpl implements AdminService {
         adminDao.changePassword(username, password);
     }
 
+    @Override
+    public void resetPassword(String username) {
+        adminDao.resetPassword(username);
+    }
+
 
 }

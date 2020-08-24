@@ -11,4 +11,6 @@ public interface AdminService {
     int admCheck(String username,String password);
     //修改密码
     void changePassword(String username,String password);
+    //重置密码
+    void resetPassword(String username);
 }
