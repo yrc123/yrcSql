@@ -126,10 +126,13 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("/resetPassword")
-    public void resetPassword(@RequestBody List<String> list) {
+    public Map<String,String> resetPassword(@RequestBody List<String> list) {
+        Map<String,String> result=new HashMap<>();
         for(int i=0;i<list.size();i++){
             String username= list.get(i);
             adminService.resetPassword(username);
+            result.put("status","1");
         }
+        return result;
     }
 }
