@@ -116,6 +116,7 @@ public class StudentServiceImpl implements StudentService {
             qdataList.add(qdata);
             examDao.insert(paperId,qdata.getId(),30+1);
         }
+
         examPaper.setPaperId(paperId);
         examPaper.setQtype(new int[]{15,15,15});
         examPaper.setQdataList(qdataList);
@@ -126,6 +127,32 @@ public class StudentServiceImpl implements StudentService {
         Date over=date;
         String teacherId=this.getTeacherId(studentId);
         examDao.addPaper(paperId,begin,over,studentId,teacherId);
+        return examPaper;
+    }
+
+    @Override
+    public ExamPaper getExistPaper(Integer paperId) {
+        List<Qdata> qdataList=new ArrayList<>();
+        ExamPaper examPaper=new ExamPaper();
+        List<Question> questions;
+        questions=questionDao.getQuestionList(paperId);//获取该试卷的所有题目
+        for(int i=0;i<questions.size();i++){
+            Qdata qdata=new Qdata();
+            qdata.setId(questions.get(i).getId());
+            qdata.setTitle(questions.get(i).getTitle());
+            List<String> choice=new ArrayList<>();
+            choice.add(questions.get(i).getOption1());
+            choice.add(questions.get(i).getOption2());
+            choice.add(questions.get(i).getOption3());
+            choice.add(questions.get(i).getOption4());
+            qdata.setChoice(choice);
+            qdataList.add(qdata);
+        }
+        Date over=getOvertime(paperId);
+        examPaper.setPaperId(paperId);
+        examPaper.setQtype(new int[]{15,15,15});
+        examPaper.setQdataList(qdataList);
+        examPaper.setDate(over);
         return examPaper;
     }
 

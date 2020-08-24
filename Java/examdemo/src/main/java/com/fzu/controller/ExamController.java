@@ -112,16 +112,35 @@ public class ExamController {
     @RequestMapping("/getPaper")
     @ResponseBody
     public ExamPaper getPaper(HttpServletRequest request,HttpServletResponse response) throws ParseException {
-        String studentId="";
         Cookie[] cookies=request.getCookies();
-        for(Cookie i:cookies){
-            if(i.getName().equals("username")) studentId=i.getValue();
+        int flag=0;
+        Integer paperId=0;
+        for (Cookie i:cookies){
+            if (i.getName().equals("paperId")){
+                paperId=Integer.valueOf(i.getValue());
+                flag=1;
+                break;
+            }
         }
-        ExamPaper examPaper= studentService.getExamPaper(studentId);
-        System.out.println("考卷"+examPaper);
-        Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
-        response.addCookie(cookie);
-        return examPaper;
+        //如果paperId存在，试卷已存在，返回已有的卷子
+        if(flag==1){
+            System.out.println("试卷已存在");
+            return studentService.getExistPaper(paperId);
+        }
+        //试卷未出好则出卷
+        else {
+            String studentId="";
+            for(Cookie i:cookies){
+                if(i.getName().equals("username")) studentId=i.getValue();
+            }
+            ExamPaper examPaper= studentService.getExamPaper(studentId);
+            System.out.println("考卷"+examPaper);
+            Cookie cookie=new Cookie("paperId",String.valueOf(examPaper.getPaperId()));
+            response.addCookie(cookie);
+            return examPaper;
+        }
+
+
     }
 
     //提交试卷

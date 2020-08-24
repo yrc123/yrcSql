@@ -24,6 +24,8 @@ public interface StudentService {
     ClassExam getClassExam(Integer classId);
     //获取一份试卷
     ExamPaper getExamPaper(String studentId) throws ParseException;
+    //获取原有试卷
+    ExamPaper getExistPaper(Integer paperId);
     //获得教师id
     String getTeacherId(String studentId);
     //获得班级考试的开始时间(用于判断是否可以点击开始考试)
