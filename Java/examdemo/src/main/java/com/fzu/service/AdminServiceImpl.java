@@ -3,6 +3,7 @@ package com.fzu.service;
 import com.fzu.dao.AdminDao;
 import com.fzu.dao.ExamDao;
 import com.fzu.dao.QuestionDao;
+import com.fzu.dao.TeacherDao;
 import com.fzu.pojo.QTable;
 import com.fzu.pojo.Question;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class AdminServiceImpl implements AdminService {
     AdminDao adminDao;
     @Autowired
     ExamDao examDao;
+    @Autowired
+    TeacherDao teacherDao;
 
     @Override
     public void importQuestion(List<QTable> qTables) {
@@ -55,6 +58,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void setOfficialExam(String examTime) {
         examDao.setOfficialExam(examTime);
+    }
+
+    @Override
+    public void deleteTeacher(List<String> teacherId) {
+        for(int i=0;i<teacherId.size();i++){
+            teacherDao.deleteTeacher(teacherId.get(i));
+        }
     }
 
 

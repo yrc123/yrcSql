@@ -26,4 +26,6 @@ public interface TeacherService {
     List<TTable> getTeacherList();
     //获取学生成绩信息
     List<StudentInfo> getStudentInfo(int flag,String username,String classId);
+    //删除班级
+    void deleteClass(List<Integer> classId);
 }

@@ -15,4 +15,6 @@ public interface AdminService {
     void resetPassword(String username);
     //设置所有班级进行正式考试
     void setOfficialExam(String examTime);
+    //删除教师
+    void deleteTeacher(List<String> teacherId);
 }

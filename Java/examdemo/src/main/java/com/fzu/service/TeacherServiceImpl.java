@@ -29,31 +29,26 @@ public class TeacherServiceImpl implements TeacherService {
             teacherDao.addTeacher(teacher);
         }
     }
-
     @Override
     public int teaCheck(String username, String password) {
         return teacherDao.teaCheck(username,password);
     }
-
     @Override
     public void changePassword(String username, String password) {
         teacherDao.changePassword(username, password);
     }
-
     @Override
     public void updateClassExam(ClassExam classExam) {
         System.out.println(classExam);
         classDao.updateClassExam(classExam);
 
     }
-
     @Override
     public List<ClassExam> getClassExamList(String teacherId) {
         List<ClassExam> result=classDao.getClassExamById(teacherId);
         return result;
 
     }
-
     @Override
     public List<TTable> getTeacherList() {
 
@@ -61,7 +56,6 @@ public class TeacherServiceImpl implements TeacherService {
         return result;
 
     }
-
     @Override
     public List<StudentInfo> getStudentInfo(int flag,String username,String classId){
         int id;
@@ -71,5 +65,12 @@ public class TeacherServiceImpl implements TeacherService {
         List<StudentInfo> result=studentDao.getStudentInfoById(id,username);
 
         return result;
+    }
+
+    @Override
+    public void deleteClass(List<Integer> classId) {
+        for(int i=0;i<classId.size();i++){
+            classDao.deleteClass(classId.get(i));
+        }
     }
 }

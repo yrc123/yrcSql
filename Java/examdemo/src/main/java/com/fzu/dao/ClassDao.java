@@ -110,7 +110,7 @@ public class ClassDao {
         String sql="select class_teacher.start_time from class_teacher where class_id=?";
         return jdbcTemplate.queryForObject(sql,new Object[]{classId},Date.class);
     }
-    //
+    //删除教室
     public void deleteClass(Integer classId){
         String sql = "delete from class_teacher where class_id = ?";
         String sel = "select class_name from class_teacher where class_id = ?";

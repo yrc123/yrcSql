@@ -67,7 +67,7 @@ public class TeacherDao {
         return result;
     }
 
-    //delete 0 rows
+    //删除老师
     public void deleteTeacher(String teacherId){
         String sel = "select class_name from teacher,class_teacher " +
                 "where teacher.teacher_id=class_teacher.teacher_id and class_teacher.teacher_id=?";

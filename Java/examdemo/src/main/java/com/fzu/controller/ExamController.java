@@ -141,8 +141,10 @@ public class ExamController {
         ClassExam classExam=studentService.getClassExam(classId);
         if(classExam.getClassStatus()==2)//正式考
         {
+            List<List<Integer>> nouse=new ArrayList<>();
+            nouse.add(new ArrayList<>(1));
             studentService.setScore(paperId,studentId,stuAnswer);
-            return null;
+            return nouse;
         }
         else//模拟考，返回答案
             return studentService.getAnswerList(paperId);
@@ -167,10 +169,32 @@ public class ExamController {
         String classId=jsonObject.getString("classId");
         return teacherService.getStudentInfo(flag,username,classId);
     }
+
     @RequestMapping("/getTeacherList")
     @ResponseBody
     public List<TTable> getTeacherInfo(){
         return teacherService.getTeacherList();
+    }
+    @RequestMapping("/deleteTeacher")
+    @ResponseBody
+    public Map<String,Integer>deleteTeacher(@RequestBody List<String>teacherId){
+        Map<String,Integer>result=new HashMap<>();
+        adminService.deleteTeacher(teacherId);
+        result.put("status",1);
+        return result;
+    }
+    @RequestMapping("/deleteClass")
+    @ResponseBody
+    public Map<String,Integer>deleteClass(@RequestBody List<String>classId){
+        List<Integer> classIdList=new ArrayList<>();
+        Map<String,Integer>result=new HashMap<>();
+        for(int i=0;i<classId.size();i++){
+            Integer id=Integer.valueOf(classId.get(i));
+            classIdList.add(id);
+        }
+        teacherService.deleteClass(classIdList);
+        result.put("status",1);
+        return result;
     }
 
 }

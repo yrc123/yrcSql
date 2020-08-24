@@ -55,7 +55,6 @@ public class IndexController {
     @RequestMapping("/getServerIP")
     public Map<String, String> getServerIP(HttpServletRequest request){
         Map<String, String> result = new HashMap<String, String>();
-        studentDao.getClassId("20191112");
         String IP = request.getLocalAddr();
         int p = request.getLocalPort();
         String port = Integer.toString(p);
@@ -69,7 +68,6 @@ public class IndexController {
     @RequestMapping("/getClientIP")
     public Map<String, String> getClientIP(HttpServletRequest request){
         Map<String, String> result = new HashMap<String, String>();
-        studentDao.getClassId("20191112");
         String IP = request.getRemoteAddr();
         int p = request.getRemotePort();
         String port = Integer.toString(p);
