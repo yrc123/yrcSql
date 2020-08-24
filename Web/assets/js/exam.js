@@ -15,6 +15,8 @@ function showTimeWindow(date){
 			closeBtn:0,
 			move:'#timeBar',
 			success:function(){
+				date="0000-00-00"+date.substring(11);
+				console.log(date.sub);
 				setTime(date);
 			}
 		});
@@ -255,7 +257,7 @@ function submitExam(){
 				shade:0.3,
 				time:500
 			});
-			if(resp==1){
+			if($.cookie("examType")==0){
 				setTimeout(function(){
 					location.href="./student.html"
 				},500);
@@ -268,6 +270,7 @@ function submitExam(){
 					goSide(0);
 				},500);
 			}
+			$.removeCookie("paperId",{ path: '/' });
 		},
 		error:function(){
 			layer.msg("服务器出错",{
