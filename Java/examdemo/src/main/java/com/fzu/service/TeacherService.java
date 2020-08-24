@@ -4,6 +4,7 @@ import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.StudentInfo;
 import com.fzu.pojo.TTable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface TeacherService {
@@ -24,5 +25,5 @@ public interface TeacherService {
     //获取所有老师的id和name
     List<TTable> getTeacherList();
     //获取学生成绩信息
-    List<StudentInfo> getStudentInfo(String classId);
+    List<StudentInfo> getStudentInfo(int flag,String username,String classId);
 }
