@@ -42,8 +42,9 @@ public class ExamController {
     //将所有班级设置为正式考试
     @RequestMapping("/setOfficialExam")
     @ResponseBody
-    public Map<String,Integer> setOfficialExam(JSONObject jsonObject){
+    public Map<String,Integer> setOfficialExam(@RequestBody JSONObject jsonObject){
         String examTime=jsonObject.getString("examTime");
+        System.out.println("examTime");
         Map<String,Integer> result=new HashMap<>();
         adminService.setOfficialExam(examTime);
         result.put("status",1);
@@ -70,8 +71,16 @@ public class ExamController {
     @ResponseBody
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
-        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
-        examType += 1;
+        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟 1->2 2->1
+        int temp = -1;
+        if(examType==1)
+            temp = 1;
+        else if(examType==0)
+            temp = 2;
+        else
+            System.out.println("出错的examType");
+
+        examType = temp;
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
@@ -103,7 +112,6 @@ public class ExamController {
     @RequestMapping("/getPaper")
     @ResponseBody
     public ExamPaper getPaper(HttpServletRequest request,HttpServletResponse response) throws ParseException {
-
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){
