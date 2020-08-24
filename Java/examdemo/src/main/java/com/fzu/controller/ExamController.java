@@ -141,10 +141,8 @@ public class ExamController {
         ClassExam classExam=studentService.getClassExam(classId);
         if(classExam.getClassStatus()==2)//正式考
         {
-            List<List<Integer>> nouse=new ArrayList<>();
-            nouse.add(new ArrayList<>(1));
             studentService.setScore(paperId,studentId,stuAnswer);
-            return nouse;
+            return studentService.getAnswerList(paperId);
         }
         else//模拟考，返回答案
             return studentService.getAnswerList(paperId);
