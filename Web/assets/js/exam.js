@@ -298,8 +298,8 @@ function loadChoice(){
 	if($.cookie("choice",{path:'/'})==null)return false;
 	console.log(examInfo);
 	//console.log(choiceInCookie);
-	console.log(JSON.parse($.cookie("choice"),{path:'/'}));
-	choiceInCookie=JSON.parse($.cookie("choice"),{path:'/'});
+	console.log(JSON.parse($.cookie("choice",{path:'/'})));
+	choiceInCookie=JSON.parse($.cookie("choice",{path:'/'}));
 	if(examInfo.paperId!=choiceInCookie.paperId){
 		choiceInCookie.paperId=examInfo.paperId;
 		choiceInCookie.choice=cArr;
