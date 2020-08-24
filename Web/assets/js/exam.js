@@ -15,6 +15,8 @@ function showTimeWindow(date){
 			closeBtn:0,
 			move:'#timeBar',
 			success:function(){
+				date="0000-00-00"+date.substring(11);
+				console.log(date.sub);
 				setTime(date);
 			}
 		});
