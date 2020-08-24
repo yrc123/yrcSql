@@ -6,13 +6,16 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.fzu.dao.ClassDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.dao.StudentDao;
+import com.fzu.dao.TeacherDao;
 import com.fzu.pojo.ClassExam;
 import com.fzu.pojo.Question;
 import com.fzu.service.StudentService;
+import com.fzu.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,22 +31,28 @@ public class IndexController {
     StudentDao studentDao;
     @Autowired
     ClassDao classDao;
+    @Autowired
+    TeacherDao teacherDao;
 
     @RequestMapping("/hi")
     public String index(){
         return "index";
     }
 
+    @Autowired
+    StudentService studentService = new StudentServiceImpl();
     @ResponseBody
     @RequestMapping("/test")
-    public void test(@RequestBody ClassExam classExam){
-        classDao.updateClassExam(classExam);
+    public void test(@RequestParam Integer paperId){
+        studentService.getAnswerList(paperId);
     }
 
     @ResponseBody
     @RequestMapping("/test2")
-    public void test2(){
-        classDao.getClassExamById("T19036");
+    public void test2(@RequestParam String Ans,@RequestParam int stuAns){
+        Question question = new Question();
+        question.setAnswer(Ans);
+        System.out.println(question.checkAnswer(stuAns));
     }
 
     @ResponseBody
