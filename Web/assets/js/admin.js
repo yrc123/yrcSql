@@ -28,7 +28,7 @@ table.render({
 	},
 	toolbar:  '#teacherListBar' , //开启头部工具栏，并为其绑定左侧模板
     defaultToolbar: ['filter', 'exports', 'print'],
-	title:"班级考表",
+	title:"教师名单",
 	height: 'full-240',
 });
 
