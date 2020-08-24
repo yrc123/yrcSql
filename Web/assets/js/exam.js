@@ -255,7 +255,7 @@ function submitExam(){
 				shade:0.3,
 				time:500
 			});
-			if(resp==1){
+			if($.cookie("examType")==0){
 				setTimeout(function(){
 					location.href="./student.html"
 				},500);
