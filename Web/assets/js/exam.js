@@ -290,8 +290,8 @@ function saveCookie(no,value){
 	choiceInCookie.paperId=examInfo.paperId;
 	choiceInCookie.choice[no]=value;	
 	console.log(choiceInCookie);
-	$.cookie("choice",JSON.stringify(choiceInCookie),{path:'/'});
-	$.cookie("paperId",examInfo.paperId,{path:'/'});
+	$.cookie("choice",JSON.stringify(choiceInCookie),{ path: '/' });
+	$.cookie("paperId",examInfo.paperId,{path: '/' });
 }
 //加载cookie中的选项
 function loadChoice(){
@@ -303,7 +303,7 @@ function loadChoice(){
 	if(examInfo.paperId!=choiceInCookie.paperId){
 		choiceInCookie.paperId=examInfo.paperId;
 		choiceInCookie.choice=cArr;
-		$.cookie("choice",JSON.stringify(choiceInCookie),{path:'/'});
+		$.cookie("choice",JSON.stringify(choiceInCookie),{ path : '/'});
 		console.log(choiceInCookie);
 		return false;
 	}
