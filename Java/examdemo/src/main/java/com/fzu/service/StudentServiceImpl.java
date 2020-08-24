@@ -84,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
             qdata.setChoice(choice);
 
             qdataList.add(qdata);
-            examDao.insert(paperId,qdata.getId());
+            examDao.insert(paperId,qdata.getId(),i);
         }
 
         List<Question> questionList2=questionDao.getRandomQuestion("多选题");
@@ -100,7 +100,7 @@ public class StudentServiceImpl implements StudentService {
             qdata.setChoice(choice);
 
             qdataList.add(qdata);
-            examDao.insert(paperId,qdata.getId());
+            examDao.insert(paperId,qdata.getId(),15+i);
         }
 
         List<Question> questionList3=questionDao.getRandomQuestion("判断题");
@@ -114,7 +114,7 @@ public class StudentServiceImpl implements StudentService {
             qdata.setChoice(choice);
 
             qdataList.add(qdata);
-            examDao.insert(paperId,qdata.getId());
+            examDao.insert(paperId,qdata.getId(),30+1);
         }
         examPaper.setPaperId(paperId);
         examPaper.setQtype(new int[]{15,15,15});
@@ -145,6 +145,7 @@ public class StudentServiceImpl implements StudentService {
         number.add(15);
         List<Integer> answer=new ArrayList<>();
         questions=questionDao.getQuestionList(paperId);
+        System.out.println("接收顺序测试"+questions);
         for(int i=0;i<questions.size();i++){
             Question question=questions.get(i);
             answer.add(question.exchangeAnswer());

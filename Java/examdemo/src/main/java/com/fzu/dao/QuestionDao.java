@@ -41,7 +41,7 @@ public class QuestionDao {
 
     //通过paperId得到题目集合
     public List<Question> getQuestionList(Integer paperId){
-        String sql="select question.* from question,paper_question where paper_id=? and question_id=id";
+        String sql="select question.* from question,paper_question where paper_id=? and question_id=id order by id_order asc";
         return jdbcTemplate.query(sql,new BeanPropertyRowMapper(Question.class),paperId);
 
     }

@@ -37,10 +37,11 @@ public class ExamDao {
         String sql="insert into paper values (?,?,?,?,?)";
         jdbcTemplate.update(sql,objects);
     }
-    //添加试卷-题目关系
-    public void insert(int paperId,int questionId){
-        String sql="insert into paper_question(paper_id, question_id) values (?,?)";
-        jdbcTemplate.update(sql,new Object[]{paperId,questionId});
+    //添加试卷-题目关系(自动有序？？)
+    public void insert(int paperId,int questionId,int idOrder){
+        String sql="insert into paper_question(paper_id, question_id,id_order) values (?,?,?)";
+        System.out.println("顺序测试"+paperId+questionId);
+        jdbcTemplate.update(sql,new Object[]{paperId,questionId,idOrder});
     }
 
     //获得结束时间

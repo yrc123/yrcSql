@@ -28,6 +28,8 @@ public class IndexController {
     StudentDao studentDao;
     @Autowired
     ClassDao classDao;
+    @Autowired
+    StudentService studentService;
 
     @RequestMapping("/hi")
     public String index(){
@@ -43,7 +45,7 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("/test2")
     public void test2(@RequestBody JSONObject jsonObject){
-        studentDao.getStudentInfoById(jsonObject.getInteger("classId"));
+        studentService.getAnswerList(21);
     }
 
     @ResponseBody
