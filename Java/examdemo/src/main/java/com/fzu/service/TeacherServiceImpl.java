@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 @Service
@@ -62,11 +63,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<StudentInfo> getStudentInfo(String classId){
+    public List<StudentInfo> getStudentInfo(int flag,String username,String classId){
         int id;
-        if(classId.equals("ALL")) id=0;
+        if(classId.equals("ALL") && flag==0) id=0;
+        else if(classId.equals("ALL") && flag==1) id=1;
         else id=Integer.valueOf(classId);
-        List<StudentInfo> result=studentDao.getStudentInfoById(id);
+        List<StudentInfo> result=studentDao.getStudentInfoById(id,username);
 
         return result;
     }

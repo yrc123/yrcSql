@@ -124,9 +124,23 @@ public class ExamController {
     }
     @RequestMapping("/getStudentInfo")
     @ResponseBody
-    public List<StudentInfo> getStudentInfo(@RequestBody JSONObject jsonObject){
+    public List<StudentInfo> getStudentInfo(HttpServletRequest request,@RequestBody JSONObject jsonObject){
+        Cookie[] cookies=request.getCookies();
+        int flag = -1;
+        String username="";
+        for(Cookie i:cookies){
+            if(i.getName().equals("username")){
+                username=i.getValue();
+            }
+            if(i.getName().equals("character")&&i.getValue().equals("admin")){
+                flag=0;
+            }
+            else if(i.getName().equals("character")&&i.getValue().equals("teacher")){
+                flag=1;
+            }
+        }
         String classId=jsonObject.getString("classId");
-        return teacherService.getStudentInfo(classId);
+        return teacherService.getStudentInfo(flag,username,classId);
     }
     @RequestMapping("/getTeacherList")
     @ResponseBody
