@@ -1,6 +1,7 @@
 package com.fzu.service;
 
 import com.fzu.dao.AdminDao;
+import com.fzu.dao.ExamDao;
 import com.fzu.dao.QuestionDao;
 import com.fzu.pojo.QTable;
 import com.fzu.pojo.Question;
@@ -14,6 +15,8 @@ public class AdminServiceImpl implements AdminService {
     QuestionDao questionDao;
     @Autowired
     AdminDao adminDao;
+    @Autowired
+    ExamDao examDao;
 
     @Override
     public void importQuestion(List<QTable> qTables) {
@@ -47,6 +50,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void resetPassword(String username) {
         adminDao.resetPassword(username);
+    }
+
+    @Override
+    public void setOfficialExam(String examTime) {
+        examDao.setOfficialExam(examTime);
     }
 
 

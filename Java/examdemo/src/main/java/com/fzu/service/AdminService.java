@@ -13,4 +13,6 @@ public interface AdminService {
     void changePassword(String username,String password);
     //重置密码
     void resetPassword(String username);
+    //设置所有班级进行正式考试
+    void setOfficialExam(String examTime);
 }

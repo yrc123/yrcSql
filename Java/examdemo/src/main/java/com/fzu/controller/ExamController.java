@@ -39,6 +39,16 @@ public class ExamController {
         result.put("status",1);
         return result;
     }
+    //将所有班级设置为正式考试
+    @RequestMapping("/setOfficialExam")
+    @ResponseBody
+    public Map<String,Integer> setOfficialExam(JSONObject jsonObject){
+        String examTime=jsonObject.getString("examTime");
+        Map<String,Integer> result=new HashMap<>();
+        adminService.setOfficialExam(examTime);
+        result.put("status",1);
+        return result;
+    }
 
     //获得班级考试信息(列表)
     @RequestMapping("/getClassInExam")
