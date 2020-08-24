@@ -69,8 +69,18 @@ public class TeacherDao {
 
     //delete 0 rows
     public void deleteTeacher(String teacherId){
-        String sql = "delete from teacher where teacher_id = ? cascade";
-        int status = jdbcTemplate.update(sql,new Object[]{ teacherId});
-        System.out.println("delete status = "+status);
+        String sel = "select class_name from teacher,class_teacher " +
+                "where teacher.teacher_id=class_teacher.teacher_id and class_teacher.teacher_id=?";
+        //String classname = jdbcTemplate.queryForObject(sel,new Object[]{ teacherId},String.class);
+        //删除老师和班级
+        String sql1 = "delete from teacher where teacher_id = ? ";
+        //删除在老师班级的学生
+        String sql2 = "delete from student where classroom in " +
+                        "( select class_name from class_teacher where teacher_id = ?" +
+                        ") ";
+        int status2 = jdbcTemplate.update(sql2,new Object[]{ teacherId});
+        int status1 = jdbcTemplate.update(sql1,new Object[]{ teacherId});
+        System.out.println("delete status1 = "+status1);
+        System.out.println("delete status2 = "+status2);
     }
 }

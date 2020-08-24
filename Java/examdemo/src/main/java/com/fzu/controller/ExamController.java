@@ -60,8 +60,16 @@ public class ExamController {
     @ResponseBody
     public Map<String,Integer> examStatus(HttpServletRequest request,@RequestBody JSONObject jsonObject){
         Map<String,Integer> result=new HashMap<>();
-        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟
-        examType += 1;
+        Integer examType=jsonObject.getInteger("examType");//0代表正式，1代表模拟 1->2 2->1
+        int temp = -1;
+        if(examType==1)
+            temp = 1;
+        else if(examType==0)
+            temp = 2;
+        else
+            System.out.println("出错的examType");
+
+        examType = temp;
         String studentId="";
         Cookie[] cookies=request.getCookies();
         for(Cookie i:cookies){

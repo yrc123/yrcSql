@@ -18,6 +18,7 @@ import java.util.Map;
 public class ClassDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     //增加班级_教师表(已完成)
     public void addClass(Map<String,String> map){
         //对map进行遍历
@@ -109,6 +110,16 @@ public class ClassDao {
         String sql="select class_teacher.start_time from class_teacher where class_id=?";
         return jdbcTemplate.queryForObject(sql,new Object[]{classId},Date.class);
     }
-
+    //
+    public void deleteClass(Integer classId){
+        String sql = "delete from class_teacher where class_id = ?";
+        String sel = "select class_name from class_teacher where class_id = ?";
+        String classname = jdbcTemplate.queryForObject(sel,new Object[]{ classId},String.class);
+        String sql2 = "delete from student where classroom = ?";
+        int status1 = jdbcTemplate.update(sql,classId);
+        int status2 = jdbcTemplate.update(sql2,classname);
+        System.out.println("delete status1 = "+status1);
+        System.out.println("delete status2 = "+status2);
+    }
 
 }
