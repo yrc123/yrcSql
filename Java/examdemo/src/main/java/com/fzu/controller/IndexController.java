@@ -47,7 +47,8 @@ public class IndexController {
     @ResponseBody
     @RequestMapping("/test2")
     public void test2(@RequestBody JSONObject jsonObject){
-        studentDao.getStudentInfoById(jsonObject.getInteger("classId"));
+        String username= jsonObject.getString("username");
+        studentDao.getStudentInfoById(1,username);
     }
 
     @ResponseBody

@@ -39,6 +39,16 @@ public class ExamController {
         result.put("status",1);
         return result;
     }
+    //将所有班级设置为正式考试
+    @RequestMapping("/setOfficialExam")
+    @ResponseBody
+    public Map<String,Integer> setOfficialExam(JSONObject jsonObject){
+        String examTime=jsonObject.getString("examTime");
+        Map<String,Integer> result=new HashMap<>();
+        adminService.setOfficialExam(examTime);
+        result.put("status",1);
+        return result;
+    }
 
     //获得班级考试信息(列表)
     @RequestMapping("/getClassInExam")
@@ -139,9 +149,23 @@ public class ExamController {
     }
     @RequestMapping("/getStudentInfo")
     @ResponseBody
-    public List<StudentInfo> getStudentInfo(@RequestBody JSONObject jsonObject){
+    public List<StudentInfo> getStudentInfo(HttpServletRequest request,@RequestBody JSONObject jsonObject){
+        Cookie[] cookies=request.getCookies();
+        int flag = -1;
+        String username="";
+        for(Cookie i:cookies){
+            if(i.getName().equals("username")){
+                username=i.getValue();
+            }
+            if(i.getName().equals("character")&&i.getValue().equals("admin")){
+                flag=0;
+            }
+            else if(i.getName().equals("character")&&i.getValue().equals("teacher")){
+                flag=1;
+            }
+        }
         String classId=jsonObject.getString("classId");
-        return teacherService.getStudentInfo(classId);
+        return teacherService.getStudentInfo(flag,username,classId);
     }
     @RequestMapping("/getTeacherList")
     @ResponseBody

@@ -432,6 +432,27 @@
 
 ### setOfficialExam
 
+- 参数
+
+  - ```json
+        {
+            "examTime":string
+        }
+        ...
+    ```
+
+  - examTime：如果设置班级正式考试，返回班级考试时间段，格式"YYYY/MM/DD HH:mm:ss ~ YYYY/MM/DD HH:mm:ss"
+
+- 返回
+
+  - ```json
+    {
+        "status":0|1
+    }
+    ```
+
+  - status：0设置失败，1设置成功
+
 * 功能
   * 设置正式考试
 

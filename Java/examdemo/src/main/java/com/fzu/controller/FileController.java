@@ -84,10 +84,10 @@ public class FileController {
                         String newName ="学生表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径
                         //"C:/Users/11139/examsystem/"
-                        path = "S:/sqlTest/examsystem/" + newName;
+                        path ="C:/Users/11139/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
                         ////保存当前文件路径
                         //request.getSession().setAttribute("currFilePath", path);
                         //request.getSession().setAttribute("teacherId", teacherId);
@@ -195,10 +195,10 @@ public class FileController {
                         String newName ="教师表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径
                         //"C:/Users/11139/examsystem/"
-                        path = "S:/sqlTest/examsystem/" + newName;
+                        path = "C:/Users/11139/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo();*/
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
                         ////保存当前文件路径
                         //request.getSession().setAttribute("currFilePath", path);
                     }
@@ -248,6 +248,7 @@ public class FileController {
 
             }
             Sheet sheet= workbook.getSheet("sheet1");
+            //System.out.println(sheet);
             //获取行数
             int rows=sheet.getPhysicalNumberOfRows();
             List<TTable> tTables=new ArrayList<>();
@@ -315,10 +316,10 @@ public class FileController {
                         String newName ="题目表"+timeStamp+sname;//命名+时间戳+后缀
                         //指定上传文件的路径  C:/Users/11139/examsystem/
                         // S:/sqlTest/examsystem/
-                        path = "S:/sqlTest/examsystem/" + newName;
+                        path = "C:/Users/11139/examsystem/" + newName;
                         //上传保存
                         /* file.transferTo(); C:/Users/11139/examsystem/ */
-                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("S:/sqlTest/examsystem/",newName));
+                        FileUtils.copyInputStreamToFile(file.getInputStream(),new File("C:/Users/11139/examsystem/",newName));
                         ////保存当前文件路径
                         //request.getSession().setAttribute("currFilePath", path);
                     }
