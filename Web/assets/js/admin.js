@@ -185,6 +185,9 @@ table.render({
 	url:"/api/getStudentInfo",
 	method:"POST",
 	contentType:'application/json',
+	where:{
+		classId:"ALL"
+	},
 	parseData: function(res){ //res 即为原始返回的数据
 		//console.log(res);
 		res =(res);
@@ -194,7 +197,6 @@ table.render({
 			"count": res.total, //解析数据长度
 		};
 		data.data=res;
-		//console.log(data);
 		return data; 
 	},
 	//toolbar:  '#teacherListBar' , //开启头部工具栏，并为其绑定左侧模板
