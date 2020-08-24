@@ -24,7 +24,7 @@ public class TeacherServiceImpl implements TeacherService {
         for(int i=0;i<tTables.size();i++){
             Teacher teacher=new Teacher();
             teacher.setTeacherId(tTables.get(i).getTeacherId());
-            teacher.setName(tTables.get(i).getName());
+            teacher.setName(tTables.get(i).getTeacherName());
             teacherDao.addTeacher(teacher);
         }
     }
@@ -63,7 +63,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<StudentInfo> getStudentInfo(String classId){
-        int id=Integer.valueOf(classId);
+        int id;
+        if(classId.equals("ALL")) id=0;
+        else id=Integer.valueOf(classId);
         List<StudentInfo> result=studentDao.getStudentInfoById(id);
 
         return result;

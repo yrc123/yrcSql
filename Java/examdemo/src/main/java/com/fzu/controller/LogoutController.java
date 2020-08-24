@@ -28,9 +28,12 @@ public class LogoutController {
         Map<String, Object> result = new HashMap<String, Object>();
         //System.out.println(username.substring(0,1));
         for(Cookie i:cookies){
-            i.setMaxAge(0);
-            i.setPath("/");
-            response.addCookie(i);
+            if(i.getName().equals("userId")||i.getName().equals("username")||i.getName().equals("character")){
+                i.setMaxAge(0);
+                i.setPath("/");
+                response.addCookie(i);
+            }
+
         }
         result.put("status", "1");
         /*

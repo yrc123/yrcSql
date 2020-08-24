@@ -85,10 +85,10 @@ function setExam(data){
 	var tmp;
 
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			addExam.append(type[i]);
-			if(i!=2 || j!=data.Qtype[i]-1)addExam.append("<hr class='layui-bg-green'>");
+			if(i!=2 || j!=data.qtype[i]-1)addExam.append("<hr class='layui-bg-green'>");
 		}
 	}
 
@@ -99,16 +99,16 @@ function setExam(data){
 	var num=0;
 	var s=["单选","多选","判断"]
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			qArr[num].children(".q-number").text(num+1);
 			qArr[num].children(".q-title").children("span").text(s[i]);
-			qArr[num].children(".q-title").append(data.data[num].title);
+			qArr[num].children(".q-title").append(data.qdataList[num].title);
 			var qNum=0;
 			var node = qArr[num].children(".q-select").children("div");
 				node.each(function(){
 					if(i<2)
-						$(this).children("input").attr("title",data.data[num].choice[qNum++]);
+						$(this).children("input").attr("title",data.qdataList[num].choice[qNum++]);
 					$(this).children("input").attr("name","q-"+num);
 				})
 			num++;
@@ -160,7 +160,7 @@ function getInput(data){
 	var tmp;
 	var num=0;
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			var inputArrTmp = new Array();
 			var node = qArr[num].children(".q-select").children("div");
@@ -180,14 +180,14 @@ function getAns(data){
 	//console.log(data);
 	var ans=new Array();
 	
-	ans.push(data.Qtype);
+	ans.push(data.qtype);
 	
 	var inputArr = getInput(data);
 	var tmp;
 	var Qnum=0;
 	var tmpArr = new Array();
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			var sum = 0;
 			var item;
@@ -217,7 +217,7 @@ function setAns(ans,data){
 	var tmp;
 	//console.log(ans);
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			//console.log(tmp);
 			var item;
@@ -315,7 +315,7 @@ function setChoice(){
 	var Qnum=0;
 	var tmp;
 	for(i=0;i<3;i++){
-		tmp=data.Qtype[i];
+		tmp=data.qtype[i];
 		for(j=0;j<tmp;j++){
 			var item;
 			if(i<2)item=4;

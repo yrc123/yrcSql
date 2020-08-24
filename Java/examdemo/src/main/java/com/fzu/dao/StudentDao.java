@@ -65,8 +65,8 @@ public class StudentDao {
     }
     //获得教师id
     public String getTeacherId(String studentId){
-        String sql="select teacher_id from class_teacher,student where student.classroom=class_teacher.class_name";
-        return jdbcTemplate.queryForObject(sql,String.class);
+        String sql="select teacher_id from class_teacher,student where student.classroom=class_teacher.class_name and student_id= ?";
+        return jdbcTemplate.queryForObject(sql,new Object[]{studentId},String.class);
     }
 
     //写入正式考试的成绩
@@ -77,21 +77,29 @@ public class StudentDao {
 
     //读取学生成绩信息
     public List<StudentInfo> getStudentInfoById(int classId){
-        String sql1="select class_name from exam_system.class_teacher where class_id = ? ";
-        String className = jdbcTemplate.queryForObject(sql1,new Object[]{ classId},String.class);
-        System.out.println(classId);
-        System.out.println(className);
-
         List<StudentInfo> result=new ArrayList<>();
-        String sql2="select student_id,name,score from exam_system.student where classroom= ? ";
-        List<Student> list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class),className);
+        List<Student> list;
+        if(classId==0){
+            String sql2="select student_id,name,score from exam_system.student";
+            list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class));
+        }
+        else{
+            String sql1="select class_name from exam_system.class_teacher where class_id = ? ";
+            String className = jdbcTemplate.queryForObject(sql1,new Object[]{ classId},String.class);
+            System.out.println(classId);
+            System.out.println(className);
+
+            String sql2="select student_id,name,score from exam_system.student where classroom= ? ";
+            list = jdbcTemplate.query(sql2,new BeanPropertyRowMapper<>(Student.class),className);
+        }
+
         for(int i=0;i<list.size();i++){
             Student obj=list.get(i);
             StudentInfo cont=new StudentInfo();
-            cont.setStudentId(obj.getStudentId());
-            cont.setName(obj.getName());
-            if(obj.getScore()==null) cont.setScore(-1);
-            else cont.setScore(obj.getScore());
+            cont.setStudentNo(obj.getStudentId());
+            cont.setStudentName(obj.getName());
+            if(obj.getScore()==null) cont.setStudentScore(-1);
+            else cont.setStudentScore(obj.getScore());
             result.add(cont);
         }
         System.out.println(result);

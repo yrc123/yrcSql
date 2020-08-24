@@ -254,7 +254,7 @@ public class FileController {
                 String teacherId = formatter.formatCellValue(sheet.getRow(currentRow).getCell(0));
                 String name = sheet.getRow(currentRow).getCell(1).getStringCellValue();
                 t.setTeacherId(teacherId);
-                t.setName(name);
+                t.setTeacherName(name);
                 tTables.add(t);
             }
             teacherService.importTeacher(tTables);
